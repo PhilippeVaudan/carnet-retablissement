@@ -1,0 +1,1727 @@
+<!doctype html><html><head><meta charset=utf8><title>Mon carnet rétablissement</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#3a7bc8"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Mon carnet"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mon carnet rétablissement</title>
+<meta content="cover" name="claude:viewport-fit-sides"/>
+
+<style>
+/* Layout : classeur — colonne de navigation à gauche (modules > thèmes > sections), contenu à droite.
+   Chaque section : idée clé, schéma, mes notes, détail replié, slides de référence. Palette des diapos du cours. */
+:root{
+  --bg:#f5f6f6; --paper:#ffffff; --side:#eef1f1; --fg:#17243a; --muted:#5b6676; --line:#dde2e6;
+  --navy:#1c2e4a; --teal:#1f8a83; --coral:#d9604a; --ochre:#b98a22; --sage:#6b8c2e;
+  --teal-soft:#e4f1f0; --coral-soft:#f9e6e2; --ochre-soft:#f7efdc; --navy-soft:#e6ebf3; --sage-soft:#eef3e3;
+  --on-navy:#ffffff; --shade:rgba(10,16,26,.86);
+  --display:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#10161f; --paper:#17202b; --side:#131b25; --fg:#e7ebf0; --muted:#9aa6b5; --line:#2a3542;
+  --navy:#9fb6d9; --teal:#5cc2b9; --coral:#ef8a74; --ochre:#e2b75a; --sage:#a9c56d;
+  --teal-soft:#16302f; --coral-soft:#3a221d; --ochre-soft:#352b16; --navy-soft:#1e2a3c; --sage-soft:#222c16;
+  --on-navy:#10161f; --shade:rgba(0,0,0,.9); color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#10161f; --paper:#17202b; --side:#131b25; --fg:#e7ebf0; --muted:#9aa6b5; --line:#2a3542;
+  --navy:#9fb6d9; --teal:#5cc2b9; --coral:#ef8a74; --ochre:#e2b75a; --sage:#a9c56d;
+  --teal-soft:#16302f; --coral-soft:#3a221d; --ochre-soft:#352b16; --navy-soft:#1e2a3c; --sage-soft:#222c16;
+  --on-navy:#10161f; --shade:rgba(0,0,0,.9); color-scheme:dark }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;color:var(--fg)}
+h1{font-size:1.35rem;font-weight:650;line-height:1.2}
+h2{font-size:1.45rem;font-weight:650}
+h3{font-size:1.05rem;font-weight:650}
+p{margin:0}
+a{color:var(--teal)}
+.eyebrow{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+
+/* Structure */
+.app{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:100%}
+aside.side{position:sticky;top:0;height:100vh;height:100dvh;overflow-y:auto;background:var(--side);border-right:1px solid var(--line);padding:22px 14px 30px max(14px,env(safe-area-inset-left,0px))}
+aside .brand{padding:0 8px 16px;border-bottom:1px solid var(--line);margin-bottom:12px}
+aside .brand p{color:var(--muted);font-size:.85rem;margin-top:4px}
+.navlink{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:none;font:inherit;color:var(--fg);padding:7px 10px;border-radius:6px;cursor:pointer;text-decoration:none}
+.navlink:hover{background:var(--paper)}
+.navlink:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+.navlink.active{background:var(--paper);font-weight:700;box-shadow:inset 3px 0 0 var(--c,var(--teal))}
+.navlink .dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--teal));flex:none}
+.modlist{margin-top:16px;display:flex;flex-direction:column;gap:6px}
+.modtitle{padding:0 10px 2px;display:block}
+.mod{border:1px solid var(--line);border-radius:8px;background:color-mix(in srgb,var(--paper) 45%,transparent)}
+.modhead{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;border:0;background:none;font:inherit;color:var(--fg);text-align:left;padding:9px 10px;cursor:pointer;border-radius:8px}
+.modhead span:first-child{display:flex;flex-direction:column;line-height:1.25}
+.modhead small{color:var(--muted);font-size:.78rem;margin-top:2px}
+.modhead:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+.modhead .chev{color:var(--muted);transition:transform .15s}
+.modhead[aria-expanded="false"] .chev{transform:rotate(-90deg)}
+.modbody{padding:0 4px 8px}
+.mod.placeholder{border-style:dashed;background:none}
+.mod.placeholder .modhead{cursor:default}
+.subnav{display:flex;flex-direction:column;margin:2px 0 6px 18px;border-left:1px solid var(--line);padding-left:6px}
+.subnav a{font-size:.86rem;color:var(--muted);text-decoration:none;padding:3px 8px;border-radius:4px}
+.subnav a:hover{color:var(--fg);background:var(--paper)}
+.soon{color:var(--muted);font-size:.9rem;padding:6px 10px;display:flex;gap:8px;align-items:center}
+.soon .dot{background:var(--line)}
+
+main{padding-block:28px 80px;padding-left:max(16px,clamp(16px,4vw,48px));padding-right:max(16px,env(safe-area-inset-right,0px),clamp(16px,4vw,48px))}
+.content{max-width:820px}
+
+/* Barre mobile */
+.mbar{display:none}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  aside.side{position:fixed;inset:0 auto 0 0;width:min(86vw,320px);z-index:30;transform:translateX(-102%);transition:transform .2s ease;padding-top:calc(16px + env(safe-area-inset-top,0px));box-shadow:0 0 40px rgba(0,0,0,.25)}
+  body.menu-open aside.side{transform:none}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:25}
+  .mbar{display:flex;align-items:center;gap:10px;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--line);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--paper)}
+  .mbar button{font:inherit;font-weight:700;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:6px;padding:6px 12px;cursor:pointer;flex:none}
+  .mbar .mtoc{margin-left:auto;padding:6px 10px}
+  .mbar span{flex:1;min-width:0}
+  .mbar span{font-size:.9rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  section.s{scroll-margin-top:64px}
+}
+@media (prefers-reduced-motion:reduce){ aside.side{transition:none} }
+
+/* Contenu */
+.phead{margin-bottom:26px;display:flex;flex-direction:column;gap:6px}
+.phead h2{font-size:1.9rem}
+.phead p{color:var(--muted);max-width:62ch}
+section.s{padding-block:26px;border-top:1px solid var(--line);scroll-margin-top:16px}
+section.s:first-of-type{border-top:0;padding-top:4px}
+section.s > h2{margin-bottom:10px}
+.idea{font-size:1.08rem;max-width:64ch}
+.idea + .idea{margin-top:8px}
+.block{margin-top:18px}
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--min,180px)),1fr))}
+.card{border-radius:8px;padding:12px 14px;min-width:0}
+.card .k{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:3px}
+.t{background:var(--teal-soft)} .t .k{color:var(--teal)}
+.c{background:var(--coral-soft)} .c .k{color:var(--coral)}
+.o{background:var(--ochre-soft)} .o .k{color:var(--ochre)}
+.b{background:var(--navy-soft)} .b .k{color:var(--navy)}
+.key{border-left:3px solid var(--coral);padding:4px 0 4px 14px;font-weight:700;max-width:66ch;margin-top:16px}
+.quote{font-family:var(--display);font-size:1.1rem;line-height:1.45}
+.mine{background:var(--sage-soft);border-left:3px solid var(--sage);border-radius:0 8px 8px 0;padding:10px 14px;margin-top:16px;max-width:66ch}
+.mine .k{color:var(--sage);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700}
+.added{font-size:.85rem;color:var(--muted);margin-top:6px}
+ul.l{margin:4px 0 0;padding-left:1.1em} ul.l li{margin:2px 0}
+.fig{overflow-x:auto}
+.fig svg{display:block;max-width:100%;height:auto}
+
+details.more{margin-top:16px;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
+details.more > summary{cursor:pointer;padding:9px 14px;font-weight:700;font-size:.92rem;color:var(--muted);list-style:none;display:flex;align-items:center;gap:8px}
+details.more > summary::-webkit-details-marker{display:none}
+details.more > summary::before{content:"+";font-family:var(--display);font-size:1.1rem;width:1em;color:var(--teal)}
+details.more[open] > summary::before{content:"−"}
+details.more > summary:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+details.more .inner{padding:4px 16px 16px;display:flex;flex-direction:column;gap:12px}
+
+.slides{display:flex;gap:8px;overflow-x:auto;margin-top:16px;padding-bottom:4px}
+details.slides-box{margin-top:10px;background:none;border-style:dashed}
+details.slides-box > summary::before{content:"▸";font-family:var(--body);font-size:.9rem}
+details.slides-box[open] > summary::before{content:"▾"}
+.slides .lab{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--muted);align-self:center;writing-mode:vertical-rl;transform:rotate(180deg);flex:none}
+.thumb{flex:none;width:150px;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:#fff;padding:0;cursor:zoom-in;position:relative}
+.thumb .sp{display:block;width:100%;background-repeat:no-repeat;background-color:#fff}
+.thumb span{position:absolute;right:4px;bottom:3px;font-size:.68rem;background:var(--shade);color:#fff;border-radius:3px;padding:0 5px}
+.thumb:hover{border-color:var(--teal)} .thumb:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+table.cmp{border-collapse:collapse;width:100%;min-width:460px;font-size:.94rem}
+table.cmp th,table.cmp td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+table.cmp thead th{font-size:.75rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+table.cmp tbody th{font-weight:700;width:30%}
+.tbl{overflow-x:auto}
+
+.pill-row{display:flex;flex-wrap:wrap;gap:6px}
+.pill{appearance:none;font:inherit;font-size:.86rem;border:1px solid var(--line);background:var(--paper);color:var(--fg);padding:4px 11px;border-radius:999px;cursor:pointer}
+.pill[aria-pressed="true"]{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+.pill:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+ol.ladder{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:3px;counter-reset:d}
+ol.ladder li{counter-increment:d;display:grid;grid-template-columns:2em 1fr;gap:8px;align-items:baseline;padding:5px 12px;border-radius:5px;font-size:.94rem;background:color-mix(in srgb,var(--coral) calc(var(--i)*6%),var(--teal-soft))}
+ol.ladder li details summary{cursor:pointer;list-style:none;padding:2px 0}
+ol.ladder li details summary::-webkit-details-marker{display:none}
+ol.ladder li details summary::after{content:" ▸";color:var(--muted);font-size:.85em}
+ol.ladder li details[open] summary::after{content:" ▾"}
+ol.ladder li summary:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.ddef{background:var(--paper);border-radius:6px;padding:10px 12px;margin:6px 0 4px}
+.dgrp{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:4px}
+.ddef dl{margin:0;display:flex;flex-direction:column;gap:6px}
+.ddef dt{font-weight:700}
+.ddef dd{margin:0;color:var(--fg)}
+.dk{color:var(--muted);font-weight:400}
+ol.ladder li::before{content:counter(d);font-family:var(--display);font-weight:650;color:var(--navy)}
+.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:4px}
+
+.keyes{display:grid;grid-template-columns:auto 1fr 1fr auto;gap:6px;align-items:center;min-width:500px}
+.keyes .q{aspect-ratio:1.6;border-radius:6px;padding:10px;font-size:.86rem;display:flex;align-items:flex-end;font-weight:700}
+.keyes .ax{font-size:.78rem;color:var(--muted);text-align:center}
+.q1{background:#c6d4ea;color:#17243a}.q2{background:#9db3d6;color:#17243a}.q3{background:#6b92c7;color:#fff}.q4{background:#2c64a8;color:#fff}
+
+
+/* Accueil : sommaire pleine page */
+body.at-home .app{grid-template-columns:minmax(0,1fr)}
+body.at-home aside.side, body.at-home .mbar{display:none}
+body.at-home main{max-width:1120px;margin:0 auto;width:100%}
+body.at-home .content{max-width:none}
+.hero{display:flex;flex-direction:column;gap:8px;padding-block:18px 30px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.htitle{font-size:clamp(2.1rem,5vw,3.2rem);letter-spacing:-.015em}
+.hero p{color:var(--muted);font-size:1.05rem}
+.homegrid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:820px){.homegrid{grid-template-columns:minmax(0,1fr)}}
+.hsec{font-size:1.15rem;margin-bottom:12px}
+.hmods{display:flex;flex-direction:column;gap:12px}
+.hmod{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.hmodhead{display:flex;flex-direction:column;gap:4px;padding:18px 20px 14px;text-decoration:none;color:var(--fg);border-bottom:1px solid var(--line);position:relative;cursor:pointer}
+.hmod.closed .hmodhead{border-bottom:0}
+.rubidx{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+.rubidx[hidden]{display:none}
+.rubcard{display:flex;flex-direction:column;gap:3px;padding:16px 18px;background:var(--paper);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--fg)}
+.rubcard b{font-family:var(--display);font-size:1.15rem}
+.rubcard span{color:var(--muted);font-size:.88rem}
+.rubcard:hover,.rubcard:focus-visible{border-color:var(--teal);outline:none}
+.rubback{margin-bottom:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.search{position:relative;margin-top:14px;max-width:560px}
+.search .loupe{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);display:flex}
+.search input{width:100%;font:inherit;font-size:1rem;padding:12px 14px 12px 44px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--fg)}
+.search input:focus{outline:2px solid var(--teal);outline-offset:1px}
+.results{margin-top:12px;max-width:760px;display:flex;flex-direction:column;gap:6px}
+.rcount{font-size:.85rem;color:var(--muted)}
+.hit{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper);text-decoration:none;color:var(--fg)}
+.hit:hover,.hit:focus-visible{border-color:var(--teal);outline:none}
+.hpath{font-size:.75rem;letter-spacing:.04em;color:var(--teal);font-weight:700}
+.hsnip{font-size:.9rem;color:var(--muted)}
+.hit mark{background:var(--ochre-soft);color:var(--fg);padding:0 2px;border-radius:3px}
+section.s.flash{animation:flash 1.6s ease}
+@keyframes flash{0%{background:var(--ochre-soft)}100%{background:transparent}}
+@media (prefers-reduced-motion:reduce){section.s.flash{animation:none}}
+.hmodhead .eyebrow,.hmodhead p{display:none}
+.hmodhead h3{font-size:1.3rem;padding-right:28px}
+.hthemes a .dot{background:var(--teal)!important}
+.hchev{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:1.1rem;color:var(--muted)}
+.hmodhead h3{font-size:1.45rem}
+.hmodhead:hover h3{color:var(--teal)}
+.hmodhead:focus-visible,.hthemes a:focus-visible,.hpos:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+.muted{color:var(--muted)}
+.hthemes{list-style:none;margin:0;padding:8px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:2px}
+.hthemes a,.hthemes li.off{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:6px;text-decoration:none;color:var(--fg)}
+.hthemes a:hover{background:var(--bg)}
+.hthemes .dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--line));flex:none}
+.hthemes li.off{color:var(--muted)}
+.hthemes em{font-style:normal;font-size:.78rem;margin-left:auto}
+.hmod > .hmodhead:last-child{border-bottom:0}
+.hmod.empty{border-style:dashed;background:none;padding:18px 20px;color:var(--muted)}
+.hpos{display:flex;flex-direction:column;gap:10px;background:var(--sage-soft);border-left:3px solid var(--sage);border-radius:0 10px 10px 0;padding:16px 18px;text-decoration:none;color:var(--fg)}
+.hpos:hover span{color:var(--fg)}
+
+.spk{background:var(--navy-soft);border-left:3px dashed var(--navy);border-radius:0 8px 8px 0;padding:10px 14px;margin-top:16px;max-width:66ch;display:flex;flex-direction:column;gap:6px;font-size:.95rem}
+.spk .k{color:var(--navy);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700}
+.spk .k::after{content:" · ce qu’ils avaient prévu de dire";text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted)}
+/* Visionneuse */
+.lb{position:fixed;inset:0;z-index:50;background:var(--shade);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb .sp{display:block;width:min(1200px,100%);max-width:100%;background-repeat:no-repeat;background-color:#fff;border-radius:4px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.lb .bar{display:flex;gap:10px;align-items:center;color:#fff;font-size:.9rem}
+.lb button{font:inherit;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:7px 14px;cursor:pointer}
+.lb button:hover{background:rgba(255,255,255,.22)}
+.lb button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.lb .cap{min-width:7em;text-align:center}
+.stack{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.stack > .card,.panel.rubriques section.s .card{border:1px solid var(--line);padding:14px 16px}
+a[href$=".pdf"]{display:inline-block;text-decoration:none;font-weight:600;font-size:.88rem;border:1px solid currentColor;border-radius:6px;padding:5px 12px;margin-top:2px}
+a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)}
+.pv{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;flex-direction:column}
+.pvbar{display:flex;align-items:center;gap:12px;padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line);background:var(--paper)}
+.pvbar span{flex:1;min-width:0;font-weight:700;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pvbar button,.pvbar a{font:inherit;font-size:.88rem;font-weight:600;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer;text-decoration:none;flex:none}
+.pvbody{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;align-items:center;gap:12px;padding:12px}
+.pvpage{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.15);max-width:100%;flex:none}
+.pvpage canvas{display:block;max-width:100%;height:auto}
+.pvmsg{color:var(--muted);margin-top:40px}
+.fillrow{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.fillbtn{font:inherit;font-weight:700;font-size:.92rem;color:#fff;background:var(--teal);border:0;border-radius:8px;padding:10px 16px;cursor:pointer;text-align:left}
+.fillbtn:hover{filter:brightness(1.08)}.fillbtn:focus-visible,.fm button:focus-visible,.fm textarea:focus-visible,.fm input:focus-visible,.fm select:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.card .fillbtn{margin-top:8px;font-size:.88rem;padding:7px 12px}
+.fm{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;flex-direction:column}
+.fmbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line);background:var(--paper)}
+.fmbar #fmtitle{flex:1 1 200px;min-width:0;font-weight:700;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fmbar button{font:inherit;font-size:.88rem;font-weight:600;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer;flex:none}
+.fmbar #fmexp{background:var(--teal);color:#fff;border-color:var(--teal)}
+#fmstat{font-size:.8rem;color:var(--muted);flex:none}
+.fmbody{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:16px max(16px,env(safe-area-inset-right,0px)) 60px max(16px,env(safe-area-inset-left,0px))}
+.fmbody>*{max-width:860px;margin-inline:auto}
+.fmintro{margin-bottom:14px}.fmintro p{margin-bottom:6px;max-width:70ch}
+.fm input[type=text],.fm textarea,.fm select,.fm input[type=month]{font:inherit;font-size:16px;color:var(--fg);background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%;resize:none;overflow:hidden;line-height:1.4}
+.fm select{overflow:visible}
+.fpart{background:var(--paper);border:1px solid var(--line);border-radius:10px;margin-bottom:12px}
+.fpart>summary{cursor:pointer;font-weight:700;padding:14px 16px;font-family:var(--display);font-size:1.08rem}
+.fpin{padding:0 16px 16px;display:flex;flex-direction:column;gap:16px}
+.ff{display:flex;flex-direction:column;gap:6px}
+.fl{font-weight:600;font-size:.94rem}
+.fhint{font-size:.83rem;color:var(--muted)}
+.fmh{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin:8px 0 -6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:.86rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:999px;padding:5px 11px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#fff}
+.fm .chipadd{width:9em;border-radius:999px;padding:5px 11px;font-size:.86rem}
+.ftab{display:flex;flex-direction:column;gap:8px}
+.frow{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;border-left:3px solid var(--teal-soft);padding-left:8px}
+.fcell{flex:1 1 180px;min-width:0;display:flex;flex-direction:column;gap:2px}
+.fcl{font-size:.74rem;color:var(--muted)}
+.fchk{font-size:.86rem;display:flex;align-items:center;gap:4px;padding-bottom:8px}
+.fchk input{width:20px;height:20px}
+.fdel{font:inherit;font-size:1.1rem;line-height:1;color:var(--muted);background:none;border:1px solid var(--line);border-radius:6px;width:34px;height:36px;cursor:pointer;flex:none}
+.fadd,.fclear{font:inherit;font-size:.86rem;font-weight:600;color:var(--teal);background:none;border:1px dashed var(--teal);border-radius:6px;padding:7px 12px;cursor:pointer;align-self:flex-start}
+.fclear{color:var(--coral);border-color:var(--coral);margin-top:10px}
+.fweek{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.fday{display:flex;flex-direction:column;gap:4px}.fday b{font-size:.84rem}
+.fm .fday textarea{font-size:15px;padding:6px 8px}
+.ffeubar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.ffeubar input{max-width:12em}
+.fleg{font-size:.82rem;color:var(--muted);display:flex;align-items:center;gap:4px;flex-wrap:wrap}.fleg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-left:6px}
+.ffeu{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:5px}
+.fd{font:inherit;font-size:.85rem;height:40px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);cursor:pointer}
+.fd.v,.fleg .v{background:#7cbf6b;color:#0b2a07;border-color:#7cbf6b}.fd.o,.fleg .o{background:#f0a540;color:#3a2200;border-color:#f0a540}.fd.r,.fleg .r{background:#d9483f;color:#fff;border-color:#d9483f}
+.sform{padding:16px;display:flex;flex-direction:column;gap:10px}
+.srow{display:flex;align-items:center;gap:12px}.srow input{flex:1;accent-color:var(--teal);height:32px}
+.sval{display:inline-grid;place-items:center;min-width:52px;height:52px;border-radius:50%;font-weight:800;font-size:1.15rem;color:#17243a;flex:none}
+.sval.sm{min-width:38px;height:38px;font-size:.92rem}
+.sdesc{font-size:.9rem;min-height:2.6em}
+.fprim{font:inherit;font-weight:700;color:#fff;background:var(--teal);border:0;border-radius:8px;padding:10px 18px;cursor:pointer;align-self:flex-start}
+.schart svg{width:100%;height:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px;margin:8px 0 12px}
+.schart .sl{fill:none;stroke:var(--muted);stroke-width:2}.schart .sg{stroke:var(--line);stroke-dasharray:4 4}.schart .st{font-size:11px;fill:var(--muted)}
+.slist{display:flex;flex-direction:column;gap:8px}
+.sent{display:flex;gap:12px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.sent>div{flex:1;min-width:0}.sent b{font-size:.86rem}.sent p{margin-top:2px}
+
+.stabs{display:flex;gap:6px;flex-wrap:wrap}.stab{font:inherit;font-weight:700;font-size:.9rem;border:1px solid var(--line);background:var(--paper);color:var(--fg);border-radius:8px;padding:8px 14px;cursor:pointer}.stab[aria-selected=true]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.stargrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:760px){.stargrid{grid-template-columns:1fr}}
+.starwrap{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px;color:var(--fg)}.starwrap svg{width:100%;height:auto;display:block;max-width:420px;margin:auto}.starwrap .cell{cursor:pointer}.starwrap .cell:hover{fill:rgba(255,255,255,.35)}
+.starlist{list-style:decimal;padding-left:1.4em;display:flex;flex-direction:column;gap:8px;margin-bottom:12px}.starlist li span{font-size:.9rem;display:block;margin-bottom:3px}
+.sbtns{display:flex;gap:4px}.sb{font:inherit;font-size:.85rem;font-weight:700;width:36px;height:32px;border-radius:6px;border:1px solid var(--line);background:var(--paper);color:var(--fg);cursor:pointer}.sb.on{background:var(--c);border-color:var(--c);color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.35)}
+.sent .chip{flex:none;align-self:center}
+.sb.wide{width:auto;min-width:44px;padding:0 10px}
+</style>
+<style>
+.sos{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--fg);background:var(--coral-soft);border:1px solid var(--coral);border-radius:10px;padding:12px 16px;margin:18px 0 6px;max-width:760px}
+.sos b{color:var(--coral)}.sos span{font-size:.92rem}
+.card.tel .num{font-size:1.7rem;font-weight:800;letter-spacing:.02em;color:var(--coral);margin:2px 0 4px}
+.vb{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;max-width:760px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px}
+.vbt{background:var(--b);color:#17243a;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:4px;min-height:84px;justify-content:center;transform:rotate(-.6deg)}.vbt:nth-child(even){transform:rotate(.8deg)}
+.vbt.big{grid-column:span 2}.vbt b{font-family:var(--display);font-size:1rem;line-height:1.25}.vbt span{font-size:.84rem}.vbt svg{width:100%;max-height:70px}
+@media (max-width:420px){.vbt.big{grid-column:span 1}}
+.tale{max-width:66ch;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;padding:14px 18px;font-family:var(--display);font-size:1.05rem;line-height:1.6}.tale p+p{margin-top:10px}
+</style>
+<div class="mbar"><button id="homeBtn" type="button">← Sommaire</button><span id="mbarTitle">Mon carnet rétablissement</span><button aria-label="Rechercher" class="searchBtn mtoc" type="button"><svg aria-hidden="true" height="18" style="display:block" viewbox="0 0 24 24" width="18"><circle cx="10.5" cy="10.5" fill="none" r="6.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path></svg></button><button aria-controls="side" aria-expanded="false" aria-label="Thèmes" class="mtoc" id="menuBtn" type="button">☰</button></div>
+<div class="app">
+<aside aria-label="Sommaire du carnet" class="side" id="side">
+<button class="navlink searchBtn" style="margin-bottom:8px" type="button"><svg aria-hidden="true" height="16" style="display:block" viewbox="0 0 24 24" width="16"><circle cx="10.5" cy="10.5" fill="none" r="6.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path></svg>Rechercher</button>
+<div class="brand"><h1>Mon carnet rétablissement</h1><p>Par Philippe Vaudan, pair praticien en santé mentale</p></div>
+<button class="navlink" id="installNav" type="button">📲 Installer le carnet</button>
+<button class="navlink" data-p="accueil" style="--c:var(--navy)"><span class="dot"></span>Sommaire</button>
+<div class="modlist">
+<span class="eyebrow modtitle">Thèmes</span>
+<div class="mod" data-mod="comprendre"><button aria-expanded="true" class="modhead" type="button"><span><b>Comprendre</b><small>Santé, rétablissement, pouvoir d’agir</small></span><span aria-hidden="true" class="chev">▾</span></button>
+<div class="modbody"><button class="navlink" data-p="sante" style="--c:var(--teal)"><span class="dot"></span>La santé mentale</button>
+<nav class="subnav" data-for="sante"></nav>
+<button class="navlink" data-p="retablissement" style="--c:var(--teal)"><span class="dot"></span>Le rétablissement</button>
+<nav class="subnav" data-for="retablissement"></nav>
+<button class="navlink" data-p="pouvoir" style="--c:var(--teal)"><span class="dot"></span>Reprendre du pouvoir</button>
+<nav class="subnav" data-for="pouvoir"></nav>
+<button class="navlink" data-p="emotions" style="--c:var(--teal)"><span class="dot"></span>Émotions et stress</button>
+<nav class="subnav" data-for="emotions"></nav>
+<button class="navlink" data-p="critique" style="--c:var(--teal)"><span class="dot"></span>Un regard critique</button>
+<nav class="subnav" data-for="critique"></nav>
+</div></div>
+<div class="mod" data-mod="traverser"><button aria-expanded="true" class="modhead" type="button"><span><b>Ce qu’on peut traverser</b><small>Des mots sur ce qu’on vit</small></span><span aria-hidden="true" class="chev">▾</span></button>
+<div class="modbody"><button class="navlink" data-p="avant" style="--c:var(--coral)"><span class="dot"></span>Avant de lire</button>
+<nav class="subnav" data-for="avant"></nav>
+<button class="navlink" data-p="humeur" style="--c:var(--coral)"><span class="dot"></span>Quand l’humeur bascule</button>
+<nav class="subnav" data-for="humeur"></nav>
+<button class="navlink" data-p="anxiete" style="--c:var(--coral)"><span class="dot"></span>Quand l’anxiété prend trop de place</button>
+<nav class="subnav" data-for="anxiete"></nav>
+<button class="navlink" data-p="trauma" style="--c:var(--coral)"><span class="dot"></span>Après un traumatisme</button>
+<nav class="subnav" data-for="trauma"></nav>
+<button class="navlink" data-p="psychose" style="--c:var(--coral)"><span class="dot"></span>Quand la réalité se trouble</button>
+<nav class="subnav" data-for="psychose"></nav>
+<button class="navlink" data-p="medic" style="--c:var(--coral)"><span class="dot"></span>Les médicaments</button>
+<nav class="subnav" data-for="medic"></nav>
+</div></div>
+<span class="eyebrow modtitle" style="margin-top:10px">Ressources</span>
+<button class="navlink" data-p="outils" style="--c:var(--teal)"><span class="dot"></span>Outils</button>
+<nav class="subnav" data-for="outils"></nav>
+<button class="navlink" data-p="lectures" style="--c:var(--navy)"><span class="dot"></span>Lectures</button>
+<nav class="subnav" data-for="lectures"></nav>
+<button class="navlink" data-p="aide" style="--c:var(--coral)"><span class="dot"></span>Où trouver de l’aide</button>
+<nav class="subnav" data-for="aide"></nav>
+</div>
+</aside>
+<div class="scrim" hidden="" id="scrim"></div>
+<main><div class="content">
+<div class="panel home" data-title="Sommaire" id="p-accueil">
+<div class="hero">
+<span class="eyebrow">Par Philippe Vaudan, pair praticien en santé mentale</span>
+<h1 class="htitle">Mon carnet rétablissement</h1>
+<p>Des repères pour comprendre ce qu’on traverse, et des outils à remplir pour prendre soin de soi. Lis dans l’ordre que tu veux, à ton rythme.</p>
+<div class="search"><label class="sr" for="q">Rechercher dans le carnet</label><span aria-hidden="true" class="loupe"><svg height="20" viewbox="0 0 24 24" width="20"><circle cx="10.5" cy="10.5" fill="none" r="6.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path></svg></span><input autocomplete="off" id="q" placeholder="Recherche" type="search"/></div>
+<div class="results" hidden="" id="results"></div>
+</div>
+<a class="sos" href="#aide"><b>Besoin d’aide maintenant ?</b><span>Urgence vitale 144 · Détresse psychologique (Vaud) 0848 133 133 · La Main Tendue 143</span></a>
+<div class="homegrid">
+<div class="homecol">
+<h2 class="hsec">Thèmes</h2>
+<div class="hmods">
+<article class="hmod"><a class="hmodhead" href="#sante"><h3>Comprendre</h3><p class="muted">La santé mentale, le rétablissement, reprendre du pouvoir</p></a><ol class="hthemes"><li><a href="#sante"><span class="dot" style="--c:var(--teal)"></span>La santé mentale</a></li><li><a href="#retablissement"><span class="dot" style="--c:var(--teal)"></span>Le rétablissement</a></li><li><a href="#pouvoir"><span class="dot" style="--c:var(--teal)"></span>Reprendre du pouvoir</a></li><li><a href="#emotions"><span class="dot" style="--c:var(--teal)"></span>Émotions et stress</a></li><li><a href="#critique"><span class="dot" style="--c:var(--teal)"></span>Un regard critique</a></li></ol></article>
+<article class="hmod"><a class="hmodhead" href="#avant"><h3>Ce qu’on peut traverser</h3><p class="muted">Des mots pour mettre sur ce qu’on vit</p></a><ol class="hthemes"><li><a href="#avant"><span class="dot" style="--c:var(--coral)"></span>Avant de lire</a></li><li><a href="#humeur"><span class="dot" style="--c:var(--coral)"></span>Quand l’humeur bascule</a></li><li><a href="#anxiete"><span class="dot" style="--c:var(--coral)"></span>Quand l’anxiété prend trop de place</a></li><li><a href="#trauma"><span class="dot" style="--c:var(--coral)"></span>Après un traumatisme</a></li><li><a href="#psychose"><span class="dot" style="--c:var(--coral)"></span>Quand la réalité se trouble</a></li><li><a href="#medic"><span class="dot" style="--c:var(--coral)"></span>Les médicaments</a></li></ol></article>
+</div></div>
+<div class="homecol">
+<h2 class="hsec">Ressources</h2>
+<div class="hmods">
+<article class="hmod"><a class="hmodhead" href="#outils"><h3>Outils</h3></a><ol class="hthemes">
+<li><a href="#out-revim"><span class="dot"></span>ReViM</a></li><li><a href="#out-wrap"><span class="dot"></span>WRAP</a></li><li><a href="#out-etoile"><span class="dot"></span>Étoile du rétablissement</a></li><li><a href="#out-suds"><span class="dot"></span>Échelle de détresse</a></li><li><a href="#out-tcd"><span class="dot"></span>Émotions (TCD)</a></li><li><a href="#out-cercles"><span class="dot"></span>Cercles d’influence</a></li><li><a href="#out-visual"><span class="dot"></span>Visual board</a></li></ol></article>
+<article class="hmod"><a class="hmodhead" href="#lectures"><h3>Lectures</h3></a></article>
+<article class="hmod"><a class="hmodhead" href="#aide"><h3>Où trouver de l’aide</h3></a></article>
+</div></div>
+</div>
+<p class="added" style="margin-top:28px;max-width:70ch">Ce carnet ne remplace pas un suivi médical ou thérapeutique. Ce que tu remplis dans les outils reste privé : personne d’autre ne peut le lire.</p>
+</div>
+<!-- ================= COMPRENDRE ================= -->
+<div class="panel" data-title="La santé mentale" hidden id="p-sante">
+<div class="phead"><span class="eyebrow" style="color:var(--teal)">Comprendre</span><h2>La santé mentale</h2><p>Ce n’est pas juste « ne pas être malade ».</p></div>
+<section class="s" data-nav="Qu’est-ce que la santé ?" id="sante-def">
+<h2>Qu’est-ce que la santé ?</h2>
+<p class="idea">Il n’y a pas une seule définition. Pour l’Organisation mondiale de la santé, la santé mentale, c’est pouvoir se réaliser, faire face aux tensions normales de la vie, travailler, et contribuer à sa communauté.</p>
+<p class="quote block">« La santé, c’est pouvoir tomber malade et s’en relever. »</p>
+<p class="added">Georges Canguilhem, philosophe et médecin</p>
+<p class="block" style="max-width:66ch">Se relever ne veut pas dire redevenir exactement comme avant. On peut trouver une nouvelle façon de vivre, différente, qui nous convient.</p>
+</section>
+<section class="s" data-nav="Deux lignes, pas une" id="sante-continuums">
+<h2>Deux lignes, pas une</h2>
+<p class="idea">Avoir un trouble psychique et aller bien, ce n’est pas incompatible. Le chercheur Corey Keyes propose de regarder deux choses séparément : est-ce que j’ai des symptômes, et est-ce que je me sens bien dans ma vie ?</p>
+<div class="grid block" style="--min:220px">
+<div class="card t"><div class="k">Symptômes, et bien-être</div><p>C’est possible : vivre avec un trouble, et avoir une vie qui a du sens, des liens, des projets.</p></div>
+<div class="card t"><div class="k">Pas de symptômes, mais mal-être</div><p>C’est possible aussi : pas de diagnostic, mais un sentiment de vide, d’isolement.</p></div>
+</div>
+<p class="block" style="max-width:66ch">Le rétablissement travaille surtout sur la ligne du bien-être. Elle peut monter même si les symptômes restent.</p>
+</section>
+<section class="s" data-nav="Ce qui nous garde en santé" id="sante-saluto">
+<h2>Ce qui nous garde en santé</h2>
+<p class="idea">Au lieu de se demander « qu’est-ce qui rend malade ? », le sociologue Aaron Antonovsky s’est demandé : « qu’est-ce qui aide à rester en santé, même dans les moments durs ? ». C’est la salutogenèse.</p>
+<p class="block">Sa réponse : le sentiment de cohérence, qui tient en trois questions.</p>
+<div class="grid block" style="--min:180px">
+<div class="card t"><div class="k">Je comprends</div><p>Ce qui m’arrive a une certaine logique.</p></div>
+<div class="card t"><div class="k">Je peux faire face</div><p>J’ai des ressources, en moi ou autour de moi.</p></div>
+<div class="card t"><div class="k">Ça a du sens</div><p>Ça vaut la peine de m’y investir.</p></div>
+</div>
+<p class="added">Pour aller plus loin : <a href="#lec-saluto">la salutogenèse</a>, dans les lectures.</p>
+</section>
+<section class="s" data-nav="Ce qui influence la santé" id="sante-facteurs">
+<h2>Ce qui influence la santé mentale</h2>
+<p class="idea">Notre santé mentale ne dépend pas que de nous. Elle se joue sur trois niveaux.</p>
+<div class="grid block" style="--min:200px">
+<div class="card t"><div class="k">Moi</div><p>Mon corps, mon histoire, ma personnalité, mes façons de faire face.</p></div>
+<div class="card t"><div class="k">Mon entourage</div><p>Mes proches, mon réseau, mon travail, mon argent, mon logement.</p></div>
+<div class="card t"><div class="k">La société</div><p>Les lois, l’accès aux soins, les discriminations, les inégalités.</p></div>
+</div>
+<p class="block" style="max-width:66ch">Si ça ne va pas, ce n’est donc pas forcément « de ta faute ». Et il existe des leviers à chaque niveau.</p>
+</section>
+</div>
+
+<div class="panel" data-title="Le rétablissement" hidden id="p-retablissement">
+<div class="phead"><span class="eyebrow" style="color:var(--teal)">Comprendre</span><h2>Le rétablissement</h2><p>Un chemin, pas une ligne d’arrivée.</p></div>
+<section class="s" data-nav="Ce que c’est" id="ret-def">
+<h2>Ce que c’est</h2>
+<p class="idea">Se rétablir, ce n’est pas forcément ne plus avoir de symptômes, ni redevenir comme avant. C’est retrouver une vie qui a du sens pour soi, avec de l’espoir, même avec des limites.</p>
+<p class="quote block">« Le rétablissement est un processus et non un point final. C’est là le paradoxe : en acceptant ce que nous ne pouvons pas faire ou être, nous découvrons ce que nous pouvons être et faire. »</p>
+<p class="added">Patricia Deegan, psychologue, qui a vécu elle-même un diagnostic de schizophrénie. Son texte est dans les <a href="#lec-deegan">lectures</a>.</p>
+<div class="stack block">
+<div class="card t"><div class="k">Quelques façons de le dire</div><p>« Vivre une vie satisfaisante et utile, où l’espoir a sa place malgré les limites. » « Donner à la maladie sa juste place dans sa vie. » « Reconquérir sa vie. »</p></div>
+</div>
+</section>
+<section class="s" data-nav="Les ingrédients" id="ret-chime">
+<h2>Les ingrédients</h2>
+<p class="idea">Les recherches retrouvent souvent les mêmes ingrédients chez les personnes qui se rétablissent.</p>
+<div class="grid block" style="--min:200px">
+<div class="card t"><div class="k">Des liens</div><p>Ne pas rester seul·e. Des proches, des pairs, un groupe.</p></div>
+<div class="card t"><div class="k">De l’espoir</div><p>Croire qu’une vie meilleure est possible. Parfois, d’autres y croient pour nous au début.</p></div>
+<div class="card t"><div class="k">Une identité</div><p>Je suis une personne, pas une maladie. J’ai d’autres rôles, d’autres facettes.</p></div>
+<div class="card t"><div class="k">Du sens</div><p>Des projets, des buts, des choses qui comptent pour moi.</p></div>
+<div class="card t"><div class="k">Du pouvoir d’agir</div><p>Faire mes choix, participer aux décisions qui me concernent.</p></div>
+</div>
+</section>
+<section class="s" data-nav="Pas en ligne droite" id="ret-chemin">
+<h2>Pas en ligne droite</h2>
+<p class="idea">Le rétablissement avance par petits pas, avec des hauts et des bas. Un moment difficile n’efface pas le chemin déjà fait.</p>
+<p class="block" style="max-width:66ch">Les petits pas comptent : se lever, prendre un café avec quelqu’un, sortir marcher, prendre soin de quelqu’un d’autre. Personne ne peut décider à ta place à quoi ressemble ton rétablissement.</p>
+<details class="more block"><summary>Questions pour toi</summary><div class="inner"><ul class="l">
+<li>Qui ou quoi m’aide quand je perds espoir ?</li>
+<li>Quelles sont mes autres identités, à côté de la maladie ?</li>
+<li>Qu’est-ce qui donne du sens à ma vie, aujourd’hui ?</li>
+<li>Comment je compose avec mes hauts et mes bas ?</li>
+</ul></div></details>
+<p class="added">Pour t’organiser : les plans <a href="#out-revim">ReViM</a> et <a href="#out-wrap">WRAP</a>, et ton <a href="#out-etoile">étoile du rétablissement</a>.</p>
+</section>
+<section class="s" data-nav="Les pairs" id="ret-pairs">
+<h2>Le rôle des pairs</h2>
+<p class="idea">Un·e pair praticien·ne, c’est quelqu’un qui a traversé des difficultés psychiques et qui s’est formé pour accompagner d’autres personnes, à partir de son vécu.</p>
+<p class="block" style="max-width:66ch">Il ou elle ne remplace pas les soignants. Sa force : montrer que le rétablissement est possible, et marcher à côté, d’égal à égal.</p>
+</section>
+</div>
+
+<div class="panel" data-title="Reprendre du pouvoir" hidden id="p-pouvoir">
+<div class="phead"><span class="eyebrow" style="color:var(--teal)">Comprendre</span><h2>Reprendre du pouvoir</h2><p>Devenir l’expert·e de sa propre vie.</p></div>
+<section class="s" data-nav="Le pouvoir d’agir" id="pouv-empowerment">
+<h2>Le pouvoir d’agir</h2>
+<p class="idea">Quand on souffre, on a souvent l’impression de ne plus avoir de prise sur sa vie. Reprendre du pouvoir d’agir (on dit aussi « empowerment »), c’est retrouver cette prise, petit à petit.</p>
+<div class="grid block" style="--min:200px">
+<div class="card t"><div class="k">Pour moi</div><p>Comprendre comment je fonctionne, faire mes choix.</p></div>
+<div class="card t"><div class="k">Avec d’autres</div><p>Ne pas être seul·e, échanger, agir ensemble.</p></div>
+<div class="card t"><div class="k">Dans la société</div><p>Faire entendre sa voix : « Rien sur nous sans nous ».</p></div>
+</div>
+<p class="block" style="max-width:66ch">Reprendre du pouvoir ne veut pas dire tout faire seul·e. Demander de l’aide, c’est aussi agir.</p>
+</section>
+<section class="s" data-nav="Ce qui peut aider" id="pouv-droits">
+<h2>Ce qui peut aider</h2>
+<ul class="l block">
+<li>Avoir accès à l’information, et poser toutes ses questions</li>
+<li>Avoir de vrais choix entre plusieurs options</li>
+<li>Connaître ses droits</li>
+<li>Garder espoir, et oser être en colère quand c’est juste</li>
+<li>Prévoir à l’avance ce qu’on veut en cas de crise : <a href="#out-revim">plan de gestion de crise</a>, directives anticipées, plan de crise conjoint</li>
+</ul>
+</section>
+<section class="s" data-nav="« Je n’y arriverai pas »" id="pouv-impuissance">
+<h2>« Je n’y arriverai pas »</h2>
+<p class="idea">Quand on a souvent essayé sans que ça change quoi que ce soit, on peut finir par ne plus essayer du tout. Ça s’appelle l’impuissance apprise. Ce n’est pas un défaut, c’est une réaction apprise, et ce qui s’apprend peut se désapprendre.</p>
+<p class="block" style="max-width:66ch">L’histoire de l’éléphant enchaîné le raconte très bien : un éléphant énorme reste attaché à un tout petit pieu, parce que petit, il n’avait pas réussi à s’en libérer. <a href="#lec-elephant">Lire l’histoire</a>.</p>
+<div class="stack block"><div class="card t"><div class="k">Ce qui redonne confiance</div><p>Réussir quelque chose soi-même, même de petit. Voir réussir quelqu’un qui nous ressemble. Entendre « tu peux y arriver » de quelqu’un en qui on a confiance.</p></div></div>
+</section>
+<section class="s" data-nav="Les préjugés" id="pouv-stigma">
+<h2>Les préjugés, et ceux qu’on retourne contre soi</h2>
+<p class="idea">La société a encore beaucoup de préjugés sur les troubles psychiques. Le risque, c’est de finir par y croire soi-même : « je vaux moins que les autres », « à quoi bon ». On appelle ça l’autostigmatisation.</p>
+<div class="grid block" style="--min:200px">
+<div class="card t"><div class="k">J’y crois</div><p>La honte, et je n’ose plus demander de l’aide.</p></div>
+<div class="card t"><div class="k">Je conteste</div><p>Une juste colère, qui donne de l’énergie.</p></div>
+<div class="card t"><div class="k">Je m’en détache</div><p>Ces préjugés ne parlent pas de moi.</p></div>
+</div>
+<p class="block" style="max-width:66ch">Plus on reprend du pouvoir, moins ces préjugés pèsent. Et c’est à toi de choisir à qui tu parles de ce que tu vis, et quand.</p>
+</section>
+</div>
+
+<div class="panel" data-title="Émotions et stress" hidden id="p-emotions">
+<div class="phead"><span class="eyebrow" style="color:var(--teal)">Comprendre</span><h2>Émotions et stress</h2><p>Les écouter plutôt que les combattre.</p></div>
+<section class="s" data-nav="Les émotions" id="emo-def">
+<h2>Les émotions</h2>
+<p class="idea">Une émotion, c’est un mouvement : quelque chose se passe dans le corps, dans les pensées, et ça pousse à agir. Il n’y a pas de bonne ou de mauvaise émotion.</p>
+<div class="grid block" style="--min:220px">
+<div class="card t"><div class="k">Agréable</div><p>Souvent un besoin satisfait.</p></div>
+<div class="card t"><div class="k">Désagréable</div><p>Souvent un besoin qui n’est pas satisfait, ou un danger perçu.</p></div>
+</div>
+<p class="block" style="max-width:66ch">Parfois, une émotion en cache une autre. Une mère crie sur son enfant qui a failli se faire renverser : on voit de la colère, mais dessous, il y a la peur.</p>
+<details class="more block"><summary>Quand une peur prend de la place</summary><div class="inner"><ul class="l">
+<li>Qu’est-ce qui l’a déclenchée ? Un danger réel, ou imaginé ?</li>
+<li>Comment je la nomme : peur d’être abandonné·e, rejeté·e, humilié·e… ?</li>
+<li>De quoi aurais-je besoin, là, maintenant ?</li>
+<li>Qui ou quoi peut m’aider à répondre à ce besoin ?</li>
+</ul></div></details>
+</section>
+<section class="s" data-nav="Le stress" id="emo-stress">
+<h2>Le stress</h2>
+<p class="idea">Le stress est une réaction normale : le corps se prépare à faire face. Il devient un problème quand il dure ou qu’il déborde.</p>
+<p class="block">Ce qui rend une situation plus stressante :</p>
+<div class="grid block" style="--min:180px">
+<div class="card t"><div class="k">Peu de contrôle</div><p>Je n’ai pas de prise.</p></div>
+<div class="card t"><div class="k">Imprévisible</div><p>Je ne sais pas ce qui va arriver.</p></div>
+<div class="card t"><div class="k">Nouveau</div><p>Je ne l’ai jamais vécu.</p></div>
+<div class="card t"><div class="k">Ça me touche</div><p>Mes valeurs ou mon image de moi sont en jeu.</p></div>
+</div>
+<p class="added">Pour suivre ton niveau de détresse : l’<a href="#out-suds">échelle SUDS</a>.</p>
+</section>
+<section class="s" data-nav="Prendre soin de soi" id="emo-soin">
+<h2>Prendre soin de soi</h2>
+<p class="idea">Prendre soin de soi, ce n’est pas se faire plaisir à tout prix. C’est ce qu’on fait exprès pour garder sa santé, seul·e ou avec d’autres.</p>
+<div class="grid block" style="--min:180px">
+<div class="card t"><div class="k">Le corps</div><p>Bouger, dormir, manger, aller dehors.</p></div>
+<div class="card t"><div class="k">Les émotions</div><p>Se poser, respirer, des loisirs, de la gratitude.</p></div>
+<div class="card t"><div class="k">Les liens</div><p>Des proches, un groupe où je me sens bien.</p></div>
+<div class="card t"><div class="k">Le sens</div><p>Mes valeurs, ce qui me relie à plus grand que moi.</p></div>
+</div>
+<p class="added">Des outils pour ça : les fiches <a href="#out-tcd">TCD</a> et les <a href="#out-cercles">cercles d’influence</a>.</p>
+</section>
+</div>
+
+<div class="panel" data-title="Un regard critique" hidden id="p-critique">
+<div class="phead"><span class="eyebrow" style="color:var(--teal)">Comprendre</span><h2>Un regard critique</h2><p>Le rétablissement, ce n’est pas que ton affaire.</p></div>
+<section class="s" data-nav="Pas que personnel" id="crit-social">
+<h2>Pas seulement une affaire personnelle</h2>
+<p class="idea">On parle beaucoup de ce que chaque personne peut changer en elle. C’est important. Mais on risque d’oublier ce qui ne dépend pas d’elle : le logement, l’argent, le travail, les discriminations.</p>
+<p class="block" style="max-width:66ch">Si tu n’avances pas comme tu voudrais, ce n’est pas forcément un manque de volonté. Les obstacles sont parfois dans la société.</p>
+</section>
+<section class="s" data-nav="À ton rythme" id="crit-norme">
+<h2>À ton rythme, et à ta façon</h2>
+<p class="idea">Le rétablissement n’a pas à ressembler à une « success story ». Il n’est jamais fini, il ne suit pas une ligne droite, et il n’y a pas de but imposé.</p>
+<p class="block" style="max-width:66ch">Parfois, se retirer un peu fait du bien : fréquenter un lieu sans forcément parler, être avec d’autres sans être envahi·e. Ça aussi, c’est une façon de prendre soin de soi.</p>
+</section>
+<section class="s" data-nav="Pour aller plus loin" id="crit-plus">
+<h2>Pour aller plus loin</h2>
+<ul class="l">
+<li>Les cours gratuits des collèges de rétablissement : <a href="https://www.recoverycollege.ch/" target="_blank" rel="noopener">recoverycollege.ch</a> (Genève) et <a href="https://retablissement.ch/" target="_blank" rel="noopener">retablissement.ch</a> (Lausanne, addictions)</li>
+<li>Le plan de crise conjoint, expliqué : <a href="https://plandecriseconjoint.ch/" target="_blank" rel="noopener">plandecriseconjoint.ch</a></li>
+<li>Les pair·es praticien·nes de Suisse romande : <a href="https://re-pairs.ch/" target="_blank" rel="noopener">re-pairs.ch</a></li>
+</ul>
+</section>
+</div>
+
+<!-- ================= TRAVERSER ================= -->
+<div class="panel" data-title="Avant de lire" hidden id="p-avant">
+<div class="phead"><span class="eyebrow" style="color:var(--coral)">Ce qu’on peut traverser</span><h2>Avant de lire</h2></div>
+<section class="s" data-nav="À quoi servent ces pages" id="avant-but">
+<h2>À quoi servent ces pages</h2>
+<p class="idea">Ces pages donnent des mots pour mettre sur ce qu’on vit, ou sur ce que vit un proche. Elles ne servent pas à se diagnostiquer.</p>
+<div class="stack block">
+<div class="card c"><div class="k">À garder en tête</div><ul class="l">
+<li>Seul·e un·e professionnel·le peut poser un diagnostic, après en avoir parlé avec toi.</li>
+<li>Un diagnostic décrit une difficulté. Il ne dit pas qui tu es.</li>
+<li>Se reconnaître dans quelques lignes, c’est normal : beaucoup de ces réactions sont humaines.</li>
+<li>Si une page te remue, fais une pause. Tu peux en parler à quelqu’un de confiance.</li>
+</ul></div>
+</div>
+<p class="added">Besoin de parler maintenant ? <a href="#aide">Où trouver de l’aide</a>.</p>
+</section>
+</div>
+
+<div class="panel" data-title="Quand l’humeur bascule" hidden id="p-humeur">
+<div class="phead"><span class="eyebrow" style="color:var(--coral)">Ce qu’on peut traverser</span><h2>Quand l’humeur bascule</h2><p>Trop bas, ou trop haut.</p></div>
+<section class="s" data-nav="Quand tout pèse" id="hum-bas">
+<h2>Quand tout pèse</h2>
+<p class="idea">Une dépression, ce n’est pas « juste être triste ». Elle peut toucher les pensées, les émotions, le corps et l’envie de faire les choses, pendant des semaines.</p>
+<div class="grid block" style="--min:180px">
+<div class="card c"><div class="k">Les pensées</div><p>Tout paraît noir, on rumine, on se dévalorise.</p></div>
+<div class="card c"><div class="k">Les émotions</div><p>Tristesse, vide, culpabilité, parfois irritabilité.</p></div>
+<div class="card c"><div class="k">Le corps</div><p>Fatigue, sommeil et appétit perturbés.</p></div>
+<div class="card c"><div class="k">Le quotidien</div><p>Plus d’envie, on se retire, tout demande un effort énorme.</p></div>
+</div>
+<div class="key">Si tu as des idées de mort ou de suicide, tu n’as pas à rester seul·e avec ça. Parles-en à quelqu’un. La Main Tendue au 143, jour et nuit. En cas de danger immédiat, le 144. <a href="#aide">Toutes les adresses</a>.</div>
+</section>
+<section class="s" data-nav="Quand tout s’accélère" id="hum-haut">
+<h2>Quand tout s’accélère</h2>
+<p class="idea">À l’inverse, l’humeur peut monter très haut : beaucoup d’énergie, peu besoin de dormir, les idées qui fusent, l’envie de tout faire, parfois des dépenses ou des risques qu’on regrette ensuite.</p>
+<p class="block" style="max-width:66ch">Sur le moment, on peut se sentir très bien. Ce sont souvent les proches qui remarquent le changement. Quand l’humeur alterne entre des périodes très basses et très hautes, on parle de trouble bipolaire.</p>
+</section>
+<section class="s" data-nav="Ce qui peut aider" id="hum-aide">
+<h2>Ce qui peut aider</h2>
+<ul class="l">
+<li>En parler à son médecin : il existe des traitements et des psychothérapies qui aident</li>
+<li>Garder une structure dans la journée et la semaine, même légère</li>
+<li>Repérer ses signes avant-coureurs et ce qui déclenche : le <a href="#out-revim">plan ReViM</a> et son relevé quotidien en feu tricolore sont faits pour ça</li>
+<li>Se fixer de petits objectifs, atteignables</li>
+<li>Ne pas rester seul·e : un proche, un groupe, un·e pair</li>
+</ul>
+</section>
+</div>
+
+<div class="panel" data-title="Quand l’anxiété prend trop de place" hidden id="p-anxiete">
+<div class="phead"><span class="eyebrow" style="color:var(--coral)">Ce qu’on peut traverser</span><h2>Quand l’anxiété prend trop de place</h2><p>Les difficultés psychiques les plus fréquentes.</p></div>
+<section class="s" data-nav="Peur et anxiété" id="anx-peur">
+<h2>Peur et anxiété</h2>
+<p class="idea">La peur nous protège face à un danger réel. L’anxiété, c’est une inquiétude face à un danger plus flou, ou qui n’est pas là. Les deux sont normales.</p>
+<p class="block" style="max-width:66ch">Elles deviennent un problème quand elles sont trop fortes, durent trop longtemps, font souffrir, et empêchent de vivre ce qu’on veut vivre. Près d’une personne sur sept est concernée au cours de sa vie.</p>
+</section>
+<section class="s" data-nav="Les formes" id="anx-formes">
+<h2>Les formes que ça peut prendre</h2>
+<div class="grid block" style="--min:200px">
+<div class="card c"><div class="k">S’inquiéter de tout</div><p>Des soucis qui tournent en boucle, de la tension, de la fatigue.</p></div>
+<div class="card c"><div class="k">Les crises d’angoisse</div><p>Une peur intense et soudaine, le cœur qui s’emballe, l’impression que quelque chose de grave va arriver. Ça passe, même si ça fait très peur.</p></div>
+<div class="card c"><div class="k">La peur du regard des autres</div><p>Les situations sociales deviennent très difficiles.</p></div>
+<div class="card c"><div class="k">Les pensées qui s’imposent</div><p>Des pensées qui reviennent sans cesse, et des gestes répétés pour les calmer.</p></div>
+</div>
+</section>
+<section class="s" data-nav="Ce qui peut aider" id="anx-aide">
+<h2>Ce qui peut aider</h2>
+<ul class="l">
+<li>En parler : les thérapies comportementales, qui apprennent à affronter peu à peu ce qui fait peur, marchent bien</li>
+<li>Noter son niveau de détresse pour mieux le connaître : l’<a href="#out-suds">échelle SUDS</a></li>
+<li>Des outils pour traverser les moments forts : les fiches <a href="#out-tcd">TCD</a></li>
+<li>Se rappeler qu’une crise d’angoisse redescend toujours</li>
+</ul>
+</section>
+</div>
+
+<div class="panel" data-title="Après un traumatisme" hidden id="p-trauma">
+<div class="phead"><span class="eyebrow" style="color:var(--coral)">Ce qu’on peut traverser</span><h2>Après un traumatisme</h2></div>
+<section class="s" data-nav="Avant de lire" id="trau-avert">
+<div class="stack"><div class="card c"><div class="k">Avant de lire</div><p>Cette page parle d’événements violents et de leurs effets. Si tu sens que ça remue trop, arrête-toi, respire, regarde autour de toi. Tu peux revenir plus tard, ou la lire avec quelqu’un.</p></div></div>
+</section>
+<section class="s" data-nav="Ce que c’est" id="trau-def">
+<h2>Ce que c’est</h2>
+<p class="idea">Un traumatisme, c’est une expérience où on a eu très peur pour sa vie, son corps ou celle d’un proche, sans pouvoir s’en protéger. Après, le corps et l’esprit peuvent rester en alerte, comme si le danger était toujours là.</p>
+<p class="block" style="max-width:66ch">Face au danger, on peut se battre, fuir, se figer, ou « faire le mort ». Ces réactions sont automatiques. On ne les choisit pas, et il n’y a pas à en avoir honte.</p>
+</section>
+<section class="s" data-nav="Ce qu’on peut vivre ensuite" id="trau-signes">
+<h2>Ce qu’on peut vivre ensuite</h2>
+<div class="grid block" style="--min:200px">
+<div class="card c"><div class="k">Revivre</div><p>Des souvenirs qui reviennent comme si ça se passait maintenant, des cauchemars.</p></div>
+<div class="card c"><div class="k">Éviter</div><p>Tout ce qui rappelle l’événement : des lieux, des gens, des sujets.</p></div>
+<div class="card c"><div class="k">Être sur le qui-vive</div><p>Sursauter, mal dormir, être toujours en alerte.</p></div>
+<div class="card c"><div class="k">Se sentir coupé·e</div><p>Comme détaché·e de soi ou de ce qui se passe autour.</p></div>
+</div>
+</section>
+<section class="s" data-nav="Revenir au présent" id="trau-outils">
+<h2>Revenir au présent</h2>
+<p class="idea">Quand un souvenir envahit, ces petits exercices aident à se rappeler qu’on est ici, aujourd’hui, en sécurité.</p>
+<div class="grid block" style="--min:220px">
+<div class="card t"><div class="k">5-4-3-2-1</div><p>Nomme 5 choses que tu vois, 4 que tu touches, 3 que tu entends, 2 que tu sens, 1 que tu goûtes.</p></div>
+<div class="card t"><div class="k">Regarder autour de soi</div><p>Tourne lentement la tête, pose ton regard sur les objets, et sens ce que ça fait.</p></div>
+<div class="card t"><div class="k">Moi, ici, maintenant</div><p>« C’est à moi que c’est arrivé. Dans le passé. Aujourd’hui, je suis ici. »</p></div>
+</div>
+<p class="block" style="max-width:66ch">Il existe des traitements spécialisés qui aident vraiment. Tu peux en parler à ton médecin, ou à un centre comme ceux listés dans <a href="#aide">Où trouver de l’aide</a>.</p>
+<div class="stack block"><div class="card t"><div class="k">Croix-Rouge suisse · « Quand le passé résiste à l’oubli »</div><p>Une brochure pour les personnes traumatisées et leurs proches, qui suit une famille et explique les réactions, les traitements et où trouver de l’aide. Existe en 14 langues.</p><p style="margin-top:6px"><a href="annexes/CRS-quand-le-passe-resiste-a-l-oubli.pdf">Ouvrir la brochure (PDF, 32 pages)</a></p></div></div>
+</section>
+</div>
+
+<div class="panel" data-title="Quand la réalité se trouble" hidden id="p-psychose">
+<div class="phead"><span class="eyebrow" style="color:var(--coral)">Ce qu’on peut traverser</span><h2>Quand la réalité se trouble</h2><p>Les expériences de psychose.</p></div>
+<section class="s" data-nav="Ce qu’on peut vivre" id="psy-vivre">
+<h2>Ce qu’on peut vivre</h2>
+<p class="idea">Il arrive qu’on entende, voie ou ressente des choses que les autres ne perçoivent pas, ou qu’on soit convaincu·e de choses que l’entourage ne partage pas. Ces expériences peuvent faire très peur, ou au contraire sembler évidentes.</p>
+<p class="block" style="max-width:66ch">Souvent, on cherche à donner un sens à ce qu’on vit d’étrange, et ce sens peut devenir une conviction très forte. On peut aussi perdre de l’énergie, de l’envie, et se retirer des autres.</p>
+</section>
+<section class="s" data-nav="Ce qu’il faut savoir" id="psy-savoir">
+<h2>Ce qu’il faut savoir</h2>
+<ul class="l block">
+<li>C’est plus fréquent qu’on ne le croit : environ une personne sur cent vit une schizophrénie, et beaucoup plus vivent un épisode isolé.</li>
+<li>Le stress, le manque de sommeil ou certaines substances comme le cannabis peuvent déclencher ou aggraver ces expériences.</li>
+<li>Plus on en parle tôt, mieux c’est.</li>
+<li>Beaucoup de personnes se rétablissent et ont une vie pleine. Les liens, une aide de qualité et l’accès aux soins font une grande différence.</li>
+</ul>
+<p class="block" style="max-width:66ch">Écouter : la psychologue Eleanor Longden raconte son parcours avec les voix dans sa conférence TED « Les voix dans ma tête ».</p>
+</section>
+<section class="s" data-nav="Ce qui peut aider" id="psy-aide">
+<h2>Ce qui peut aider</h2>
+<ul class="l">
+<li>Trouver quelqu’un avec qui en parler sans être jugé·e</li>
+<li>Repérer ses signes avant-coureurs et prévoir à l’avance : le <a href="#out-revim">plan de gestion de crise</a></li>
+<li>Prendre soin de son sommeil et réduire les consommations</li>
+<li>Des groupes et des pair·es qui ont vécu la même chose</li>
+</ul>
+</section>
+</div>
+
+<div class="panel" data-title="Les médicaments" hidden id="p-medic">
+<div class="phead"><span class="eyebrow" style="color:var(--coral)">Ce qu’on peut traverser</span><h2>Les médicaments : en parler</h2><p>Un outil parmi d’autres, et tes questions comptent.</p></div>
+<section class="s" data-nav="Préparer son rendez-vous" id="med-rdv">
+<h2>Préparer son rendez-vous</h2>
+<p class="idea">Patricia Deegan propose quelques pistes pour reprendre du pouvoir face à son traitement.</p>
+<div class="stack block">
+<div class="card t"><div class="k">Les médicaments</div><p>Un outil parmi d’autres, pas une question de morale. Toujours avec d’autres façons de prendre soin de soi.</p></div>
+<div class="card t"><div class="k">Toi</div><p>C’est ton rétablissement. Tes questions et ton ressenti comptent.</p></div>
+<div class="card t"><div class="k">Le médecin</div><p>Il ou elle est souvent pressé·e, peut se tromper, ne sait pas tout de ta vie.</p></div>
+<div class="card t"><div class="k">Avant</div><p>Note tes questions, ce que tu as remarqué (effets, sommeil, humeur) avec des faits précis.</p></div>
+<div class="card t"><div class="k">Pendant</div><p>Annonce ce dont tu veux parler, prends des notes, viens accompagné·e si tu veux, par exemple par un·e pair.</p></div>
+</div>
+<p class="block" style="max-width:66ch">Ne change pas ou n’arrête pas un traitement seul·e d’un coup : parles-en d’abord.</p>
+</section>
+</div>
+
+<!-- ================= AIDE ================= -->
+<div class="panel" data-title="Où trouver de l’aide" hidden id="p-aide">
+<div class="phead"><span class="eyebrow" style="color:var(--coral)">Ressources</span><h2>Où trouver de l’aide</h2><p>Tu n’as pas à traverser ça seul·e.</p></div>
+<section class="s" data-nav="Urgences" id="aide-urgence">
+<h2>Maintenant, c’est urgent</h2>
+<div class="grid block" style="--min:220px">
+<div class="card c tel"><div class="k">Danger pour ta vie ou celle de quelqu’un</div><p class="num">144</p><p>Ambulance, 24 h sur 24. Ou le 112.</p></div>
+<div class="card c tel"><div class="k">Détresse psychologique · Vaud</div><p class="num">0848 133 133</p><p>Centrale des médecins de garde, 24 h sur 24. Une infirmière évalue et oriente, y compris vers les urgences psychiatriques. Pour l’Est vaudois : 0800 779 779.</p></div>
+<div class="card c tel"><div class="k">Parler à quelqu’un, tout de suite</div><p class="num">143</p><p>La Main Tendue, anonyme, jour et nuit. Aussi par chat sur <a href="https://www.143.ch/fr/" target="_blank" rel="noopener">143.ch</a>.</p></div>
+<div class="card c tel"><div class="k">Jeunes</div><p class="num">147</p><p>Pro Juventute, pour les enfants et les jeunes, 24 h sur 24, aussi par chat et WhatsApp.</p></div>
+</div>
+<p class="added">Urgences psychiatriques du CHUV : rue du Bugnon 44, Lausanne, ouvertes 24 h sur 24, par l’entrée des urgences adultes. Il est conseillé d’appeler le 0848 133 133 avant d’y aller.</p>
+</section>
+<section class="s" data-nav="Être accompagné·e" id="aide-accomp">
+<h2>Être accompagné·e</h2>
+<div class="stack">
+<div class="card t"><div class="k">GRAAP-Fondation · Lausanne</div><p>Accueil, soutien individuel ou en groupe pour toute personne qui vit des difficultés psychiques. Gratuit. Rue de la Borde 25, 021 643 16 00, <a href="https://graap.ch/" target="_blank" rel="noopener">graap.ch</a>.</p></div>
+<div class="card t"><div class="k">Pro Mente Sana · association romande</div><p>Informations, conseils et défense des droits des personnes concernées et de leurs proches : <a href="https://www.promentesana.org/" target="_blank" rel="noopener">promentesana.org</a>.</p></div>
+<div class="card t"><div class="k">Trouver une consultation</div><p>Le répertoire de <a href="https://santepsy.ch/trouver-une-adresse/" target="_blank" rel="noopener">santepsy.ch</a>. Au CHUV, la cellule d’orientation CORA : 021 314 44 35, du lundi au vendredi.</p></div>
+<div class="card t"><div class="k">Victimes de violence</div><p>L’aide aux victimes, au 142.</p></div>
+<div class="card t"><div class="k">Collèges de rétablissement</div><p>Des cours gratuits, donnés par des pair·es et des pros : <a href="https://www.recoverycollege.ch/" target="_blank" rel="noopener">recoverycollege.ch</a>, <a href="https://retablissement.ch/" target="_blank" rel="noopener">retablissement.ch</a>.</p></div>
+</div>
+</section>
+<section class="s" data-nav="Addictions" id="aide-addictions">
+<h2>Addictions</h2>
+<p class="idea">Une consommation (alcool, drogues, jeu, écrans…) qui prend le contrôle se soigne aussi. Les adresses, par région :</p>
+<table class="cmp">
+<tbody>
+<tr><th>Vaud, centre</th><td><a href="https://www.chuv.ch/fr/fiches-psy/service-de-medecine-des-addictions-sma/" rel="noopener" target="_blank">SMA (CHUV)</a> · <a href="https://www.chuv.ch/fr/jeu-excessif/cje-home/" rel="noopener" target="_blank">Centre du jeu excessif</a> · <a href="https://www.chuv.ch/fr/fiches-psy/unite-hospitaliere-de-medecine-des-addictions-uhma" rel="noopener" target="_blank">UHMA, sevrage à Cery</a></td></tr>
+<tr><th>Vaud, nord et est</th><td><a href="https://www.chuv.ch/fr/fiches-psy/unite-de-traitement-des-addictions-utad-nord-vaudois/" rel="noopener" target="_blank">UTAd, Yverdon</a> · <a href="https://nant.ch/contact/" rel="noopener" target="_blank">UTAM, Fondation de Nant</a> · <a href="https://www.entree-de-secours.ch/" rel="noopener" target="_blank">Entrée de secours</a></td></tr>
+<tr><th>Genève</th><td><a href="https://www.hug.ch/addictologie/prise-charge-addictions-aux-opiaces" rel="noopener" target="_blank">CAAP Arve (opiacés)</a> · <a href="https://www.hug.ch/addictologie/prise-charge-addictions-substances" rel="noopener" target="_blank">CAAP Grand-Pré</a> · <a href="https://www.phenix.ch/addictions/" rel="noopener" target="_blank">Phénix</a></td></tr>
+<tr><th>Autres cantons</th><td><a href="https://www.addiction-valais.ch/fr/" rel="noopener" target="_blank">Valais</a> · <a href="https://www.rfsm.ch/nos-prestations-adultes/addiction-et-centre-cantonal-daddictologie" rel="noopener" target="_blank">Fribourg</a> · <a href="https://www.addiction-neuchatel.ch/" rel="noopener" target="_blank">Neuchâtel</a> · <a href="https://www.addiction-jura.ch/" rel="noopener" target="_blank">Jura</a></td></tr>
+<tr><th>Psycho-social</th><td><a href="https://fva.ch/" rel="noopener" target="_blank">FVA</a> · <a href="https://croix-bleue.ch/" rel="noopener" target="_blank">Croix-Bleue</a></td></tr>
+<tr><th>Auto-support</th><td><a href="https://aasri.ch/" rel="noopener" target="_blank">AA</a> · <a href="https://www.narcotics-anonymous.ch/fr/" rel="noopener" target="_blank">NA</a> · <a href="https://caswitzerland.ch/" rel="noopener" target="_blank">CA</a> · <a href="https://dasasuisse.ch/" rel="noopener" target="_blank">DASA</a></td></tr>
+<tr><th>Collèges et sites</th><td><a href="https://retablissement.ch/" rel="noopener" target="_blank">Recovery College Addictions (Lausanne)</a> · <a href="https://www.recoverycollege.ch/" rel="noopener" target="_blank">Collège de rétablissement (Genève)</a> · <a href="https://www.infodrog.ch/fr/" rel="noopener" target="_blank">Infodrog</a> · <a href="https://www.safezone.ch/fr/" rel="noopener" target="_blank">SafeZone</a> · <a href="https://grea.ch/" rel="noopener" target="_blank">GREA</a> · <a href="https://www.addictionsuisse.ch/" rel="noopener" target="_blank">Addiction Suisse</a></td></tr>
+</tbody>
+</table>
+<p class="added">Jeu excessif : SOS Jeu, 0800 801 381.</p>
+</section>
+<section class="s" data-nav="En ligne" id="aide-ligne">
+<h2>En ligne</h2>
+<ul class="l">
+<li><a href="https://www.parler-peut-sauver.ch/" target="_blank" rel="noopener">parler-peut-sauver.ch</a> : quand on traverse une crise, ou qu’on s’inquiète pour quelqu’un</li>
+<li><a href="https://stopsuicide.ch/la-pour-toi" target="_blank" rel="noopener">Stop Suicide, « là pour toi »</a></li>
+<li><a href="https://www.comment-vas-tu.ch/" target="_blank" rel="noopener">comment-vas-tu.ch</a> : des idées pour prendre soin de sa santé mentale</li>
+<li>Pour les jeunes : <a href="https://www.ciao.ch/" target="_blank" rel="noopener">ciao.ch</a> (11–20 ans), <a href="https://www.ontecoute.ch/" target="_blank" rel="noopener">ontecoute.ch</a> (18–25 ans)</li>
+</ul>
+<p class="added">Numéros et adresses vérifiés en novembre 2026 sur les sites du canton de Vaud, de l’OFSP et du CHUV.</p>
+</section>
+</div>
+<div class="panel rubriques" data-title="Outils" hidden id="p-outils">
+<div class="phead"><span class="eyebrow" style="color:var(--teal)">Ressources</span><h2>Outils</h2><p>À remplir ici, quand tu veux. Ça s’enregistre tout seul, et tu peux exporter en PDF pour l’imprimer ou le montrer à quelqu’un. Choisis une rubrique.</p></div>
+<div class="rubidx"></div>
+<p class="rubback" hidden><a href="#outils">← Toutes les rubriques</a></p>
+<section class="s" data-nav="ReViM" id="out-revim"><h2>ReViM · Reprendre sa vie en main</h2>
+<p class="idea">Un guide suisse pour planifier ton rétablissement : comment rester stable, composer avec les hauts et les bas, rebondir après une crise, et avancer vers tes objectifs. Et un plan pour prévoir à l’avance ce que tu veux en cas de crise.</p>
+<div class="fillrow"><button type="button" class="fillbtn" data-form="revim-plan">✎ Remplir mon plan de rétablissement</button><button type="button" class="fillbtn" data-form="revim-crise">✎ Remplir mon plan de gestion de crise</button></div>
+<div class="stack"><div class="card t"><div class="k">Le guide complet</div><p>Les explications et des témoignages, pour accompagner les carnets.</p><p style="margin-top:6px"><a href="ressources/ReViM-guide.pdf">Ouvrir le guide (PDF, 132 pages)</a></p></div><div class="card t"><div class="k">Les carnets en PDF</div><p>Si tu préfères les imprimer et les remplir à la main.</p><p style="margin-top:6px"><a href="ressources/ReViM-plan-personnel.pdf">Plan de rétablissement (PDF, 44 pages)</a></p></div><div class="card t"><p><a href="ressources/ReViM-plan-gestion-crise.pdf">Plan de gestion de crise (PDF, 24 pages)</a></p></div></div></section>
+<section class="s" data-nav="WRAP" id="out-wrap"><h2>WRAP · plan d’action pour le bien-être</h2>
+<p class="idea">Créé par Mary Ellen Copeland, qui a elle-même vécu des troubles psychiques : un plan pour chaque jour, un plan de crise, et un plan pour l’après-crise.</p>
+<div class="fillrow"><button type="button" class="fillbtn" data-form="wrap">✎ Remplir mon WRAP</button></div>
+<div class="stack"><div class="card t"><div class="k">Les 8 étapes en une fiche</div><p>Le WRAP résumé : bien-être, boîte à outils, routine, déclencheurs, signes avant-coureurs, crise, après la crise.</p><p style="margin-top:6px"><a href="ressources/WRAP-8-etapes.pdf">Ouvrir la fiche (PDF, 2 pages)</a></p></div><div class="card t"><div class="k">Le livret à imprimer</div><p>La version complète, à remplir à la main.</p><p style="margin-top:6px"><a href="ressources/WRAP-livret-personnel.pdf">Ouvrir le livret (PDF, 59 pages)</a></p></div></div></section>
+<section class="s" data-nav="Étoile du rétablissement" id="out-etoile"><h2>Étoile du rétablissement</h2>
+<p class="idea">Te situer sur dix domaines de ta vie, et voir comment ça évolue avec le temps.</p>
+<div class="fillrow"><button type="button" class="fillbtn" data-form="etoile">✎ Remplir mon étoile du rétablissement</button></div>
+</section>
+<section class="s" data-nav="Échelle de détresse (SUDS)" id="out-suds"><h2>Échelle de détresse (SUDS)</h2>
+<p class="idea">Noter ta détresse de 0 à 100, honnêtement, pour mieux la connaître, voir comment elle évolue, et choisir l’outil qui convient au moment.</p>
+<div class="fillrow"><button type="button" class="fillbtn" data-form="suds">✎ Noter ma détresse et suivre mon évolution</button></div>
+<div class="stack"><div class="card t"><div class="k">L’échelle</div><p>Les niveaux de 0 à 100, avec les compétences à essayer.</p><p style="margin-top:6px"><a href="ressources/SUDS-echelle-detresse.pdf">Ouvrir (PDF)</a></p></div></div></section>
+<section class="s" data-nav="Émotions (TCD)" id="out-tcd"><h2>Émotions : les fiches de la TCD</h2>
+<p class="idea">La thérapie comportementale dialectique (TCD) a été créée par Marsha Linehan, qui a elle-même traversé de grandes souffrances. Elle aide à accepter ce qu’on vit et, en même temps, à changer ce qui fait souffrir.</p>
+<div class="fillrow"><button type="button" class="fillbtn" data-form="tcd-ft1">✎ Peser le pour et le contre</button><button type="button" class="fillbtn" data-form="tcd-ft2">✎ Comprendre un comportement (analyse en chaîne)</button></div>
+<div class="stack"><div class="card t"><div class="k">Les quatre familles de compétences</div><p>La pleine conscience (observer sans juger), la régulation des émotions, la tolérance à la détresse (traverser un moment dur sans l’aggraver), et l’efficacité dans les relations (demander, dire non).</p></div>
+<div class="card t"><div class="k">Pour aller plus loin</div><p>Ces deux fiches viennent du manuel de Marsha Linehan, « Documents et fiches de travail pour l’entraînement aux compétences TCD ». Il existe des groupes de compétences TCD : tu peux en parler à ton ou ta thérapeute.</p></div></div></section>
+<section class="s" data-nav="Cercles d’influence" id="out-cercles"><h2>Les cercles d’influence</h2>
+<p class="idea">Quand tout se mélange dans la tête, cet outil aide à trier ce qui te préoccupe, et à savoir où mettre ton énergie.</p>
+<p style="max-width:66ch">On dessine trois cercles, l’un dans l’autre.</p>
+<div class="fig block">
+<svg aria-label="Trois cercles l’un dans l’autre : au centre ce que je contrôle, autour ce que j’influence, à l’extérieur ce qui me préoccupe" role="img" style="max-width:320px" viewBox="0 0 300 200">
+<circle cx="150" cy="100" fill="var(--navy-soft)" r="95"/><circle cx="150" cy="100" fill="var(--ochre-soft)" r="62"/><circle cx="150" cy="100" fill="var(--teal-soft)" r="30" stroke="var(--teal)"/>
+<g fill="var(--fg)" font-size="11.5" text-anchor="middle"><text font-weight="700" x="150" y="104">je contrôle</text><text x="150" y="58">j’influence</text><text x="150" y="24">ça me préoccupe</text></g></svg>
+</div>
+<div class="stack block">
+<div class="card t"><div class="k">1 · Vider son sac</div><p>Écris tout ce qui te préoccupe en ce moment, sans trier.</p></div>
+<div class="card t"><div class="k">2 · Ranger chaque souci dans un cercle</div><p><b>Au centre, ce que je contrôle</b> : mes choix, mes réactions, ce que je fais aujourd’hui. <b>Autour, ce que j’influence</b> : ce sur quoi je peux agir un peu, avec d’autres. <b>À l’extérieur, ce qui me préoccupe sans que je puisse le changer</b> : le passé, l’actualité, ce que pensent les autres.</p></div>
+<div class="card t"><div class="k">3 · Mettre son énergie au bon endroit</div><p>Pour le centre, choisis une action. Pour le cercle du milieu, un petit pas. Pour l’extérieur, essaie de lâcher prise, ou limite le temps que tu y passes.</p></div>
+<div class="card t"><div class="k">Un exemple</div><p>« Je suis inquiet pour mon dossier AI. » Je ne contrôle pas la décision (extérieur). J’influence : appeler mon assistante sociale pour savoir où en est le dossier (milieu). Je contrôle : préparer mes questions ce soir, puis aller marcher pour me changer les idées (centre).</p></div>
+</div>
+</section>
+<section class="s" data-nav="Visual board" id="out-visual"><h2>Le tableau de visualisation (visual board)</h2>
+<p class="idea">Un grand tableau d’images et de mots qui montrent ce vers quoi tu veux aller. On l’accroche là où on le voit tous les jours. Ça aide à garder le cap, surtout les jours sans énergie.</p>
+<div class="vb block" role="img" aria-label="Exemple inventé de tableau de visualisation">
+<div class="vbt big" style="--b:#cfe6f5"><svg viewBox="0 0 60 40" aria-hidden="true"><path d="M0 30 Q15 22 30 30 T60 30 V40 H0Z" fill="#5aa7e6"/><circle cx="46" cy="12" r="6" fill="#f2c12e"/><path d="M8 30 L18 14 L28 30" fill="#7ea33f"/></svg><b>Marcher au bord du lac, 3 fois par semaine</b></div>
+<div class="vbt" style="--b:#f9e6e2"><b>Reprendre la guitare</b><span>10 minutes, c’est déjà bien</span></div>
+<div class="vbt" style="--b:#eef3e3"><b>« Doucement, mais sûrement »</b></div>
+<div class="vbt" style="--b:#f7efdc"><b>Un repas par semaine avec des amis</b></div>
+<div class="vbt" style="--b:#e6ebf3"><b>Dormir avant minuit</b></div>
+<div class="vbt big" style="--b:#e4f1f0"><b>Dans un an</b><span>un petit boulot qui a du sens, un appartement à moi, et du temps pour la musique</span></div>
+</div>
+<p class="added">Un exemple inventé. Le tien peut être en papier, avec des photos découpées dans des magazines, des dessins, des mots, des billets de concert…</p>
+<details class="more block"><summary>Comment faire le tien</summary><div class="inner"><ul class="l">
+<li>Choisis deux ou trois domaines de ta vie qui comptent pour toi en ce moment.</li>
+<li>Rassemble des images et des mots qui te font envie, sans te juger.</li>
+<li>Mélange de grands rêves et de petits pas concrets.</li>
+<li>Accroche-le là où tu passes souvent, et change-le quand tu veux.</li>
+<li>Pour transformer un rêve en étapes : la partie « objectifs » du <a href="#out-revim">plan ReViM</a>.</li>
+</ul></div></details>
+</section>
+
+
+</div>
+<div class="panel rubriques" data-title="Lectures" hidden id="p-lectures">
+<div class="phead"><span class="eyebrow" style="color:var(--navy)">Ressources</span><h2>Lectures</h2><p>Des textes courts, à lire quand tu en as envie. Choisis une lecture.</p></div>
+<div class="rubidx"></div>
+<p class="rubback" hidden><a href="#lectures">← Toutes les rubriques</a></p>
+<section class="s" data-nav="Un témoignage : Patricia Deegan" id="lec-deegan"><h2>Un témoignage : Patricia Deegan</h2>
+<p class="idea">À 17 ans, Patricia Deegan reçoit un diagnostic de schizophrénie. On lui dit qu’elle ne guérira pas. Elle est devenue psychologue, et l’une des voix les plus connues du rétablissement.</p>
+<div class="stack block">
+<div class="card t"><div class="k">Ce qu’elle raconte</div><p>Le rétablissement n’est pas un retour à l’état d’avant, mais une transformation. On ne « guérit » pas en effaçant ce qu’on a vécu : on se reconstruit avec. Ce qui l’a aidée, ce sont les personnes qui ont cru en elle quand elle n’y croyait plus, et le fait de reprendre peu à peu des décisions sur sa propre vie.</p></div>
+<div class="card t"><div class="k">Le texte complet</div><p>« Le rétablissement en tant que processus autogéré de guérison et de transformation » (2001), 10 pages.</p><p style="margin-top:6px"><a href="ressources/Deegan-2001-retablissement.pdf">Lire le texte (PDF)</a></p></div>
+</div></section>
+<section class="s" data-nav="L’éléphant enchaîné" id="lec-elephant"><h2>L’éléphant enchaîné</h2>
+<p class="idea">Une histoire de Jorge Bucay, psychothérapeute argentin, racontée ici en quelques lignes.</p>
+<div class="tale block">
+<p>Un enfant adore le cirque, et surtout l’éléphant. Pendant le spectacle, l’animal est immense, d’une force incroyable. Mais après, on l’attache par une patte à un tout petit pieu planté dans le sol. Un animal capable de déraciner un arbre pourrait s’en libérer sans effort. Alors pourquoi ne s’en va-t-il pas ?</p>
+<p>Les adultes répondent : « parce qu’il est dressé ». Mais s’il est dressé, pourquoi l’attacher ? Personne ne sait vraiment.</p>
+<p>Des années plus tard, l’enfant devenu grand comprend. Tout petit, l’éléphanteau a été attaché à un pieu pareil. Il a tiré, poussé, jour après jour, sans y arriver, parce qu’à cet âge le pieu était plus fort que lui. Un jour, il a arrêté d’essayer. Il a gardé en lui ce souvenir : « je ne peux pas ».</p>
+<p>Devenu énorme, il ne s’échappe toujours pas. Pas parce qu’il ne peut pas, mais parce qu’il croit qu’il ne peut pas. Et il n’a jamais remis cette idée à l’épreuve.</p>
+</div>
+<div class="stack block">
+<div class="card t"><div class="k">Et nous ?</div><p>Nous aussi, on porte parfois des « je ne peux pas » appris il y a longtemps, à un moment où c’était vrai. La seule façon de savoir si c’est encore vrai aujourd’hui, c’est d’essayer à nouveau, à son rythme, avec du soutien si besoin.</p></div>
+<div class="card t"><div class="k">Questions pour toi</div><ul class="l"><li>Quel est un de mes « petits pieux » ?</li><li>Quand est-ce que je l’ai appris ?</li><li>Quel petit pas pourrait me montrer s’il me retient encore ?</li></ul></div>
+<div class="card t"><div class="k">Le texte original</div><p>Jorge Bucay, « Laisse-moi te raconter… les chemins de la vie ».</p><p style="margin-top:6px"><a href="ressources/Elephant-enchaine-Bucay.pdf">Lire le texte original (PDF, 2 pages)</a></p></div>
+</div>
+<p class="added">Voir aussi : <a href="#pouv-impuissance">« Je n’y arriverai pas »</a>.</p></section>
+<section class="s" data-nav="La salutogenèse" id="lec-saluto"><h2>La salutogenèse</h2>
+<p class="idea">Au lieu de se demander « pourquoi tombe-t-on malade ? », le sociologue Aaron Antonovsky s’est demandé, dans les années 70 : « pourquoi certaines personnes restent-elles en bonne santé, même quand la vie est très dure ? ». Salus veut dire santé, genèse veut dire origine.</p>
+<h3 class="block">Le sentiment de cohérence</h3>
+<p style="max-width:66ch">Pour Antonovsky, on tient mieux le coup quand le monde nous paraît cohérent. Ça repose sur trois piliers.</p>
+<div class="grid block" style="--min:200px">
+<div class="card t"><div class="k">Comprendre</div><p>« Je comprends ce qui m’arrive. Le monde n’est pas un chaos total. »</p></div>
+<div class="card t"><div class="k">Pouvoir faire face</div><p>« J’ai des ressources, en moi ou autour de moi, pour affronter ça. »</p></div>
+<div class="card t"><div class="k">Trouver du sens</div><p>« Ça vaut la peine que je m’y investisse. »</p></div>
+</div>
+<h3 class="block">Les ressources qui aident</h3>
+<div class="grid block" style="--min:180px">
+<div class="card t"><div class="k">Le corps</div><p>La santé physique, le sommeil.</p></div>
+<div class="card t"><div class="k">Les liens</div><p>La famille, les amis, une communauté.</p></div>
+<div class="card t"><div class="k">Le concret</div><p>Un logement, de quoi vivre.</p></div>
+<div class="card t"><div class="k">Le savoir</div><p>Comprendre, apprendre, réfléchir.</p></div>
+</div>
+<h3 class="block">Une ligne, pas deux cases</h3>
+<p style="max-width:66ch">On n’est pas soit malade, soit en bonne santé. On se déplace tous les jours sur une ligne entre les deux. Le but n’est pas d’éliminer tout ce qui va mal, mais de renforcer ce qui nous aide à aller du côté de la santé, quelles que soient les tempêtes.</p>
+<details class="more block"><summary>Questions pour toi</summary><div class="inner"><ul class="l"><li>Qu’est-ce qui m’aide à comprendre ce qui m’arrive ?</li><li>Sur quelles ressources je peux compter, en moi et autour de moi ?</li><li>Qu’est-ce qui donne du sens à ce que je traverse ?</li></ul></div></details>
+</section>
+<section class="s" data-nav="La pyramide de Maslow" id="lec-maslow"><h2>La pyramide des besoins de Maslow</h2>
+<p class="idea">Le psychologue Abraham Maslow a classé nos besoins, du plus vital au plus personnel. Quand ceux du bas manquent, ceux du haut deviennent très difficiles à atteindre. Ce n’est pas un escalier strict : on vit souvent plusieurs étages à la fois.</p>
+
+<svg class="block" role="img" aria-label="Pyramide de Maslow à cinq étages" viewBox="0 0 400 300" style="max-width:440px;width:100%">
+<g font-family="inherit" text-anchor="middle">
+<path d="M200 10 L240 66 H160Z" fill="#3d6db5"/><text x="200" y="56" fill="#fff" font-size="11" font-weight="700">Se réaliser</text>
+<path d="M160 70 H240 L279 124 H121Z" fill="#7ea33f"/><text x="200" y="102" fill="#fff" font-size="12" font-weight="700">L’estime</text>
+<path d="M121 128 H279 L318 182 H82Z" fill="#f2c12e"/><text x="200" y="160" fill="#17243a" font-size="12" font-weight="700">L’appartenance</text>
+<path d="M82 186 H318 L357 240 H43Z" fill="#e8851f"/><text x="200" y="218" fill="#fff" font-size="12" font-weight="700">La sécurité</text>
+<path d="M43 244 H357 L390 290 H10Z" fill="#c62828"/><text x="200" y="272" fill="#fff" font-size="12" font-weight="700">Le corps</text>
+</g></svg>
+<ul class="l">
+<li><b>Le corps</b> : manger, boire, dormir, se soigner, avoir chaud</li>
+<li><b>La sécurité</b> : un logement, de l’argent pour vivre, de la stabilité</li>
+<li><b>L’appartenance</b> : des liens, un groupe, être aimé·e</li>
+<li><b>L’estime</b> : être reconnu·e, avoir confiance en soi</li>
+<li><b>Se réaliser</b> : des projets, de la créativité, du sens</li>
+</ul>
+<details class="more block"><summary>Questions pour toi</summary><div class="inner"><ul class="l"><li>Quels besoins sont plutôt couverts pour moi en ce moment ?</li><li>Lequel manque le plus ?</li><li>Qui ou quoi pourrait m’aider à le combler ?</li></ul></div></details></section>
+</div>
+
+</div></main>
+</div>
+
+<div aria-label="Lecteur PDF" aria-modal="true" class="pv" hidden="" id="pv" role="dialog">
+<div class="pvbar"><button id="pvclose" type="button">← Fermer</button><span id="pvtitle"></span><button hidden="" id="pvdl" type="button">Télécharger</button></div>
+<div class="pvbody" id="pvbody"></div>
+</div>
+<script>/* Enregistrement des fichiers (PDF) : partage natif sur mobile, sinon téléchargement classique */
+window.CARNET_DL={save:async function(o){
+  var blob=o.data,name=o.filename||'carnet.pdf';
+  try{
+    var f=new File([blob],name,{type:blob.type||'application/pdf'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})&&/iphone|ipad|ipod|android/i.test(navigator.userAgent)){
+      try{await navigator.share({files:[f],title:name});return;}catch(e){if(e&&e.name==='AbortError'){var x=new Error('declined');x.code='declined';throw x;}}
+    }
+  }catch(e){if(e&&e.code==='declined')throw e;}
+  var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},4000);
+}};
+/* Demande au navigateur de ne pas effacer les données du carnet */
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
+</script>
+<script src="vendor/pdf.min.js"></script>
+<script>
+(function(){
+  const pv=document.getElementById('pv'),body=document.getElementById('pvbody'),title=document.getElementById('pvtitle'),dl=document.getElementById('pvdl');
+  let doc=null,obs=null,blobUrl=null,ret=null,cur=null,dlns=null;
+  dlns=CARNET_DL;
+  dl.onclick=async()=>{if(!dlns||!cur)return;try{await dlns.save({filename:cur.name,data:new Blob([cur.buf],{type:'application/pdf'})});}catch(e){if(['unavailable','not_granted','capability_disabled','capability_removed'].includes(e&&e.code))dl.hidden=true;}};
+  if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc='vendor/pdf.worker.min.js';}
+  function close(){pv.hidden=true;document.body.style.overflow='';body.innerHTML='';if(obs)obs.disconnect();if(doc)doc.destroy();doc=null;if(blobUrl)URL.revokeObjectURL(blobUrl);blobUrl=null;if(ret)ret.focus();}
+  document.getElementById('pvclose').onclick=close;
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!pv.hidden)close();});
+  async function render(pg){
+    if(pg.dataset.done)return;pg.dataset.done=1;
+    const page=await doc.getPage(+pg.dataset.n);
+    const w=body.clientWidth-24, v1=page.getViewport({scale:1}), sc=Math.min(w,1100)/v1.width, dpr=Math.min(window.devicePixelRatio||1,2);
+    const vp=page.getViewport({scale:sc*dpr}), c=document.createElement('canvas');
+    c.width=vp.width;c.height=vp.height;c.style.width=(vp.width/dpr)+'px';c.style.height=(vp.height/dpr)+'px';
+    pg.style.height='';pg.appendChild(c);
+    await page.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+  }
+  async function open(href,label){
+    ret=document.activeElement;pv.hidden=false;document.body.style.overflow='hidden';title.textContent=label;
+    body.innerHTML='<p class="pvmsg">Chargement…</p>';dl.hidden=true;cur=null;
+    try{
+      if(!window.pdfjsLib)throw new Error('lecteur indisponible');
+      const r=await fetch(href);if(!r.ok)throw new Error('fichier introuvable');
+      const buf=await r.arrayBuffer();
+      cur={name:href.split('/').pop(),buf:buf.slice(0)};dl.hidden=!dlns;
+      doc=await pdfjsLib.getDocument({data:new Uint8Array(buf)}).promise;
+      body.innerHTML='';
+      const w=Math.min(body.clientWidth-24,1100);
+      const p1=await doc.getPage(1),v=p1.getViewport({scale:1}),h=Math.round(w*v.height/v.width);
+      obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)render(e.target);}),{root:body,rootMargin:'800px 0px'});
+      for(let i=1;i<=doc.numPages;i++){const pg=document.createElement('div');pg.className='pvpage';pg.dataset.n=i;pg.style.height=h+'px';pg.style.width=w+'px';body.appendChild(pg);obs.observe(pg);}
+      title.textContent=label+' · '+doc.numPages+' p.';
+    }catch(err){body.innerHTML='<p class="pvmsg">Impossible d’ouvrir ce PDF ('+err.message+').</p>';}
+    document.getElementById('pvclose').focus();
+  }
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a[href$=".pdf"]');if(!a||a.id==='pvdl')return;
+    e.preventDefault();
+    const card=a.closest('.card');const k=card&&card.querySelector('.k');
+    open(a.getAttribute('href'),(k?k.textContent:a.textContent).trim());
+  });
+})();
+</script>
+<div id="fm" class="fm" hidden role="dialog" aria-modal="true" aria-labelledby="fmtitle">
+<div class="fmbar"><button type="button" id="fmclose">← Fermer</button><span id="fmtitle"></span><span id="fmstat" aria-live="polite"></span><button type="button" id="fmexp">Exporter en PDF</button></div>
+<div id="fmbody" class="fmbody"></div>
+</div>
+<script>
+const WEEK=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+const SLOTS=['Matinée','Après-midi','Soirée'];
+const FORMS={
+'revim-plan':{
+  title:'Mon plan personnel de rétablissement',
+  short:'ReViM · plan de rétablissement',
+  credit:'D’après « Mon plan personnel de rétablissement » (ReViM, 2e éd. 2025, Re-Pairs, Pro Mente Sana, La Source, CHUV ; orig. Perkins & Rinaldi).',
+  parts:[
+   {title:'1. Mon plan pour rester stable',fields:[
+    {t:'chips',id:'jesuis',label:'Je suis un/une…',opts:['ami','mélomane','artiste','étudiant','ami des animaux','amateur d’art','employé','bénévole','fils','fille','diplômé','danseur','footballeur','manager','fan de foot','cycliste','frère','sœur','mère','père','musicien','collectionneur']},
+    {t:'chips',id:'quandbien',label:'Comment suis-je quand je vais bien ?',opts:['sociable','bavard','énergique','solitaire','introverti','vif d’esprit','prudent','extraverti','attentionné','athlétique','heureux','encourageant','optimiste','assidu','compétent','pessimiste','aidant','sérieux','responsable','aventurier','travailleur','curieux','franc','confiant','détendu','impulsif','enthousiaste','ouvert d’esprit','calme','obstiné']},
+    {t:'text',id:'quotidien',label:'Choses à faire quotidiennement qui m’aident à rester stable'},
+    {t:'text',id:'hebdo',label:'Choses à faire chaque semaine ou certains jours, qui m’aident à rester stable'},
+    {t:'text',id:'desequilibre',label:'Choses qui me font perdre mon équilibre'},
+    {t:'week',id:'semaine',label:'Mon plan hebdomadaire',days:WEEK}
+   ]},
+   {title:'2. Mon plan pour composer avec les hauts et les bas',fields:[
+    {t:'table',id:'declencheurs',label:'Mes éléments déclencheurs d’une crise',cols:['Déclencheur','Ce que je vais faire pour y remédier']},
+    {t:'table',id:'avantcoureurs',label:'Mes signes avant-coureurs d’une crise',cols:['Signe avant-coureur','Ce que je vais faire quand je le repère']},
+    {t:'table',id:'signescrise',label:'Mes signes de crise',cols:['Signe de crise','Comment je vais y réagir']},
+    {t:'feu',id:'releve',label:'Tableau de relevé quotidien (feu tricolore)',hint:'Touche un jour pour le colorer : vert = stabilité et équilibre, orange = signes avant-coureurs, rouge = la situation devient critique.'}
+   ]},
+   {title:'3. Mon plan pour rebondir après une crise',fields:[
+    {t:'h',label:'Si j’ai été hospitalisé : préparer la sortie'},
+    {t:'table',id:'affaires',label:'Affaires d’ordre personnel à régler avant ma sortie',cols:['Ce qui doit être réglé','L’aide dont j’ai besoin, et de qui','Comment je vais m’y prendre']},
+    {t:'text',id:'raccompagne',label:'Je souhaiterais que … ou … me raccompagne chez moi',small:true},
+    {t:'text',id:'resteavecmoi',label:'Je souhaiterais que … ou … passe quelque temps chez moi et m’aide à retrouver mes marques',small:true},
+    {t:'week',id:'premieresemaine',label:'Emploi du temps de ma première semaine chez moi',days:['Jour de la sortie','Jour 2','Jour 3','Jour 4','Jour 5','Jour 6','Jour 7']},
+    {t:'h',label:'Que j’aie été hospitalisé ou non'},
+    {t:'table',id:'soutien',label:'Mes personnes de soutien et l’aide qu’elles peuvent m’apporter',cols:['Nom','Téléphone','Ce que j’aimerais qu’elles fassent pour moi']},
+    {t:'text',id:'urgences',label:'En cas d’urgence, je peux appeler les numéros suivants',small:true},
+    {t:'text',id:'actquot',label:'Activités quotidiennes qui m’aident à redevenir stable après une crise'},
+    {t:'text',id:'acthebdo',label:'Activités que j’aimerais faire une ou quelques fois par semaine (avec les jours)'},
+    {t:'text',id:'acteviter',label:'Activités que je vais tâcher d’éviter pendant ma convalescence'},
+    {t:'week',id:'reequilibrer',label:'Emploi du temps hebdomadaire pour rééquilibrer ma vie',days:WEEK},
+    {t:'table',id:'moinsbien',label:'Signes qui indiquent que je vais moins bien',cols:['Signe','Comment je vais tâcher d’y réagir']},
+    {t:'table',id:'clarifier',label:'Points que je dois clarifier',cols:[{n:'Type',opts:['Personne à remercier','Personne auprès de qui m’excuser','Problème à régler']},'Personne à contacter, ce que je dois faire','Aide nécessaire, et de qui','Quand je vais m’en occuper']},
+    {t:'table',id:'reprise',label:'Reprise des activités et des engagements qui me tiennent à cœur',cols:[{n:'Domaine',opts:['Tâches quotidiennes','Obligations familiales','Travail, formation','Détente et loisirs','Amis, vie sociale','Activités spirituelles']},'Activité que je souhaite reprendre',{n:'Priorité',w:'5em'}]},
+    {t:'table',id:'engagements',label:'Engagements : plan pour la reprise de contact',cols:['Engagement ou activité','Plan pour la reprise de contact','Soutien nécessaire']},
+    {t:'text',id:'finplan',label:'Je saurai que je n’ai plus besoin de ce plan et que je peux repasser à mon « plan pour rester stable » lorsque…'},
+    {t:'h',label:'Ce que j’ai appris de cette crise'},
+    {t:'text',id:'app_stable',label:'Modifications dans mon « plan pour rester stable » (éléments utiles ou nuisibles)'},
+    {t:'text',id:'app_decl',label:'Déclencheurs et mesures pour y faire face'},
+    {t:'text',id:'app_avant',label:'Signes avant-coureurs et mesures à prendre aussi vite que possible'},
+    {t:'text',id:'app_crise',label:'Signes de crise et ce que je peux faire lorsque je les repère'},
+    {t:'text',id:'app_plancrise',label:'Changements dans le plan de gestion de crise'}
+   ]},
+   {title:'4. Mon plan pour poursuivre mes objectifs',fields:[
+    {t:'text',id:'reves',label:'Mes rêves et mes objectifs'},
+    {t:'text',id:'objectif',label:'Je veux travailler sur l’objectif suivant',small:true},
+    {t:'text',id:'duree',label:'Durée probable pour atteindre cet objectif',small:true},
+    {t:'text',id:'planglobal',label:'Mon plan global pour atteindre cet objectif'},
+    {t:'table',id:'etapes',label:'Premières étapes vers mon objectif',cols:['Étape'],check:'Fait'},
+    {t:'text',id:'infos',label:'Informations dont j’ai besoin, et où les trouver'},
+    {t:'text',id:'aide',label:'Aide et soutien dont j’aurai peut-être besoin, et de la part de qui'},
+    {t:'text',id:'notes',label:'Notes'}
+   ]}
+  ]},
+'revim-crise':{
+  title:'Mon plan personnel de gestion de crise',
+  short:'ReViM · plan de gestion de crise',
+  credit:'D’après « Reprendre sa vie en main », plan de gestion de crise (ReViM, 2e éd. 2025). Pour donner une valeur légale à certaines volontés : directives anticipées (Pro Mente Sana) ou plan de crise conjoint.',
+  parts:[
+   {title:'1. Comment suis-je lorsque je vais bien ?',fields:[{t:'text',id:'bien',label:'Lorsque je vais bien, je suis…'}]},
+   {title:'2. Symptômes de crise',fields:[{t:'text',id:'symptomes',label:'Symptômes qui indiquent que je suis en période de crise, et que j’ai besoin que des tiers veillent à ma sécurité et prennent des décisions me concernant'}]},
+   {title:'3. Mes personnes de soutien',fields:[
+    {t:'table',id:'soutien',label:'Mes personnes de soutien',cols:['Nom','Type de relation','Téléphone / e-mail']},
+    {t:'table',id:'informer',label:'Personnes que les services psychiatriques doivent informer en cas d’urgence',cols:['Nom','Téléphone / e-mail']},
+    {t:'table',id:'confiance',label:'Ma personne de confiance, qui coordonne le contact avec mes personnes de soutien',cols:['Nom','Téléphone / e-mail'],rows:1},
+    {t:'text',id:'ordre',label:'En cas de divergence, l’ordre dans lequel je souhaite que les avis soient pris en compte',small:true},
+    {t:'table',id:'pascontact',label:'Personnes avec qui je ne souhaite pas être en contact pendant une crise',cols:['Nom','Pourquoi (facultatif)']}
+   ]},
+   {title:'4. Affaires d’ordre personnel',fields:[
+    {t:'table',id:'affaires',label:'Ce dont mes personnes de soutien doivent s’occuper (animaux, argent, prévenir l’entourage…)',cols:['Nom','Ce dont la personne doit s’occuper']}
+   ]},
+   {title:'5. Médicaments',fields:[
+    {t:'table',id:'soignants',label:'Mes soignants',cols:[{n:'Rôle',opts:['Psychiatre','Référent','Médecin généraliste','Autre']},'Nom','Téléphone'],rows:3},
+    {t:'text',id:'actuels',label:'Médicaments que je prends actuellement'},
+    {t:'table',id:'aides',label:'Médicaments ou traitements qui m’ont aidé par le passé',cols:['Médicament','Pourquoi je souhaite le prendre']},
+    {t:'table',id:'pasaides',label:'Ceux qui ne m’ont pas aidé',cols:['Médicament','Pourquoi je préfère l’éviter']},
+    {t:'table',id:'refuses',label:'Ceux que je refuse de prendre',cols:['Médicament','Pourquoi je ne suis pas d’accord']},
+    {t:'text',id:'allergies',label:'Allergies médicamenteuses connues',small:true}
+   ]},
+   {title:'6. Autres traitements et stratégies',fields:[
+    {t:'text',id:'autres',label:'Autres traitements dont je bénéficie actuellement (thérapie de groupe, groupe d’entraide…)'},
+    {t:'table',id:'souhaites',label:'Traitements et aides dont je souhaiterais bénéficier en cas de crise',cols:['Traitement / aide','Pourquoi j’en ai envie']},
+    {t:'table',id:'refusestt',label:'Traitements et aides que je refuse',cols:['Traitement / aide','Pourquoi je n’en ai pas envie']}
+   ]},
+   {title:'7. Là où je souhaite me trouver en cas de crise',fields:[
+    {t:'table',id:'lieux',label:'Mes choix, par ordre de préférence (chez moi avec visites, chez un proche, à l’hôpital…)',cols:[{n:'Choix',opts:['1er choix','2e choix','3e choix']},'Endroit','Pourquoi je le préférerais'],rows:3},
+    {t:'table',id:'hopitaloui',label:'Si je dois être hospitalisé, je préfère aller…',cols:['Service / hôpital','Pourquoi']},
+    {t:'table',id:'hopitalnon',label:'Si je dois être hospitalisé, je ne souhaite PAS aller…',cols:['Service / hôpital','Pourquoi']}
+   ]},
+   {title:'8. Comment m’aider au mieux',fields:[
+    {t:'text',id:'aide',label:'Ce que des tiers peuvent faire et qui m’aide pendant une crise'},
+    {t:'text',id:'aidepas',label:'Ce qui ne m’aide PAS, et pourquoi'}
+   ]},
+   {title:'9. Mes besoins particuliers',fields:[
+    {t:'table',id:'sante',label:'Problèmes de santé physique',cols:['Problème','Ce dont j’ai besoin à cause de cela']},
+    {t:'text',id:'spirituel',label:'Besoins liés à une pratique spirituelle ou cultuelle',small:true},
+    {t:'text',id:'nourriture',label:'Nourriture, régime alimentaire',small:true},
+    {t:'text',id:'objets',label:'Objets que j’aimerais avoir avec moi en cas d’hospitalisation'},
+    {t:'text',id:'agace',label:'Choses qui m’agacent ou qu’il serait bon de connaître sur moi'},
+    {t:'text',id:'autresbesoins',label:'Autres besoins particuliers'}
+   ]},
+   {title:'10. Quand ce plan n’a plus lieu d’être',fields:[{t:'text',id:'fin',label:'Signes qui indiquent aux autres que je suis à nouveau capable de me prendre en main'}]},
+   {title:'11. Lorsque je suis en danger',fields:[{t:'text',id:'danger',label:'Si mon comportement risque de me mettre en danger, moi ou autrui, je souhaite que mes personnes de soutien agissent ainsi'}]},
+   {title:'12. À propos de ce document',fields:[
+    {t:'text',id:'redige',label:'J’ai rédigé ce plan le (date), avec le soutien de',small:true},
+    {t:'text',id:'notes',label:'Notes'}
+   ]}
+  ]},
+'wrap':{
+  title:'Mon WRAP · plan d’action pour le rétablissement et le bien-être',
+  short:'WRAP',
+  credit:'D’après le Wellness Recovery Action Plan de Mary Ellen Copeland (cahier d’exercices, traduction PAIR).',
+  parts:[
+   {title:'Plan d’entretien quotidien',fields:[
+    {t:'text',id:'bien',label:'1. Quand je me sens bien, je suis…'},
+    {t:'text',id:'chaquejour',label:'2. Ce que je dois faire chaque jour pour me sentir aussi bien que possible'},
+    {t:'text',id:'parfois',label:'3. Ce que je dois faire, pas forcément tous les jours, pour garder mon bien-être'},
+    {t:'text',id:'declencheurs',label:'4. Mes déclencheurs : événements ou circonstances qui peuvent lancer une réaction en chaîne'},
+    {t:'text',id:'eviter',label:'5. Éviter mes déclencheurs : ce que je peux faire pour limiter mon exposition'},
+    {t:'text',id:'fairefase',label:'6. Faire face aux déclencheurs quand ils arrivent'},
+    {t:'text',id:'alerte',label:'7. Mes signes d’alerte précoce'},
+    {t:'text',id:'planalerte',label:'8. Ce que je fais quand je reconnais ces signes'},
+    {t:'text',id:'degrade',label:'9. Signes que les choses se dégradent, mais que je peux encore agir pour moi'},
+    {t:'text',id:'reduire',label:'10. Ce qui m’aide à réduire ces signes'}
+   ]},
+   {title:'Plan de crise',fields:[
+    {t:'text',id:'c_bien',label:'1. À quoi je ressemble quand je me sens bien'},
+    {t:'text',id:'c_symptomes',label:'2. Les symptômes qui indiquent aux autres qu’ils doivent prendre le relais et décider pour moi'},
+    {t:'table',id:'c_allies',label:'3. Mes alliés (au moins cinq si possible)',cols:['Prénom','Lien / rôle','Téléphone'],rows:5},
+    {t:'table',id:'c_pasimpliques',label:'Personnes que je ne veux en aucun cas impliquées dans mes soins',cols:['Prénom','Pourquoi (facultatif)']},
+    {t:'text',id:'c_differends',label:'Comment régler les désaccords entre mes alliés',small:true},
+    {t:'table',id:'c_medecins',label:'4. Médecins qui participent à mes soins',cols:['Médecin','Téléphone']},
+    {t:'text',id:'c_pharmacie',label:'Ma pharmacie (nom, adresse, téléphone)',small:true},
+    {t:'text',id:'c_meds',label:'Médicaments que je prends actuellement, et pourquoi'},
+    {t:'text',id:'c_medspref',label:'Médicaments que je préfère s’ils deviennent nécessaires, et pourquoi'},
+    {t:'text',id:'c_medsok',label:'Médicaments acceptables pour moi, et pourquoi'},
+    {t:'text',id:'c_medseviter',label:'Médicaments à éviter, et pourquoi'},
+    {t:'text',id:'c_tt',label:'5. Traitements qui m’aident, et quand les utiliser'},
+    {t:'text',id:'c_tteviter',label:'Traitements que je voudrais éviter'},
+    {t:'text',id:'c_domicile',label:'6. Soins à domicile ou dans la communauté : mon plan pour rester chez moi'},
+    {t:'text',id:'c_centres',label:'7. Lieux de soins où je préfère être traité ou hospitalisé'},
+    {t:'text',id:'c_centreseviter',label:'Lieux de soins que je souhaite éviter'},
+    {t:'text',id:'c_aide',label:'8. Ce que les autres peuvent faire pour moi et qui m’aide'},
+    {t:'table',id:'c_qui',label:'Ce que j’ai besoin que les autres fassent, et qui',cols:['Ce qu’il faut faire','Qui j’aimerais']},
+    {t:'text',id:'c_aidepas',label:'Ce qui ne m’aiderait pas, ou pourrait aggraver mes symptômes'},
+    {t:'text',id:'c_inactiver',label:'9. Signes qui montrent à mes alliés qu’ils n’ont plus besoin de ce plan'},
+    {t:'text',id:'c_danger',label:'10. Si mon comportement me met en danger ou met d’autres personnes en danger, je souhaite que mes alliés…'},
+    {t:'text',id:'c_date',label:'J’ai développé ce plan le (date), avec l’aide de',small:true}
+   ]},
+   {title:'Plan post-crise',fields:[
+    {t:'text',id:'p_sorti',label:'Je saurai que je suis sorti de la crise quand…'},
+    {t:'text',id:'p_ressentir',label:'Ce que j’aimerais ressentir après la crise'},
+    {t:'table',id:'p_allies',label:'Mes alliés après la crise',cols:['Prénom','Téléphone','Ce dont j’ai besoin qu’ils fassent']},
+    {t:'text',id:'p_retour',label:'Mon retour à la maison : un endroit sûr, qui me ramène, qui reste avec moi, ce que je veux faire en rentrant'},
+    {t:'text',id:'p_occuper',label:'De quoi dois-je m’occuper dès que je peux ?'},
+    {t:'text',id:'p_demander',label:'Ce que je peux demander aux autres'},
+    {t:'text',id:'p_attendre',label:'Ce qui peut attendre que je me sente mieux'},
+    {t:'text',id:'p_chaquejour',label:'Ce que je fais pour moi chaque jour pendant ma convalescence'},
+    {t:'text',id:'p_eviter',label:'Ce que je dois éviter pendant ma convalescence (personnes, lieux, choses)'},
+    {t:'text',id:'p_pire',label:'Signes que je commence peut-être à me sentir moins bien'},
+    {t:'text',id:'p_outils',label:'Les outils que je vais utiliser si je me sens moins bien'},
+    {t:'table',id:'p_merci',label:'Personnes à remercier, à qui m’excuser ou faire amende honorable',cols:[{n:'Pour',opts:['Remercier','M’excuser','Amende honorable']},'La personne','Quand','Comment']},
+    {t:'table',id:'p_problemes',label:'Problèmes médicaux, juridiques et financiers à résoudre',cols:['Problème','Comment je compte le résoudre']},
+    {t:'text',id:'p_pertes',label:'Ce que je dois faire pour éviter d’autres pertes'},
+    {t:'text',id:'p_fin',label:'Signes que la phase post-crise est terminée et que je peux revenir à mon plan d’entretien quotidien'},
+    {t:'text',id:'p_appris',label:'Ce que j’ai appris de cette crise, et les changements que je veux faire (quand, comment)'},
+    {t:'table',id:'p_resp',label:'Calendrier de reprise des responsabilités',cols:['Responsabilité','Qui l’a assumée pendant la crise','Ce dont j’ai besoin pour la reprendre','Mon plan pour la reprendre']}
+   ]}
+  ]}
+};
+const LIENS=['Action','Sensation corporelle','Pensée','Événement','Sentiment'];
+Object.assign(FORMS,{
+'ecoute':{multi:true,title:'Conscience de soi dans l’écoute',short:'Conscience-de-soi-ecoute',titleField:'contexte',newLabel:'Nouvelle écoute',
+  intro:'Pendant ou après une écoute, note ce qui se passe en toi : dans ton corps, tes émotions, tes pensées. De -- (très désagréable) à ++ (très agréable). Chaque écoute est une fiche.',
+  credit:'D’après la grille « Conscience de soi dans l’écoute » (cours Chemins du rétablissement, module 5).',
+  parts:[{title:'L’écoute',fields:[
+    {t:'text',id:'contexte',label:'Quelle écoute ? (qui, où, de quoi on a parlé, sans détail identifiant)',small:true},
+    {t:'scale',id:'corps',label:'Corps',opts:['--','-','-/+','+','++'],ph:'Sensations : tensions, souffle, chaleur, fatigue…'},
+    {t:'scale',id:'emotions',label:'Émotions',opts:['--','-','-/+','+','++'],ph:'Ce que je ressens'},
+    {t:'scale',id:'pensees',label:'Pensées',opts:['--','-','-/+','+','++'],ph:'Ce qui me traverse l’esprit, ce que ça m’évoque'},
+    {t:'text',id:'apres',label:'Ce que j’en fais : pour moi, pour la suite de l’accompagnement, à amener en supervision ou intervision'}
+  ]}]},
+'tcd-ft1':{multi:true,title:'TCD · Avantages et inconvénients d’utiliser les compétences',short:'TCD-fiche-generale-1',titleField:'situation',
+  intro:'Fiche de travail générale 1 : peser les avantages et les inconvénients de pratiquer ses compétences dans une situation, pour atteindre SES objectifs, pas ceux de quelqu’un d’autre. Vérifie les faits.',
+  credit:'D’après M. Linehan, Fiches de travail TCD, fiche de travail générale 1.',
+  parts:[{title:'La situation',fields:[
+    {t:'text',id:'situation',label:'Décris la situation ou le problème'},
+    {t:'text',id:'objectif',label:'Ton objectif dans cette situation'}]},
+   {title:'Pratiquer les compétences',fields:[
+    {t:'text',id:'p_av',label:'Avantages'},{t:'text',id:'p_inc',label:'Inconvénients'}]},
+   {title:'Ne pas pratiquer les compétences (ou pas complètement)',fields:[
+    {t:'text',id:'n_av',label:'Avantages'},{t:'text',id:'n_inc',label:'Inconvénients'}]},
+   {title:'Ma décision',fields:[
+    {t:'text',id:'decision',label:'Qu’as-tu décidé de faire dans cette situation ?'},
+    {t:'text',id:'eclaire',label:'Est-ce la meilleure décision, en Esprit éclairé ?',small:true}]}
+  ]},
+'tcd-ft2':{multi:true,title:'TCD · Analyse en chaîne d’un comportement problématique',short:'TCD-analyse-en-chaine',titleField:'comportement',newLabel:'Nouvelle analyse',
+  intro:'Fiche de travail générale 2 : remonter la chaîne qui mène à un comportement problématique (vulnérabilités, événement déclencheur, maillons, conséquences), puis trouver ce qui pourrait la remplacer.',
+  credit:'D’après M. Linehan, Fiches de travail TCD, fiche de travail générale 2 (documents généraux 7 et 7a).',
+  parts:[{title:'1 à 3 · Le comportement et ce qui l’a précédé',fields:[
+    {t:'text',id:'comportement',label:'1. Quel est exactement le comportement problématique principal que j’analyse ?'},
+    {t:'text',id:'declencheur',label:'2. Quel événement déclencheur, dans l’environnement, m’a lancé dans la chaîne ? Ce qui s’est passé juste avant que la pensée ou l’impulsion apparaisse'},
+    {t:'text',id:'jour_decl',label:'Jour où l’événement déclencheur est survenu',small:true},
+    {t:'text',id:'vulnerabilite',label:'3. Qu’est-ce qui, en moi et dans mon environnement, m’a rendu vulnérable ?'},
+    {t:'text',id:'jour_vuln',label:'Jour où ces vulnérabilités ont commencé',small:true}]},
+   {title:'4 et 6 · La chaîne, et ce qui pourrait la remplacer',fields:[
+    {t:'table',id:'chaine',label:'Chaque maillon, dans l’ordre : actions, sensations corporelles, pensées, événements, sentiments',cols:[{n:'Type',opts:LIENS},'4. Ce qui s’est vraiment passé','6. Comportement plus compétent pour le remplacer'],rows:4}]},
+   {title:'5 · Les conséquences',fields:[
+    {t:'text',id:'cons_env',label:'Quelles ont été exactement les conséquences dans l’environnement ?'},
+    {t:'text',id:'cons_moi',label:'Et pour moi-même ?'},
+    {t:'text',id:'dommages',label:'Quels dommages mon comportement a-t-il causés ?'}]},
+   {title:'7 et 8 · Prévenir et réparer',fields:[
+    {t:'text',id:'prev_vuln',label:'7. Moyens de réduire ma vulnérabilité à l’avenir'},
+    {t:'text',id:'prev_decl',label:'Moyens d’éviter que l’événement déclencheur se reproduise'},
+    {t:'text',id:'reparer',label:'8. Stratégies pour réparer, corriger et surcorriger les dommages causés'}]}
+  ]}
+});
+
+delete FORMS.ecoute;
+
+(function(){
+const $=(t,a={},...k)=>{const e=document.createElement(t);for(const[x,y]of Object.entries(a)){if(x==='class')e.className=y;else if(x==='text')e.textContent=y;else if(x.startsWith('on'))e.addEventListener(x.slice(2),y);else e.setAttribute(x,y);}k.flat().forEach(c=>c!=null&&e.append(c));return e;};
+const ov=document.getElementById('fm'),fbody=document.getElementById('fmbody'),ftitle=document.getElementById('fmtitle'),fstat=document.getElementById('fmstat'),fexp=document.getElementById('fmexp');
+/* ---------- stockage ---------- */
+let backend=null;
+async function getBackend(){ return backend||(backend={mode:'local'}); }
+const lkey=k=>'ppsm-form-'+k;
+function lget(k){try{const s=localStorage.getItem(lkey(k));return s?JSON.parse(s):null;}catch(e){return null;}}
+function lset(k,v){try{localStorage.setItem(lkey(k),JSON.stringify(v));return true;}catch(e){return false;}}
+async function load(k){
+  const b=await getBackend();
+  if(b.mode==='db'){ try{ const s=await b.db.doc('data/users/'+b.uid+'/'+k).get(); if(s.exists){const d=s.data();return JSON.parse(d.json||'{}');} }catch(e){ if(e&&e.code!=='unavailable')backend={mode:'local'}; } }
+  return lget(k)||{};
+}
+async function save(k,v){
+  const b=await getBackend();
+  if(b.mode==='db'){
+    try{ await b.db.doc('data/users/'+b.uid+'/'+k).set({json:JSON.stringify(v),at:Date.now()}); lset(k,v); return 'db'; }
+    catch(e){ if(e&&e.code==='unavailable'){ await new Promise(r=>setTimeout(r,600+Math.random()*800)); try{ await b.db.doc('data/users/'+b.uid+'/'+k).set({json:JSON.stringify(v),at:Date.now()}); return 'db'; }catch(_){} } backend={mode:'local'}; }
+  }
+  return lset(k,v)?'local':'none';
+}
+const STAT={db:'Enregistré sur ton compte ✓',local:'Enregistré sur cet appareil ✓',none:'Pas d’enregistrement possible ici : exporte en PDF'};
+/* ---------- téléchargement ---------- */
+let dlns=CARNET_DL; const dlReady=Promise.resolve();
+function loadScript(src){return new Promise((ok,ko)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>ko(new Error('script'));document.head.appendChild(s);});}
+async function pdfLib(){ if(!window.jspdf)await loadScript('vendor/jspdf.umd.min.js'); if(!window.jspdf.jsPDF.API.autoTable)await loadScript('vendor/jspdf.plugin.autotable.min.js'); return window.jspdf.jsPDF; }
+const clean=s=>String(s==null?'':s).replace(/[’‘]/g,"'").replace(/[“”]/g,'"').replace(/[–—]/g,'-').replace(/…/g,'...').replace(/œ/g,'oe').replace(/Œ/g,'OE').replace(/ | /g,' ').replace(/✓/g,'x').replace(/[^\x00-\xff]/g,'');
+function fileStamp(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function today(){return new Date().toLocaleDateString('fr-CH',{day:'numeric',month:'long',year:'numeric'});}
+async function offer(doc,name){
+  await dlReady;
+  const blob=doc.output('blob');
+  if(dlns){ try{ await dlns.save({filename:name,data:blob}); return 'ok'; }catch(e){ if(e&&e.code==='declined')return 'declined'; return 'fail'; } }
+  return 'fail';
+}
+function pdfDoc(J,title,sub){
+  const doc=new J({unit:'mm',format:'a4'}); doc.setFont('helvetica','bold'); doc.setFontSize(17); doc.text(clean(title),15,20);
+  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(100); doc.text(doc.splitTextToSize(clean(sub),180),15,27); doc.setTextColor(0);
+  return {doc,y:38};
+}
+function ensure(P,h){ if(P.y+h>282){P.doc.addPage();P.y=18;} }
+function para(P,txt,opt={}){ const d=P.doc; d.setFont('helvetica',opt.bold?'bold':'normal'); d.setFontSize(opt.size||10); const lines=d.splitTextToSize(clean(txt),180); for(const l of lines){ensure(P,5.2);d.text(l,15,P.y);P.y+=opt.lh||4.8;} }
+function table(P,head,body,opt={}){ ensure(P,14); P.doc.autoTable({startY:P.y,head:[head.map(clean)],body:body.map(r=>r.map(clean)),margin:{left:15,right:15},styles:{fontSize:9,cellPadding:1.8,overflow:'linebreak'},headStyles:{fillColor:[28,46,74]},theme:'grid',...opt}); P.y=P.doc.lastAutoTable.finalY+5; }
+/* ---------- champs ---------- */
+function grow(t){t.style.height='auto';t.style.height=(t.scrollHeight+2)+'px';}
+const colName=c=>typeof c==='string'?c:c.n;
+function fieldEl(f,st,touch){
+  const box=$('div',{class:'ff'});
+  if(f.t==='h'){return $('h4',{class:'fmh',text:f.label});}
+  const lab=$('label',{class:'fl',text:f.label}); box.append(lab);
+  if(f.hint)box.append($('p',{class:'fhint',text:f.hint}));
+  if(f.t==='text'){
+    const ta=$('textarea',{rows:f.small?1:3}); ta.value=st[f.id]||''; const id='f-'+f.id; ta.id=id; lab.setAttribute('for',id);
+    ta.addEventListener('input',()=>{st[f.id]=ta.value;grow(ta);touch();}); requestAnimationFrame(()=>grow(ta)); box.append(ta);
+  }
+  if(f.t==='chips'){
+    const sel=new Set(st[f.id]||[]); const wrap=$('div',{class:'chips'});
+    const all=[...f.opts,...[...sel].filter(x=>!f.opts.includes(x))];
+    const draw=()=>{wrap.innerHTML='';all.forEach(o=>{const b=$('button',{type:'button',class:'chip','aria-pressed':sel.has(o)?'true':'false',text:o,onclick:()=>{sel.has(o)?sel.delete(o):sel.add(o);st[f.id]=[...sel];touch();draw();}});wrap.append(b);});
+      const inp=$('input',{type:'text',placeholder:'+ ajouter',class:'chipadd','aria-label':'Ajouter un mot'}); inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&inp.value.trim()){e.preventDefault();const v=inp.value.trim();if(!all.includes(v))all.push(v);sel.add(v);st[f.id]=[...sel];touch();draw();wrap.querySelector('.chipadd').focus();}}); wrap.append(inp);};
+    draw(); box.append(wrap);
+  }
+  if(f.t==='table'){
+    const cols=f.cols.slice(); const n=cols.length+(f.check?1:0);
+    if(!Array.isArray(st[f.id])||!st[f.id].length){st[f.id]=Array.from({length:f.rows||2},()=>Array(n).fill(''));}
+    const rows=st[f.id]; const tb=$('div',{class:'ftab'});
+    const draw=()=>{tb.innerHTML='';
+      rows.forEach((r,ri)=>{const row=$('div',{class:'frow'});
+        cols.forEach((c,ci)=>{const cl=$('div',{class:'fcell'}); const nm=colName(c); cl.append($('span',{class:'fcl',text:nm}));
+          if(typeof c==='object'&&c.opts){const s=$('select',{'aria-label':nm}); s.append($('option',{value:'',text:'—'})); c.opts.forEach(o=>s.append($('option',{value:o,text:o}))); s.value=r[ci]||''; s.addEventListener('change',()=>{r[ci]=s.value;touch();}); cl.append(s);}
+          else{const ta=$('textarea',{rows:1,'aria-label':nm}); ta.value=r[ci]||''; ta.addEventListener('input',()=>{r[ci]=ta.value;grow(ta);touch();}); requestAnimationFrame(()=>grow(ta)); cl.append(ta); if(c.w)cl.style.maxWidth=c.w;}
+          row.append(cl);});
+        if(f.check){const cb=$('input',{type:'checkbox','aria-label':f.check}); cb.checked=r[n-1]==='x'; cb.addEventListener('change',()=>{r[n-1]=cb.checked?'x':'';touch();}); row.append($('label',{class:'fchk'},cb,' '+f.check));}
+        row.append($('button',{type:'button',class:'fdel','aria-label':'Supprimer la ligne',text:'×',onclick:()=>{rows.splice(ri,1);if(!rows.length)rows.push(Array(n).fill(''));touch();draw();}}));
+        tb.append(row);});
+      tb.append($('button',{type:'button',class:'fadd',text:'+ Ajouter une ligne',onclick:()=>{rows.push(Array(n).fill(''));touch();draw();const t=tb.querySelectorAll('.frow');t[t.length-1].querySelector('textarea,select').focus();}}));};
+    draw(); box.append(tb);
+  }
+  if(f.t==='scale'){
+    st[f.id]=st[f.id]||{v:'',n:''}; const v=st[f.id]; const row=$('div',{class:'sbtns',role:'group','aria-label':f.label});
+    const draw=()=>{row.innerHTML='';f.opts.forEach((o,k)=>row.append($('button',{type:'button',class:'sb wide'+(v.v===o?' on':''),style:'--c:'+['#c62828','#e8851f','#9a9a9a','#7ea33f','#2e7d32'][k],'aria-pressed':String(v.v===o),text:o,onclick:()=>{v.v=v.v===o?'':o;touch();draw();}})));};
+    draw(); const ta=$('textarea',{rows:2,placeholder:f.ph||'Ce que je remarque','aria-label':f.label+' : note'}); ta.value=v.n||''; ta.addEventListener('input',()=>{v.n=ta.value;grow(ta);touch();}); requestAnimationFrame(()=>grow(ta)); box.append(row,ta);
+  }
+  if(f.t==='week'){
+    st[f.id]=st[f.id]||{}; const v=st[f.id]; const g=$('div',{class:'fweek'});
+    f.days.forEach(d=>{const col=$('div',{class:'fday'},$('b',{text:d})); SLOTS.forEach(s=>{const ta=$('textarea',{rows:1,placeholder:s,'aria-label':d+', '+s}); ta.value=v[d+'|'+s]||''; ta.addEventListener('input',()=>{v[d+'|'+s]=ta.value;grow(ta);touch();}); requestAnimationFrame(()=>grow(ta)); col.append(ta);}); g.append(col);});
+    box.append(g);
+  }
+  if(f.t==='feu'){
+    st[f.id]=st[f.id]||{}; const all=st[f.id]; const d0=new Date(); let cur=d0.getFullYear()+'-'+String(d0.getMonth()+1).padStart(2,'0');
+    const mi=$('input',{type:'month','aria-label':'Mois'}); mi.value=cur; const grid=$('div',{class:'ffeu'}); const notes=$('textarea',{rows:2,placeholder:'Notes du mois : déclencheurs, mesures prises, médicaments…','aria-label':'Notes du mois'});
+    const ORDER=['','v','o','r'],LBL={v:'vert',o:'orange',r:'rouge','':'pas noté'};
+    const draw=()=>{const m=all[cur]=all[cur]||{d:{},n:''}; grid.innerHTML=''; const [yy,mm]=cur.split('-').map(Number); const nd=new Date(yy,mm,0).getDate();
+      for(let i=1;i<=nd;i++){const c=m.d[i]||''; grid.append($('button',{type:'button',class:'fd '+c,text:String(i),'aria-label':i+' : '+LBL[c],onclick:(e)=>{const nx=ORDER[(ORDER.indexOf(m.d[i]||'')+1)%4]; if(nx)m.d[i]=nx;else delete m.d[i]; touch(); draw(); grid.children[i-1].focus();}}));}
+      notes.value=m.n||''; requestAnimationFrame(()=>grow(notes));};
+    mi.addEventListener('change',()=>{if(mi.value){cur=mi.value;draw();}}); notes.addEventListener('input',()=>{all[cur]=all[cur]||{d:{},n:''};all[cur].n=notes.value;grow(notes);touch();});
+    box.append($('div',{class:'ffeubar'},mi,$('span',{class:'fleg'},$('i',{class:'v'}),'stable ',$('i',{class:'o'}),'avant-coureurs ',$('i',{class:'r'}),'critique')),grid,notes); draw();
+  }
+  return box;
+}
+/* ---------- export PDF d'un plan ---------- */
+function filled(f,v){ if(v==null)return false; if(f.t==='text')return !!String(v).trim(); if(f.t==='chips')return v.length>0; if(f.t==='table')return v.some(r=>r.some(c=>String(c).trim())); if(f.t==='week')return Object.values(v).some(x=>String(x).trim()); if(f.t==='scale')return !!(v.v||String(v.n||'').trim()); if(f.t==='feu')return Object.values(v).some(m=>Object.keys(m.d||{}).length||String(m.n||'').trim()); return false; }
+async function exportPlan(key,st,item){
+  const F=FORMS[key]; const J=await pdfLib();
+  const P=pdfDoc(J,F.title,(st._nom?st._nom+' · ':'')+(item?'Fiche du '+new Date(item.t).toLocaleDateString('fr-CH',{day:'numeric',month:'long',year:'numeric'})+'. ':'')+'Exporté le '+today()+'. '+F.credit);
+  let any=false;
+  F.parts.forEach(p=>{
+    const fs=p.fields.filter(f=>f.t!=='h'&&filled(f,st[f.id])); if(!fs.length)return; any=true;
+    ensure(P,16); P.y+=2; para(P,p.title,{bold:true,size:13,lh:6}); P.y+=1;
+    fs.forEach(f=>{const v=st[f.id]; ensure(P,12); para(P,f.label,{bold:true,size:10});
+      if(f.t==='text'){para(P,v);P.y+=2;}
+      else if(f.t==='chips'){para(P,v.join(', '));P.y+=2;}
+      else if(f.t==='scale'){para(P,(v.v?'Niveau : '+v.v+(v.n?'. ':''):'')+(v.n||''));P.y+=2;}
+      else if(f.t==='table'){const head=f.cols.map(colName).concat(f.check?[f.check]:[]); table(P,head,v.filter(r=>r.some(c=>String(c).trim())));}
+      else if(f.t==='week'){table(P,[''].concat(f.days),SLOTS.map(s=>[s].concat(f.days.map(d=>v[d+'|'+s]||''))),{styles:{fontSize:8,cellPadding:1.5}});}
+      else if(f.t==='feu'){Object.keys(v).sort().forEach(m=>{const o=v[m];if(!Object.keys(o.d||{}).length&&!String(o.n||'').trim())return;const [yy,mm]=m.split('-').map(Number);const nm=new Date(yy,mm-1,1).toLocaleDateString('fr-CH',{month:'long',year:'numeric'});const L=c=>Object.keys(o.d).filter(k=>o.d[k]===c).sort((a,b)=>a-b).join(', ')||'-';table(P,[nm,'Jours'],[['Vert (stable)',L('v')],['Orange (avant-coureurs)',L('o')],['Rouge (critique)',L('r')]].concat(String(o.n||'').trim()?[['Notes',o.n]]:[]),{columnStyles:{0:{cellWidth:48}}});});}
+    });
+  });
+  if(!any)para(P,'Ce plan est encore vide.');
+  return offer(P.doc,(F.short.replace(/[^\wÀ-ÿ -]/g,'').replace(/\s+/g,'-'))+'-'+fileStamp()+'.pdf');
+}
+/* ---------- overlay ---------- */
+let ret=null,curKey=null,curState=null,timer=null,onClose=null;
+function setStat(t){fstat.textContent=t;}
+function close(){ if(timer){clearTimeout(timer);timer=null;if(curKey&&curState)save(curKey,curState);} ov.hidden=true; document.body.style.overflow=''; fbody.innerHTML=''; if(onClose)onClose(); onClose=null; if(ret)ret.focus(); }
+document.getElementById('fmclose').onclick=close;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!ov.hidden)close();});
+function openShell(title){ ret=document.activeElement; ov.hidden=false; document.body.style.overflow='hidden'; ftitle.textContent=title; fexp.hidden=false; fbody.innerHTML='<p class="pvmsg">Chargement…</p>'; setStat(''); fbody.scrollTop=0; }
+async function openForm(key,itemId){
+  const F=FORMS[key]; openShell(F.title); curKey=key;
+  const root=await load(key); const b=await getBackend(); curState=root;
+  const touch=()=>{setStat('…');clearTimeout(timer);timer=setTimeout(async()=>{timer=null;setStat(STAT[await save(key,root)]);},700);};
+  const where=b.mode==='db'?'Enregistré automatiquement sur ton compte, visible par toi seul·e, sur tous tes appareils.':'Enregistré automatiquement sur cet appareil, dans ce navigateur. Exporte en PDF pour le garder ailleurs.';
+  fbody.innerHTML='';
+  let st=root, item=null;
+  if(F.multi){
+    root.items=root.items||[];
+    if(itemId==null){
+      fexp.hidden=true;
+      fbody.append($('div',{class:'fmintro'},$('p',{text:F.intro||''}),$('p',{class:'fhint',text:where+' '+F.credit})));
+      fbody.append($('button',{type:'button',class:'fprim',text:'+ '+(F.newLabel||'Nouvelle fiche'),onclick:async()=>{const it={id:String(Date.now()),t:Date.now(),d:{}};root.items.push(it);await save(key,root);openForm(key,it.id);}}));
+      const L=$('div',{class:'slist',style:'margin-top:14px'});
+      if(!root.items.length)L.append($('p',{class:'fhint',text:'Aucune fiche pour l’instant.'}));
+      root.items.slice().reverse().forEach(it=>{const i=root.items.indexOf(it); const first=F.parts[0].fields.find(f=>f.t==='text'); const tt=(it.d[F.titleField||(first&&first.id)]||'').trim();
+        let armed=false; const del=$('button',{type:'button',class:'fdel','aria-label':'Supprimer cette fiche',text:'×'});
+        del.onclick=async()=>{if(!armed){armed=true;del.textContent='Sûr ?';del.style.width='auto';setTimeout(()=>{armed=false;del.textContent='×';del.style.width='';},3500);return;}root.items.splice(i,1);setStat(STAT[await save(key,root)]);openForm(key);};
+        L.append($('div',{class:'sent'},$('div',{},$('b',{text:new Date(it.t).toLocaleDateString('fr-CH',{weekday:'short',day:'numeric',month:'long',year:'numeric'})}),$('p',{text:tt?(tt.length>110?tt.slice(0,110)+'…':tt):'(sans titre)'})),$('button',{type:'button',class:'chip',text:'Ouvrir',onclick:()=>openForm(key,it.id)}),del));});
+      fbody.append(L); document.getElementById('fmclose').focus(); return;
+    }
+    item=root.items.find(x=>x.id===itemId); if(!item){openForm(key);return;} st=item.d;
+    fbody.append($('button',{type:'button',class:'fadd',style:'margin-bottom:12px',text:'← Toutes mes fiches',onclick:()=>{if(timer){clearTimeout(timer);timer=null;save(key,root);}openForm(key);}}));
+  }
+  const intro=$('div',{class:'fmintro'},$('p',{text:F.multi?(F.intro||''):where}),$('p',{class:'fhint',text:F.multi?where+' '+F.credit:F.credit}));
+  if(!F.multi){const nom=$('input',{type:'text',placeholder:'Mon nom (facultatif, pour l’en-tête du PDF)','aria-label':'Nom'}); nom.value=st._nom||''; nom.addEventListener('input',()=>{st._nom=nom.value;touch();}); intro.append(nom);}
+  fbody.append(intro);
+  F.parts.forEach((p,i)=>{const d=$('details',{class:'fpart'}); if(i===0||F.multi)d.open=true; d.append($('summary',{text:p.title})); const inner=$('div',{class:'fpin'}); p.fields.forEach(f=>inner.append(fieldEl(f,st,touch))); d.append(inner); d.addEventListener('toggle',()=>{if(d.open)inner.querySelectorAll('textarea').forEach(grow);}); fbody.append(d);});
+  if(!F.multi){
+    const clr=$('button',{type:'button',class:'fclear',text:'Effacer tout ce plan'}); let armed=false;
+    clr.onclick=async()=>{ if(!armed){armed=true;clr.textContent='Confirmer : tout effacer ?';setTimeout(()=>{armed=false;clr.textContent='Effacer tout ce plan';},4000);return;} for(const k in st)delete st[k]; setStat(STAT[await save(key,root)]); openForm(key); };
+    fbody.append(clr);
+  }
+  fexp.onclick=async()=>{ if(timer){clearTimeout(timer);timer=null;setStat(STAT[await save(key,root)]);} fexp.disabled=true; const o=fexp.textContent; fexp.textContent='Préparation…'; let r; try{r=await exportPlan(key,st,item);}catch(e){r='fail';} fexp.disabled=false; fexp.textContent=o; if(r==='fail')setStat('Export impossible ici'); };
+  document.getElementById('fmclose').focus();
+}
+/* ---------- SUDS ---------- */
+const SUDS=[[100,'Niveau de détresse le plus élevé. Sentiment de perte de contrôle.'],[90,'Extrêmement en détresse. Des symptômes physiologiques sont présents.'],[80,'Très en détresse, concentration difficile. Symptômes physiologiques présents.'],[70,'Assez en détresse, perte de concentration. Symptômes physiologiques présents.'],[60,'Détresse ou anxiété modérée à forte.'],[50,'Détresse ou anxiété modérée.'],[40,'Détresse ou anxiété légère à modérée.'],[30,'Détresse ou anxiété légère, sans gêne pour fonctionner.'],[20,'Détresse ou anxiété minimale.'],[10,'Attentif, concentré, en pleine capacité de concentration.'],[0,'Aucune détresse, détendu, calme.']];
+const SKILL=v=>v>=85?'STOP, TIPP':v>=65?'Se distraire avec ACCEPTS':v>=55?'Auto-apaisement':v>=45?'IMPROVE':v>=30?'Avantages et inconvénients':'Acceptation radicale';
+const SCOL=v=>['#cfe3c8','#cfe3c8','#a9cf97','#b7d0e2','#9bbccd','#f1dd85','#f4c450','#f1a46b','#e9867a','#de6468','#cf3f4d'][Math.round(v/10)];
+const anchor=v=>SUDS.find(a=>v>=a[0]-4)||SUDS[SUDS.length-1];
+async function openSuds(){
+  openShell('Mon échelle de détresse (SUDS)'); curKey='suds';
+  const st=await load('suds'); st.e=st.e||[]; curState=st; const b=await getBackend();
+  fbody.innerHTML='';
+  const intro=$('div',{class:'fmintro'},$('p',{text:'Note ta détresse de 0 à 100, honnêtement, et ce qui se passe. '+(b.mode==='db'?'Enregistré sur ton compte, visible par toi seul·e.':'Enregistré sur cet appareil.')}));
+  fbody.append(intro);
+  const mk=(lbl)=>{const r=$('input',{type:'range',min:0,max:100,step:5,'aria-label':lbl}); r.value=50; const val=$('output',{class:'sval'}); const desc=$('p',{class:'sdesc'}); const upd=()=>{const v=+r.value; val.textContent=v; val.style.background=SCOL(v); desc.textContent=anchor(v)[1]+' · Piste de compétence TCD : '+SKILL(v)+'.';}; r.addEventListener('input',upd); upd(); return {r,val,desc,box:$('div',{class:'sbox'},$('label',{class:'fl',text:lbl}),$('div',{class:'srow'},val,r),desc)};};
+  const A=mk('Mon niveau de détresse maintenant');
+  const sit=$('textarea',{rows:2,placeholder:'La situation, ce qui se passe','aria-label':'Situation'});
+  const fait=$('textarea',{rows:2,placeholder:'Ce que je fais ou vais faire (outil, personne, action)','aria-label':'Ce que je fais'});
+  const ok=$('button',{type:'button',class:'fprim',text:'Noter'});
+  const list=$('div',{class:'slist'}); const chart=$('div',{class:'schart'});
+  const form=$('div',{class:'fpart sform'},A.box,sit,fait,ok);
+  [sit,fait].forEach(t=>t.addEventListener('input',()=>grow(t)));
+  fbody.append(form,$('h4',{class:'fmh',text:'Mon suivi'}),chart,list);
+  const draw=()=>{
+    const E=st.e; list.innerHTML=''; chart.innerHTML='';
+    if(!E.length){list.append($('p',{class:'fhint',text:'Aucune note pour l’instant.'}));return;}
+    const pts=E.slice(-30); const W=600,H=160,px=i=>pts.length<2?W/2:20+i*(W-40)/(pts.length-1),py=v=>H-14-(v/100)*(H-28);
+    let svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Évolution des '+pts.length+' dernières notes"><line x1="20" x2="'+(W-20)+'" y1="'+py(50)+'" y2="'+py(50)+'" class="sg"/><text x="2" y="'+(py(50)+4)+'" class="st">50</text><text x="2" y="'+(py(100)+4)+'" class="st">100</text><text x="8" y="'+(py(0)+4)+'" class="st">0</text>';
+    if(pts.length>1)svg+='<polyline class="sl" points="'+pts.map((e,i)=>px(i)+','+py(e.v)).join(' ')+'"/>';
+    pts.forEach((e,i)=>{svg+='<circle cx="'+px(i)+'" cy="'+py(e.v)+'" r="5" fill="'+SCOL(e.v)+'" stroke="#333" stroke-width=".6"><title>'+new Date(e.t).toLocaleString('fr-CH')+' : '+e.v+'</title></circle>';});
+    chart.innerHTML=svg+'</svg>';
+    E.slice().reverse().forEach(e=>{const i=E.indexOf(e);
+      list.append($('div',{class:'sent'},$('span',{class:'sval sm',text:String(e.v),style:'background:'+SCOL(e.v)}),$('div',{},$('b',{text:new Date(e.t).toLocaleString('fr-CH',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}),e.s?$('p',{text:e.s}):null,e.f?$('p',{class:'fhint',text:'→ '+e.f}):null),$('button',{type:'button',class:'fdel','aria-label':'Supprimer cette note',text:'×',onclick:async()=>{E.splice(i,1);setStat(STAT[await save('suds',st)]);draw();}})));});
+  };
+  ok.onclick=async()=>{st.e.push({t:Date.now(),v:+A.r.value,s:sit.value.trim(),f:fait.value.trim()}); sit.value='';fait.value='';grow(sit);grow(fait); setStat('…'); draw(); setStat(STAT[await save('suds',st)]); };
+  fexp.onclick=async()=>{ fexp.disabled=true; let r='fail'; try{const J=await pdfLib(); const P=pdfDoc(J,'Mon suivi SUDS','Échelle subjective de détresse (0 à 100). Exporté le '+today()+'.'); if(!st.e.length)para(P,'Aucune note.'); else table(P,['Date','Niveau','Situation','Ce que j\'ai fait'],st.e.map(e=>[new Date(e.t).toLocaleString('fr-CH',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),String(e.v),e.s,e.f]),{columnStyles:{0:{cellWidth:32},1:{cellWidth:16,halign:'center'}}}); r=await offer(P.doc,'SUDS-suivi-'+fileStamp()+'.pdf');}catch(e){} fexp.disabled=false; if(r==='fail')setStat('Export impossible ici'); };
+  draw(); document.getElementById('fmclose').focus();
+}
+/* ---------- Étoile du rétablissement et un-recovery star ---------- */
+const STARS={
+ cible:{nom:'Étoile du rétablissement',max:5,min:1,
+  axes:['Je maîtrise ma vie et suis capable de faire mes propres choix','Je gère ma santé','Je me sens efficace face aux difficultés à surmonter','Je m’adapte facilement aux changements','J’ai de l’espoir en l’avenir','Je sais mobiliser mes ressources','Je me sens bien dans mes relations','J’ai un réseau de soutien efficace','Je me sens bien physiquement','Je me sens bien psychologiquement'],
+  bands:['#c62828','#e8851f','#f2c12e','#7ea33f','#3d6db5'],
+  aide:'Pour chaque phrase, situe-toi de 1 (au centre, rouge : pas du tout) à 5 (au bord, bleu : tout à fait). Touche l’étoile ou les chiffres.'},
+ unrec:{nom:'Un-recovery star',max:5,min:0,
+  axes:['Logement précaire','Sexisme','Perte de l’État-providence','Perte des droits','Inégalité économique','Homophobie, transphobie','Racisme','Discrimination','Trauma, trauma iatrogène','Pauvreté'],
+  bands:['#d9d4c3','#cfc8b2','#c4bca1','#b8af90','#ab9f7e'],
+  aide:'La version critique : les obstacles sociaux qui pèsent sur le rétablissement. De 0 (ne me concerne pas) à 5 (pèse énormément). Ce n’est pas une note sur toi, c’est une lecture de ce que la société fait peser.'}
+};
+delete STARS.unrec;
+function starSVG(S,vals,prev,opts={}){
+  const N=S.axes.length,L=S.max,R=opts.R||130,cx=opts.cx||170,cy=opts.cy||170,W=cx*2,H=cy*2;
+  const ang=i=>(-90+i*360/N)*Math.PI/180, pt=(r,a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)];
+  const poly=r=>S.axes.map((_,i)=>pt(r,ang(i)).map(n=>n.toFixed(1)).join(',')).join(' ');
+  const rv=v=>v<=0?0:((v-0.5)/L)*R;
+  let s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" class="starsvg" role="img" aria-label="'+S.nom+'">';
+  for(let k=L;k>=1;k--)s+='<polygon points="'+poly(k/L*R)+'" fill="'+S.bands[k-1]+'" stroke="#fff" stroke-width="1"/>';
+  S.axes.forEach((_,i)=>{const[x,y]=pt(R,ang(i));s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="#fff" stroke-width="1" opacity=".8"/>';});
+  if(!opts.static){ // cellules cliquables
+    const h=Math.PI/N;
+    S.axes.forEach((_,i)=>{for(let k=1;k<=L;k++){const a=ang(i),r0=(k-1)/L*R,r1=k/L*R;const P=[pt(r0,a-h),pt(r1,a-h),pt(r1,a+h),pt(r0,a+h)];s+='<polygon class="cell" data-i="'+i+'" data-k="'+k+'" points="'+P.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ')+'" fill="transparent"><title>'+(i+1)+'. '+S.axes[i]+' : '+k+'</title></polygon>';}});
+  }
+  const prof=(v,cls,col,dash)=>{const P=S.axes.map((_,i)=>pt(rv(+v[i]||0),ang(i)));return '<polygon points="'+P.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ')+'" fill="'+col+'" fill-opacity="'+(dash?0:.18)+'" stroke="'+col+'" stroke-width="'+(dash?2:3)+'" '+(dash?'stroke-dasharray="6 5"':'')+' stroke-linejoin="round" pointer-events="none"/>'+(dash?'':P.map((p,i)=>(+v[i]||0)>0?'<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="5" fill="'+col+'" stroke="#fff" stroke-width="2" pointer-events="none"/>':'').join(''));};
+  if(prev)s+=prof(prev,'prev','#555',true);
+  if(Object.keys(vals).length)s+=prof(vals,'cur','#17243a',false);
+  S.axes.forEach((_,i)=>{const[x,y]=pt(R+16,ang(i));s+='<text x="'+x.toFixed(1)+'" y="'+(y+4).toFixed(1)+'" text-anchor="middle" font-size="13" font-weight="700" fill="'+(opts.ink||'currentColor')+'" font-family="Helvetica,Arial,sans-serif" pointer-events="none">'+(i+1)+'</text>';});
+  return s+'</svg>';
+}
+function svgPng(svg,px){return new Promise((ok,ko)=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=px;c.height=px;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,px,px);x.drawImage(im,0,0,px,px);ok(c.toDataURL('image/png'));};im.onerror=ko;im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);});}
+const fdate=t=>new Date(t).toLocaleDateString('fr-CH',{day:'numeric',month:'long',year:'numeric'});
+async function openStar(){
+  openShell('Mon étoile du rétablissement'); curKey='etoile';
+  const st=await load('etoile'); curState=st; const b=await getBackend(); let tab='cible';
+  Object.keys(STARS).forEach(k=>{st[k]=st[k]||{cur:{},hist:[],cmp:-1};});
+  const persist=()=>{setStat('…');clearTimeout(timer);timer=setTimeout(async()=>{timer=null;setStat(STAT[await save('etoile',st)]);},500);};
+  const draw=()=>{
+    const S=STARS[tab],D=st[tab]; fbody.innerHTML='';
+    const tabs=$('div',{class:'stabs',role:'tablist'}); if(Object.keys(STARS).length<2)tabs.hidden=true; Object.keys(STARS).forEach(k=>tabs.append($('button',{type:'button',role:'tab','aria-selected':String(k===tab),class:'stab',text:STARS[k].nom,onclick:()=>{tab=k;draw();}}))); fbody.append(tabs);
+    fbody.append($('p',{class:'fhint',style:'margin:10px auto',text:S.aide+' '+(b.mode==='db'?'Enregistré sur ton compte, visible par toi seul·e.':'Enregistré sur cet appareil.')}));
+    const prev=D.cmp>=0&&D.hist[D.cmp]?D.hist[D.cmp].v:null;
+    const wrap=$('div',{class:'starwrap'}); wrap.innerHTML=starSVG(S,D.cur,prev);
+    wrap.querySelectorAll('.cell').forEach(c=>c.addEventListener('click',()=>{const i=+c.dataset.i,k=+c.dataset.k;D.cur[i]=(D.cur[i]==k&&S.min===0)?0:k;persist();draw();}));
+    const list=$('ol',{class:'starlist'});
+    S.axes.forEach((a,i)=>{const row=$('div',{class:'sbtns',role:'group','aria-label':a});
+      for(let k=S.min;k<=S.max;k++)row.append($('button',{type:'button',class:'sb'+(+D.cur[i]===k&&D.cur[i]!==undefined?' on':''),style:k>0?'--c:'+S.bands[k-1]:'--c:#ddd','aria-pressed':String(+D.cur[i]===k&&D.cur[i]!==undefined),text:String(k),onclick:()=>{D.cur[i]=k;persist();draw();}}));
+      list.append($('li',{},$('span',{text:a}),row));});
+    const note=$('textarea',{rows:2,placeholder:'Une note sur cette évaluation (facultatif)','aria-label':'Note'}); note.value=D.note||''; note.addEventListener('input',()=>{D.note=note.value;grow(note);persist();});
+    const snap=$('button',{type:'button',class:'fprim',text:'Enregistrer cette évaluation (datée)',onclick:async()=>{if(!Object.keys(D.cur).length)return;D.hist.push({t:Date.now(),v:{...D.cur},n:D.note||''});D.note='';D.cmp=D.hist.length-1;setStat(STAT[await save('etoile',st)]);draw();}});
+    const grid=$('div',{class:'stargrid'},wrap,$('div',{},list,note,snap)); fbody.append(grid);
+    if(D.hist.length){
+      fbody.append($('h4',{class:'fmh',text:'Mes évaluations'}));
+      const hl=$('div',{class:'slist'});
+      D.hist.slice().reverse().forEach(h=>{const i=D.hist.indexOf(h);
+        hl.append($('div',{class:'sent'},$('div',{},$('b',{text:fdate(h.t)}),h.n?$('p',{class:'fhint',text:h.n}):null),
+          $('button',{type:'button',class:'chip','aria-pressed':String(D.cmp===i),text:D.cmp===i?'Comparée (pointillés)':'Comparer',onclick:()=>{D.cmp=D.cmp===i?-1:i;persist();draw();}}),
+          $('button',{type:'button',class:'chip',text:'Reprendre',title:'Recharger ces valeurs dans l’étoile',onclick:()=>{D.cur={...h.v};persist();draw();}}),
+          $('button',{type:'button',class:'fdel','aria-label':'Supprimer cette évaluation',text:'×',onclick:async()=>{D.hist.splice(i,1);if(D.cmp>=D.hist.length)D.cmp=-1;setStat(STAT[await save('etoile',st)]);draw();}})));});
+      fbody.append(hl);
+    }
+    requestAnimationFrame(()=>grow(note));
+  };
+  fexp.onclick=async()=>{ fexp.disabled=true; let r='fail'; try{
+    const J=await pdfLib(); const S=STARS[tab],D=st[tab]; const prev=D.cmp>=0&&D.hist[D.cmp]?D.hist[D.cmp]:null;
+    const P=pdfDoc(J,S.nom,'Exporté le '+today()+'.'+(prev?' En pointillés : l\'évaluation du '+fdate(prev.t)+'.':'')+' D\'après Pro Mente Sana / Coraasp.');
+    const png=await svgPng(starSVG(S,D.cur,prev&&prev.v,{static:true,ink:'#17243a'}),900); P.doc.addImage(png,'PNG',45,P.y,120,120); P.y+=126;
+    table(P,['','Domaine','Maintenant'].concat(prev?[fdate(prev.t)]:[]),S.axes.map((a,i)=>[String(i+1),a,D.cur[i]!==undefined?String(D.cur[i]):'-'].concat(prev?[prev.v[i]!==undefined?String(prev.v[i]):'-']:[])),{columnStyles:{0:{cellWidth:8},2:{cellWidth:24,halign:'center'},3:{cellWidth:32,halign:'center'}}});
+    if(D.note)para(P,'Note : '+D.note);
+    if(D.hist.length){para(P,'Historique',{bold:true,size:11});table(P,['Date'].concat(S.axes.map((_,i)=>String(i+1))),D.hist.map(h=>[fdate(h.t)].concat(S.axes.map((_,i)=>h.v[i]!==undefined?String(h.v[i]):'-'))),{styles:{fontSize:8,halign:'center'},columnStyles:{0:{halign:'left',cellWidth:34}}});}
+    r=await offer(P.doc,(tab==='cible'?'Etoile-retablissement-':'Un-recovery-star-')+fileStamp()+'.pdf');
+  }catch(e){} fexp.disabled=false; if(r==='fail')setStat('Export impossible ici'); };
+  draw(); document.getElementById('fmclose').focus();
+}
+
+document.addEventListener('click',e=>{const b=e.target.closest('[data-form]');if(!b)return;e.preventDefault();const k=b.dataset.form;if(k==='etoile')openStar();else if(k==='suds')openSuds();else if(FORMS[k])openForm(k);});
+})();
+
+</script>
+<script>
+(function(){
+    const parse=s=>s.split(',').flatMap(part=>{const [a,b]=part.split('-').map(Number);return b?Array.from({length:b-a+1},(_,i)=>a+i):[a];});
+
+  const SPR={"ad":{"w":1000,"h":563,"n":55},"genre":{"w":1000,"h":563,"n":29},"m1":{"w":1000,"h":563,"n":33},"m2":{"w":1000,"h":708,"n":51},"m3":{"w":1000,"h":563,"n":58},"m4":{"w":1000,"h":563,"n":78},"m5":{"w":1000,"h":708,"n":9},"m6":{"w":1000,"h":708,"n":16},"m7":{"w":1000,"h":563,"n":55},"pt":{"w":1000,"h":751,"n":40},"rc":{"w":800,"h":1067,"n":48},"s":{"w":1032,"h":593,"n":109},"gk":{"w":1000,"h":563,"n":194}}, G=8;
+  function spriteStyle(d,n){const m=SPR[d];const g=Math.floor((n-1)/G);const k=Math.min(G,m.n-g*G);const i=(n-1)%G;
+    const pos=k>1?(i/(k-1))*100:0;
+    return `background-image:url(sprites/${d}-${String(g).padStart(2,'0')}.jpg);background-size:100% ${k*100}%;background-position:0 ${pos}%;aspect-ratio:${m.w}/${m.h}`;}
+  // Sous-sommaires dans la colonne
+  const anchorPanel={};
+  document.querySelectorAll('.panel').forEach(p=>{
+    const name=p.id.slice(2);
+    const nav=document.querySelector(`.subnav[data-for="${name}"]`);
+    p.querySelectorAll('section[id]').forEach(s=>{
+      anchorPanel[s.id]=name;
+      if(nav&&s.dataset.nav){const a=document.createElement('a');a.href='#'+s.id;a.textContent=s.dataset.nav;nav.appendChild(a);}
+    });
+  });
+
+  // Rubriques : index
+  document.querySelectorAll('.panel.rubriques').forEach(p=>{const idx=p.querySelector('.rubidx');
+    p.querySelectorAll('section.s').forEach(x=>{const a=document.createElement('a');a.className='rubcard';a.href='#'+x.id;const ks=[...x.querySelectorAll('.card .k')].map(k=>k.textContent.split(' · ').pop()).join(' · ');a.innerHTML=`<b>${x.dataset.nav}</b><span>${ks||x.querySelector('h2').textContent}</span>`;idx.appendChild(a);});});
+
+  // Recherche par mots-clés
+  const norm=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const IDX=[];
+  document.querySelectorAll('.panel').forEach(p=>{
+    const name=p.id.slice(2); if(name==='accueil') return;
+    const link=document.querySelector(`.navlink[data-p="${name}"]`); const mod=link&&link.closest('.mod');
+    const modName=mod?mod.querySelector('.modhead b').textContent:'';
+    const secs=p.querySelectorAll('section.s');
+    (secs.length?secs:[p]).forEach(s=>{
+      const clone=s.cloneNode(true); clone.querySelectorAll('summary,.slides-box,svg').forEach(e=>e.remove());
+      const txt=clone.textContent.replace(/\s+/g,' ').trim(); const h=s.querySelector('h2');
+      IDX.push({id:s.id||name,mod:modName,page:p.dataset.title,title:h?h.textContent:p.dataset.title,txt,n:norm(txt)});
+    });
+  });
+  const qIn=document.getElementById('q'), res=document.getElementById('results');
+  function search(){
+    const raw=qIn.value.trim(); const terms=norm(raw).split(/\s+/).filter(t=>t.length>1);
+    if(!terms.length){res.hidden=true;res.innerHTML='';return;}
+    const hits=IDX.filter(e=>terms.every(t=>e.n.includes(t))).map(e=>({e,score:terms.reduce((a,t)=>a+e.n.split(t).length-1,0)})).sort((a,b)=>b.score-a.score).slice(0,40);
+    res.hidden=false;
+    if(!hits.length){res.innerHTML=`<p class="muted">Aucun résultat pour « ${esc(raw)} ».</p>`;return;}
+    res.innerHTML=`<p class="rcount">${hits.length} résultat${hits.length>1?'s':''}</p>`+hits.map(({e})=>{
+      const i=e.n.indexOf(terms[0]); const a=Math.max(0,i-70), b=Math.min(e.txt.length,i+130);
+      let snip=esc((a?'…':'')+e.txt.slice(a,b)+(b<e.txt.length?'…':''));
+      terms.forEach(t=>{const re=new RegExp('('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').split('').map(c=>{const v={a:'[aàâä]',e:'[eéèêë]',i:'[iîï]',o:'[oôö]',u:'[uùûü]',c:'[cç]'}[c];return v||c;}).join('')+')','gi');snip=snip.replace(re,'<mark>$1</mark>');});
+      return `<a class="hit" href="#${e.id}" data-id="${e.id}"><span class="hpath">${esc(e.mod?e.mod+' › ':'')}${esc(e.page)}</span><b>${esc(e.title)}</b><span class="hsnip">${snip}</span></a>`;}).join('');
+  }
+  qIn.addEventListener('input',search);
+  res.addEventListener('click',ev=>{const a=ev.target.closest('.hit'); if(!a) return;
+    const terms=norm(qIn.value).split(/\s+/).filter(t=>t.length>1);
+    setTimeout(()=>{const s=document.getElementById(a.dataset.id); if(!s) return;
+      s.querySelectorAll('details.more:not(.slides-box)').forEach(d=>{if(terms.some(t=>norm(d.textContent).includes(t))) d.open=true;});
+      s.classList.add('flash'); setTimeout(()=>s.classList.remove('flash'),1600);},60);});
+  document.querySelectorAll('.searchBtn').forEach(b=>b.addEventListener('click',()=>{location.hash='accueil'; setTimeout(()=>qIn.focus(),80);}));
+
+  // Sommaire : modules repliés par défaut
+  document.querySelectorAll('.hmod').forEach(m=>{
+    const list=m.querySelector('.hthemes'), head=m.querySelector('.hmodhead');
+    if(!list||!head) return;
+    list.hidden=true; m.classList.add('closed');
+    const chev=document.createElement('span'); chev.className='hchev'; chev.setAttribute('aria-hidden','true'); chev.textContent='▸'; head.appendChild(chev);
+    head.setAttribute('role','button'); head.setAttribute('aria-expanded','false');
+    head.addEventListener('click',e=>{e.preventDefault(); const open=list.hidden; list.hidden=!open; m.classList.toggle('closed',!open); head.setAttribute('aria-expanded',open); chev.textContent=open?'▾':'▸';});
+  });
+
+  // Modules repliables
+  document.querySelectorAll('.mod[data-mod] > .modhead').forEach(h=>h.addEventListener('click',()=>{
+    const open=h.getAttribute('aria-expanded')!=='true';h.setAttribute('aria-expanded',open);h.nextElementSibling.hidden=!open;}));
+
+  // Navigation
+  const links=[...document.querySelectorAll('.navlink[data-p]')];
+  const panels=[...document.querySelectorAll('.panel')];
+  const mTitle=document.getElementById('mbarTitle');
+  function show(name,anchor){
+    if(!document.getElementById('p-'+name))name='accueil';
+    document.body.classList.toggle('at-home',name==='accueil');
+    links.forEach(l=>l.classList.toggle('active',l.dataset.p===name));
+    panels.forEach(p=>p.hidden=p.id!=='p-'+name);
+    document.querySelectorAll('.subnav').forEach(n=>n.hidden=n.dataset.for!==name);
+    const act=links.find(l=>l.dataset.p===name);const mod=act&&act.closest('.mod');
+    document.querySelectorAll('.mod[data-mod]').forEach(m=>{const h=m.querySelector('.modhead');const on=m===mod;h.setAttribute('aria-expanded',on);h.nextElementSibling.hidden=!on;});
+    mTitle.textContent=document.getElementById('p-'+name).dataset.title;
+    const pan=document.getElementById('p-'+name);
+    let sub=false;
+    if(pan.classList.contains('rubriques')){const secs=[...pan.querySelectorAll('section.s')];const one=anchor&&secs.some(x=>x.id===anchor);sub=!!one;
+      secs.forEach(x=>x.hidden=one?x.id!==anchor:true);pan.querySelector('.rubidx').hidden=one;pan.querySelector('.rubback').hidden=!one;}
+    {const hb=document.getElementById('homeBtn');if(sub){hb.textContent='← '+pan.dataset.title;hb.dataset.back=name;}else{hb.textContent='← Sommaire';delete hb.dataset.back;}}
+    if(anchor){const el=document.getElementById(anchor);if(el)requestAnimationFrame(()=>el.scrollIntoView());}
+    else window.scrollTo(0,0);
+    closeMenu();
+  }
+  function route(){
+    const h=location.hash.slice(1);
+    if(h&&document.getElementById('p-'+h))return show(h);
+    if(h&&anchorPanel[h])return show(anchorPanel[h],h);
+    show('accueil');
+  }
+  links.forEach(l=>l.addEventListener('click',()=>{if(location.hash==='#'+l.dataset.p)show(l.dataset.p);else location.hash=l.dataset.p;}));
+  window.addEventListener('hashchange',route);
+
+  // Menu mobile
+  const menuBtn=document.getElementById('menuBtn'),scrim=document.getElementById('scrim');
+  function openMenu(){document.body.classList.add('menu-open');scrim.hidden=false;menuBtn.setAttribute('aria-expanded','true');}
+  function closeMenu(){document.body.classList.remove('menu-open');scrim.hidden=true;menuBtn.setAttribute('aria-expanded','false');}
+  menuBtn.addEventListener('click',()=>document.body.classList.contains('menu-open')?closeMenu():openMenu());
+  document.getElementById('homeBtn').addEventListener('click',e=>{const t=e.currentTarget.dataset.back||'accueil';if(location.hash==='#'+t)show(t);else location.hash=t;});
+  scrim.addEventListener('click',closeMenu);
+  document.querySelectorAll('.subnav').forEach(n=>n.addEventListener('click',e=>{if(e.target.tagName==='A')closeMenu();}));
+
+  route();
+
+})();
+</script>
+
+
+<style>
+.inst{position:fixed;inset:0;z-index:9999;background:var(--shade);display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.inst[hidden]{display:none!important}
+.instbox{background:var(--paper);color:var(--fg);border-radius:16px;max-width:460px;width:100%;max-height:calc(100vh - 32px);overflow:auto;padding:20px 20px 16px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+@media (min-width:640px){.inst{align-items:center}}
+.instbox h2{font-family:var(--display);font-size:1.35rem;margin:0 0 4px}
+.instbox .lead{color:var(--muted);margin:0 0 14px;font-size:.95rem;line-height:1.45}
+.insttabs{display:flex;gap:6px;margin:0 0 12px}
+.insttabs button{flex:1;border:1px solid var(--line);background:var(--side);color:var(--fg);border-radius:999px;padding:8px 10px;font:inherit;font-size:.9rem;cursor:pointer}
+.insttabs button[aria-pressed="true"]{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+.instbox ol{margin:0 0 14px;padding-left:22px;line-height:1.55}
+.instbox ol li{margin:0 0 6px}
+.instbox .note{background:var(--teal-soft);border-radius:10px;padding:10px 12px;font-size:.88rem;line-height:1.45;margin:0 0 14px}
+.instqr{display:flex;gap:14px;align-items:center;border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
+.instqr .qr{background:#fff;padding:8px;border-radius:8px;border:1px solid var(--line);flex:none;line-height:0}
+.instqr .qr svg{width:116px;height:116px;display:block}
+.instqr p{margin:0;font-size:.86rem;color:var(--muted);line-height:1.45}
+#instUrl{word-break:break-all}
+.instact{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.instact button{border:0;border-radius:10px;padding:10px 16px;font:inherit;cursor:pointer;background:var(--side);color:var(--fg)}
+.instact button.pri{background:var(--teal);color:#fff}
+.ibanner{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:9998;background:var(--navy);color:var(--on-navy);border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center;box-shadow:0 6px 24px rgba(0,0,0,.25);max-width:520px;margin:0 auto}
+.ibanner[hidden]{display:none!important}
+.ibanner span{flex:1;font-size:.92rem;line-height:1.35}
+.ibanner button{border:0;border-radius:8px;padding:8px 12px;font:inherit;font-size:.9rem;cursor:pointer}
+.ibanner .go{background:#fff;color:var(--navy);font-weight:700}
+.ibanner .x{background:transparent;color:var(--on-navy);font-size:1.1rem;padding:6px 8px}
+</style>
+
+<div class="ibanner" id="ibanner" hidden role="region" aria-label="Installer le carnet">
+  <span>📲 Installe le carnet sur ton téléphone : il s'ouvrira comme une appli, même sans internet.</span>
+  <button type="button" class="go" id="ibGo">Comment ?</button>
+  <button type="button" class="x" id="ibX" aria-label="Fermer">✕</button>
+</div>
+
+<div class="inst" id="inst" hidden role="dialog" aria-modal="true" aria-labelledby="instTitle">
+  <div class="instbox">
+    <h2 id="instTitle">Installer mon carnet</h2>
+    <p class="lead">Une fois installé, ton carnet a son icône sur l'écran d'accueil et s'ouvre même sans connexion. Ce que tu y écris reste uniquement sur ton téléphone.</p>
+    <div class="insttabs" role="group" aria-label="Type de téléphone">
+      <button type="button" data-os="ios" aria-pressed="false">iPhone</button>
+      <button type="button" data-os="android" aria-pressed="false">Android</button>
+      <button type="button" data-os="pc" aria-pressed="false">Ordinateur</button>
+    </div>
+    <div data-panel="ios">
+      <ol>
+        <li>Ouvre ce carnet dans <b>Safari</b> (pas dans une autre appli).</li>
+        <li>Touche le bouton <b>Partager</b> : le carré avec une flèche vers le haut <span aria-hidden="true">⬆︎</span>.</li>
+        <li>Fais défiler et choisis <b>« Sur l'écran d'accueil »</b>.</li>
+        <li>Touche <b>« Ajouter »</b>. C'est fait !</li>
+      </ol>
+    </div>
+    <div data-panel="android" hidden>
+      <ol>
+        <li>Ouvre ce carnet dans <b>Chrome</b>.</li>
+        <li id="instAndroidBtn" hidden>Touche simplement le bouton ci-dessous :<br><button type="button" class="pri" id="instNow" style="margin-top:8px;border:0;border-radius:10px;padding:10px 16px;background:var(--teal);color:#fff;font:inherit;cursor:pointer">Installer maintenant</button></li>
+        <li>Sinon, touche les <b>trois points ⋮</b> en haut à droite.</li>
+        <li>Choisis <b>« Installer l'application »</b> ou <b>« Ajouter à l'écran d'accueil »</b>.</li>
+      </ol>
+    </div>
+    <div data-panel="pc" hidden>
+      <ol>
+        <li>Dans Chrome ou Edge, clique sur l'icône d'installation à droite de la barre d'adresse.</li>
+        <li>Ou, plus simple : scanne le code ci-dessous avec ton téléphone pour installer le carnet dessus.</li>
+      </ol>
+    </div>
+    <p class="note" id="instDone" hidden>✓ Ton carnet est déjà installé et ouvert comme une application.</p>
+    <p class="note">🔒 Rien n'est envoyé sur internet. Pense à exporter tes fiches en PDF de temps en temps : si tu changes de téléphone ou désinstalles le carnet, c'est ta sauvegarde.</p>
+    <div class="instqr">
+      <div class="qr" id="instQr" aria-hidden="true"></div>
+      <p><b style="color:var(--fg)">Partager le carnet</b><br>Scanne ce code pour ouvrir le carnet sur un autre téléphone.<br><span id="instUrl"></span></p>
+    </div>
+    <div class="instact"><button type="button" class="pri" id="instClose">Fermer</button></div>
+  </div>
+</div>
+
+<script src="vendor/qrcode.js"></script>
+<script>
+(function(){
+  var ua=navigator.userAgent||'';
+  var isIOS=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  var isAndroid=/android/i.test(ua);
+  var standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+  var dlg=document.getElementById('inst'),banner=document.getElementById('ibanner'),deferred=null,ret=null;
+  var url=location.origin+location.pathname.replace(/index\.html$/,'');
+
+  function show(os){
+    document.querySelectorAll('.insttabs button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.os===os?'true':'false');});
+    document.querySelectorAll('[data-panel]').forEach(function(p){p.hidden=p.dataset.panel!==os;});
+  }
+  document.querySelectorAll('.insttabs button').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.os);});});
+
+  function drawQr(){
+    var box=document.getElementById('instQr');if(box.dataset.done||typeof qrcode!=='function')return;
+    try{var q=qrcode(0,'M');q.addData(url);q.make();box.innerHTML=q.createSvgTag({cellSize:4,margin:0,scalable:true});box.dataset.done=1;}catch(e){}
+    document.getElementById('instUrl').textContent=url;
+  }
+  function open(){
+    ret=document.activeElement;drawQr();show(isIOS?'ios':isAndroid?'android':'pc');
+    document.getElementById('instDone').hidden=!standalone;
+    document.getElementById('instAndroidBtn').hidden=!deferred;
+    dlg.hidden=false;dlg.querySelector('.instbox').scrollTop=0;document.getElementById('instClose').focus({preventScroll:true});
+  }
+  function close(){dlg.hidden=true;if(ret&&ret.focus)ret.focus();}
+  window.carnetInstall=open;
+  document.getElementById('instClose').addEventListener('click',close);
+  dlg.addEventListener('click',function(e){if(e.target===dlg)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!dlg.hidden)close();});
+  var nav=document.getElementById('installNav');if(nav)nav.addEventListener('click',open);
+
+  /* Android / Chrome : installation en un geste */
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferred=e;document.getElementById('instAndroidBtn').hidden=false;});
+  document.getElementById('instNow').addEventListener('click',function(){if(!deferred)return;deferred.prompt();deferred.userChoice.finally(function(){deferred=null;close();});});
+  window.addEventListener('appinstalled',function(){banner.hidden=true;});
+
+  /* Bannière discrète à la première visite sur téléphone */
+  var seen=null;try{seen=localStorage.getItem('carnet-install-banner');}catch(e){}
+  if(!standalone&&(isIOS||isAndroid)&&!seen)setTimeout(function(){banner.hidden=false;},1500);
+  function dismiss(){banner.hidden=true;try{localStorage.setItem('carnet-install-banner','1');}catch(e){}}
+  document.getElementById('ibX').addEventListener('click',dismiss);
+  document.getElementById('ibGo').addEventListener('click',function(){dismiss();open();});
+  if(standalone&&nav)nav.textContent='📲 Partager le carnet';
+
+  /* Fonctionnement hors ligne */
+  if('serviceWorker' in navigator&&location.protocol!=='file:'){
+    window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});
+  }
+})();
+</script>
+</body></html>
