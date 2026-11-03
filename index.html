@@ -790,6 +790,14 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 <p class="idea">Te situer sur dix domaines de ta vie, et voir comment ça évolue avec le temps.</p>
 <div class="fillrow"><button type="button" class="fillbtn" data-form="etoile">✎ Remplir mon étoile du rétablissement</button></div>
 </section>
+<section class="s" data-nav="Carnet de gratitude" id="out-gratitude"><h2>Carnet de gratitude</h2>
+<p class="idea">Chaque jour, noter trois choses pour lesquelles tu ressens de la gratitude. Pas besoin de grandes choses : un café au soleil, un message d’un·e ami·e, un moment de calme, un repas qui t’a fait du bien.</p>
+<div class="fillrow"><button type="button" class="fillbtn" data-form="gratitude">✎ Écrire dans mon carnet de gratitude</button></div>
+<div class="stack">
+<div class="card t"><div class="k">Pourquoi ça peut aider</div><p>Quand ça va mal, le cerveau remarque surtout ce qui ne va pas. Ce petit exercice entraîne le regard à voir aussi ce qui tient encore debout. Ce n’est pas nier ce qui est dur : les deux peuvent exister en même temps.</p></div>
+<div class="card t"><div class="k">Quelques conseils</div><ul class="l"><li>Choisis un moment fixe, par exemple le soir avant de dormir.</li><li>Sois précis·e : « la voisine m’a souri dans l’escalier » plutôt que « ma vie ».</li><li>Tu peux sauter des jours. Ce n’est pas un devoir, et il n’y a pas de bonne réponse.</li><li>Les jours difficiles, une seule chose suffit. Même toute petite.</li><li>De temps en temps, relis les pages d’avant.</li></ul></div>
+</div>
+</section>
 <section class="s" data-nav="Échelle de détresse (SUDS)" id="out-suds"><h2>Échelle de détresse (SUDS)</h2>
 <p class="idea">Noter ta détresse de 0 à 100, honnêtement, pour mieux la connaître, voir comment elle évolue, et choisir l’outil qui convient au moment.</p>
 <div class="fillrow"><button type="button" class="fillbtn" data-form="suds">✎ Noter ma détresse et suivre mon évolution</button></div>
@@ -1147,6 +1155,17 @@ const FORMS={
    ]}
   ]}
 };
+FORMS['gratitude']={multi:true,title:'Carnet de gratitude',short:'Carnet-de-gratitude',titleField:'g1',newLabel:'Nouvelle page',
+  intro:'Note trois choses pour lesquelles tu ressens de la gratitude aujourd’hui. Des petites choses suffisent. Chaque jour est une page.',
+  credit:'D’après l’exercice des « trois bonnes choses » de la psychologie positive.',
+  parts:[{title:'Aujourd’hui',fields:[
+    {t:'text',id:'g1',label:'Une chose pour laquelle je ressens de la gratitude',small:true},
+    {t:'text',id:'g2',label:'Une deuxième',small:true},
+    {t:'text',id:'g3',label:'Une troisième',small:true},
+    {t:'text',id:'pourquoi',label:'Pourquoi ça compte pour moi, ou ce que j’ai fait pour que ça arrive (facultatif)'},
+    {t:'text',id:'merci',label:'Quelqu’un que j’aimerais remercier (facultatif)',small:true}
+  ]}]};
+
 const LIENS=['Action','Sensation corporelle','Pensée','Événement','Sentiment'];
 Object.assign(FORMS,{
 'ecoute':{multi:true,title:'Conscience de soi dans l’écoute',short:'Conscience-de-soi-ecoute',titleField:'contexte',newLabel:'Nouvelle écoute',
