@@ -303,6 +303,7 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 .sent .chip{flex:none;align-self:center}
 .sb.wide{width:auto;min-width:44px;padding:0 10px}
 .gprev ul.l{margin:4px 0 2px}.gprev .fhint{margin-top:2px}
+.cchoice{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.cch{font:inherit;text-align:left;display:flex;flex-direction:column;gap:2px;background:var(--b);color:#17243a;border:2px solid transparent;border-radius:10px;padding:10px 12px;cursor:pointer}.cch span{font-size:.84rem}.cch.on{border-color:var(--teal);box-shadow:0 0 0 2px var(--teal)}
 </style>
 <style>
 .sos{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--fg);background:var(--coral-soft);border:1px solid var(--coral);border-radius:10px;padding:12px 16px;margin:18px 0 6px;max-width:760px}
@@ -362,7 +363,7 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 <main><div class="content">
 <div class="panel home" data-title="Sommaire" id="p-accueil">
 <div class="hero">
-<span class="eyebrow">Par Philippe Vaudan, pair praticien en santé mentale · version du 3 novembre 2026</span>
+<span class="eyebrow">Par Philippe Vaudan, pair praticien en santé mentale · version du 3 novembre 2026 (2)</span>
 <h1 class="htitle">Mon carnet rétablissement</h1>
 <p>Des repères pour comprendre ce qu’on traverse, et des outils à remplir pour prendre soin de soi. Lis dans l’ordre que tu veux, à ton rythme.</p>
 <div class="search"><label class="sr" for="q">Rechercher dans le carnet</label><span aria-hidden="true" class="loupe"><svg height="20" viewbox="0 0 24 24" width="20"><circle cx="10.5" cy="10.5" fill="none" r="6.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path></svg></span><input autocomplete="off" id="q" placeholder="Recherche" type="search"/></div>
@@ -380,7 +381,7 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 <h2 class="hsec">Ressources</h2>
 <div class="hmods">
 <article class="hmod"><a class="hmodhead" href="#outils"><h3>Outils</h3></a><ol class="hthemes">
-<li><a href="#out-revim"><span class="dot"></span>ReViM</a></li><li><a href="#out-wrap"><span class="dot"></span>WRAP</a></li><li><a href="#out-etoile"><span class="dot"></span>Étoile du rétablissement</a></li><li><a href="#out-gratitude"><span class="dot"></span>Carnet de gratitude</a></li><li><a href="#out-suds"><span class="dot"></span>Échelle de détresse</a></li><li><a href="#out-tcd"><span class="dot"></span>Émotions (TCD)</a></li><li><a href="#out-cercles"><span class="dot"></span>Cercles d’influence</a></li><li><a href="#out-visual"><span class="dot"></span>Visual board</a></li></ol></article>
+<li><a href="#out-revim"><span class="dot"></span>ReViM</a></li><li><a href="#out-wrap"><span class="dot"></span>WRAP</a></li><li><a href="#out-etoile"><span class="dot"></span>Étoile du rétablissement</a></li><li><a href="#out-gratitude"><span class="dot"></span>Carnet de gratitude</a></li><li><a href="#out-suds"><span class="dot"></span>Échelle de bien-être</a></li><li><a href="#out-tcd"><span class="dot"></span>Émotions (TCD)</a></li><li><a href="#out-cercles"><span class="dot"></span>Cercles d’influence</a></li><li><a href="#out-visual"><span class="dot"></span>Visual board</a></li></ol></article>
 <article class="hmod"><a class="hmodhead" href="#lectures"><h3>Lectures</h3></a></article>
 <article class="hmod"><a class="hmodhead" href="#aide"><h3>Où trouver de l’aide</h3></a></article>
 </div></div>
@@ -537,7 +538,7 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 <div class="card t"><div class="k">Nouveau</div><p>Je ne l’ai jamais vécu.</p></div>
 <div class="card t"><div class="k">Ça me touche</div><p>Mes valeurs ou mon image de moi sont en jeu.</p></div>
 </div>
-<p class="added">Pour suivre ton niveau de détresse : l’<a href="#out-suds">échelle SUDS</a>.</p>
+<p class="added">Pour suivre comment tu te sens : l’<a href="#out-suds">échelle de bien-être</a>.</p>
 </section>
 <section class="s" data-nav="Prendre soin de soi" id="emo-soin">
 <h2>Prendre soin de soi</h2>
@@ -642,7 +643,7 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 <h2>Ce qui peut aider</h2>
 <ul class="l">
 <li>En parler : les thérapies comportementales, qui apprennent à affronter peu à peu ce qui fait peur, marchent bien</li>
-<li>Noter son niveau de détresse pour mieux le connaître : l’<a href="#out-suds">échelle SUDS</a></li>
+<li>Noter comment on se sent pour mieux se connaître : l’<a href="#out-suds">échelle de bien-être</a></li>
 <li>Des outils pour traverser les moments forts : les fiches <a href="#out-tcd">TCD</a></li>
 <li>Se rappeler qu’une crise d’angoisse redescend toujours</li>
 </ul>
@@ -799,10 +800,10 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 <div class="card t"><div class="k">Quelques conseils</div><ul class="l"><li>Choisis un moment fixe, par exemple le soir avant de dormir.</li><li>Sois précis·e : « la voisine m’a souri dans l’escalier » plutôt que « ma vie ».</li><li>Tu peux sauter des jours. Ce n’est pas un devoir, et il n’y a pas de bonne réponse.</li><li>Les jours difficiles, une seule chose suffit. Même toute petite.</li><li>De temps en temps, relis les pages d’avant.</li></ul></div>
 </div>
 </section>
-<section class="s" data-nav="Échelle de détresse (SUDS)" id="out-suds"><h2>Échelle de détresse (SUDS)</h2>
-<p class="idea">Noter ta détresse de 0 à 100, honnêtement, pour mieux la connaître, voir comment elle évolue, et choisir l’outil qui convient au moment.</p>
-<div class="fillrow"><button type="button" class="fillbtn" data-form="suds">✎ Noter ma détresse et suivre mon évolution</button></div>
-<div class="stack"><div class="card t"><div class="k">L’échelle</div><p>Les niveaux de 0 à 100, avec les compétences à essayer.</p><p style="margin-top:6px"><a href="ressources/SUDS-echelle-detresse.pdf">Ouvrir (PDF)</a></p></div></div></section>
+<section class="s" data-nav="Échelle de bien-être" id="out-suds"><h2>Échelle de bien-être</h2>
+<p class="idea">Noter comment tu te sens de 0 à 100, honnêtement : 0, c’est pas bien du tout, 100, c’est très bien. Pour mieux te connaître, voir comment ça évolue, et choisir l’outil qui convient au moment.</p>
+<div class="fillrow"><button type="button" class="fillbtn" data-form="suds">✎ Noter mon bien-être et suivre mon évolution</button></div>
+<div class="stack"><div class="card t"><div class="k">L’échelle d’origine</div><p>Cet outil s’inspire de l’échelle SUDS, qui mesure la détresse dans l’autre sens : 0, c’est calme, 100, c’est la détresse la plus forte. Le document d’origine, avec les compétences à essayer selon le niveau :</p><p style="margin-top:6px"><a href="ressources/SUDS-echelle-detresse.pdf">Ouvrir (PDF)</a></p></div></div></section>
 <section class="s" data-nav="Émotions (TCD)" id="out-tcd"><h2>Émotions : les fiches de la TCD</h2>
 <p class="idea">La thérapie comportementale dialectique (TCD) a été créée par Marsha Linehan, qui a elle-même traversé de grandes souffrances. Elle aide à accepter ce qu’on vit et, en même temps, à changer ce qui fait souffrir.</p>
 <div class="fillrow"><button type="button" class="fillbtn" data-form="tcd-ft1">✎ Peser le pour et le contre</button><button type="button" class="fillbtn" data-form="tcd-ft2">✎ Comprendre un comportement (analyse en chaîne)</button></div>
@@ -810,17 +811,18 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 <div class="card t"><div class="k">Pour aller plus loin</div><p>Ces deux fiches viennent du manuel de Marsha Linehan, « Documents et fiches de travail pour l’entraînement aux compétences TCD ». Il existe des groupes de compétences TCD : tu peux en parler à ton ou ta thérapeute.</p></div></div></section>
 <section class="s" data-nav="Cercles d’influence" id="out-cercles"><h2>Les cercles d’influence</h2>
 <p class="idea">Quand tout se mélange dans la tête, cet outil aide à trier ce qui te préoccupe, et à savoir où mettre ton énergie.</p>
+<div class="fillrow"><button type="button" class="fillbtn" data-form="cercles">✎ Trier une situation dans mes cercles</button></div>
 <p style="max-width:66ch">On dessine trois cercles, l’un dans l’autre.</p>
 <div class="fig block">
-<svg aria-label="Trois cercles l’un dans l’autre : au centre ce que je contrôle, autour ce que j’influence, à l’extérieur ce qui me préoccupe" role="img" style="max-width:320px" viewBox="0 0 300 200">
+<svg aria-label="Trois cercles l’un dans l’autre : au centre ce que je contrôle, autour ce que j’influence, à l’extérieur ce dont je lâche prise" role="img" style="max-width:320px" viewBox="0 0 300 200">
 <circle cx="150" cy="100" fill="var(--navy-soft)" r="95"/><circle cx="150" cy="100" fill="var(--ochre-soft)" r="62"/><circle cx="150" cy="100" fill="var(--teal-soft)" r="30" stroke="var(--teal)"/>
-<g fill="var(--fg)" font-size="11.5" text-anchor="middle"><text font-weight="700" x="150" y="104">je contrôle</text><text x="150" y="58">j’influence</text><text x="150" y="24">ça me préoccupe</text></g></svg>
+<g fill="var(--fg)" font-size="11.5" text-anchor="middle"><text font-weight="700" x="150" y="104">je contrôle</text><text x="150" y="58">j’influence</text><text x="150" y="24">je lâche prise</text></g></svg>
 </div>
 <div class="stack block">
 <div class="card t"><div class="k">1 · Vider son sac</div><p>Écris tout ce qui te préoccupe en ce moment, sans trier.</p></div>
-<div class="card t"><div class="k">2 · Ranger chaque souci dans un cercle</div><p><b>Au centre, ce que je contrôle</b> : mes choix, mes réactions, ce que je fais aujourd’hui. <b>Autour, ce que j’influence</b> : ce sur quoi je peux agir un peu, avec d’autres. <b>À l’extérieur, ce qui me préoccupe sans que je puisse le changer</b> : le passé, l’actualité, ce que pensent les autres.</p></div>
+<div class="card t"><div class="k">2 · Ranger chaque souci dans un cercle</div><p><b>Au centre, ce que je contrôle</b> : mes choix, mes réactions, ce que je fais aujourd’hui. <b>Autour, ce que j’influence</b> : ce sur quoi je peux agir un peu, avec d’autres. <b>À l’extérieur, je lâche prise</b> : ce qui me préoccupe mais que je ne peux pas changer, comme le passé, l’actualité, ce que pensent les autres.</p></div>
 <div class="card t"><div class="k">3 · Mettre son énergie au bon endroit</div><p>Pour le centre, choisis une action. Pour le cercle du milieu, un petit pas. Pour l’extérieur, essaie de lâcher prise, ou limite le temps que tu y passes.</p></div>
-<div class="card t"><div class="k">Un exemple</div><p>« Je suis inquiet pour mon dossier AI. » Je ne contrôle pas la décision (extérieur). J’influence : appeler mon assistante sociale pour savoir où en est le dossier (milieu). Je contrôle : préparer mes questions ce soir, puis aller marcher pour me changer les idées (centre).</p></div>
+<div class="card t"><div class="k">Un exemple</div><p>« Je suis inquiet pour mon dossier AI. » Je ne contrôle pas la décision : je lâche prise (extérieur). J’influence : appeler mon assistante sociale pour savoir où en est le dossier (milieu). Je contrôle : préparer mes questions ce soir, puis aller marcher pour me changer les idées (centre).</p></div>
 </div>
 </section>
 <section class="s" data-nav="Visual board" id="out-visual"><h2>Le tableau de visualisation (visual board)</h2>
@@ -1156,6 +1158,15 @@ const FORMS={
    ]}
   ]}
 };
+FORMS['cercles']={multi:true,title:'Mes cercles d’influence',short:'Cercles-influence',titleField:'situation',newLabel:'Nouvelle situation',
+  intro:'Décris une situation qui te préoccupe, puis range-la dans un des trois cercles. Chaque situation est une fiche.',
+  credit:'D’après les cercles d’influence de Stephen Covey.',
+  preview:(d,$)=>{const box=$('div',{class:'gprev'});box.append($('p',{text:(d.situation||'').trim()||'(sans titre)'}));const m=[d.cercle,(d.action||'').trim()].filter(Boolean).join(' · ');if(m)box.append($('p',{class:'fhint',text:'→ '+m}));return box;},
+  parts:[{title:'La situation',fields:[
+    {t:'text',id:'situation',label:'La situation qui me préoccupe'},
+    {t:'choice',id:'cercle',label:'Où je la range',opts:[['Je contrôle','Mes choix, mes réactions, ce que je fais','#e4f1f0'],['J’influence','Je peux agir un peu, avec d’autres','#f7efdc'],['Je lâche prise','Je ne peux pas la changer','#e6ebf3']]},
+    {t:'text',id:'action',label:'Ce que je fais',hint:'Je contrôle : une action. J’influence : un petit pas. Je lâche prise : comment je laisse aller, ou combien de temps je m’autorise à y penser.'}
+  ]}]};
 FORMS['gratitude']={multi:true,title:'Carnet de gratitude',short:'Carnet-de-gratitude',titleField:'g1',newLabel:'Nouvelle page',
   intro:'Note trois choses pour lesquelles tu ressens de la gratitude aujourd’hui. Des petites choses suffisent. Chaque jour est une page.',
   credit:'D’après l’exercice des « trois bonnes choses » de la psychologie positive.',
@@ -1274,6 +1285,11 @@ function fieldEl(f,st,touch){
   if(f.t==='h'){return $('h4',{class:'fmh',text:f.label});}
   const lab=$('label',{class:'fl',text:f.label}); box.append(lab);
   if(f.hint)box.append($('p',{class:'fhint',text:f.hint}));
+  if(f.t==='choice'){
+    const g=$('div',{class:'cchoice',role:'group','aria-label':f.label});
+    const draw=()=>{g.innerHTML='';f.opts.forEach(([o,sub,col])=>{const on=st[f.id]===o;g.append($('button',{type:'button',class:'cch'+(on?' on':''),'aria-pressed':String(on),style:'--b:'+col,onclick:()=>{st[f.id]=on?'':o;touch();draw();}},$('b',{text:o}),$('span',{text:sub})));});};
+    draw(); box.append(g);
+  }
   if(f.t==='text'){
     const ta=$('textarea',{rows:f.small?1:3}); ta.value=st[f.id]||''; const id='f-'+f.id; ta.id=id; lab.setAttribute('for',id);
     ta.addEventListener('input',()=>{st[f.id]=ta.value;grow(ta);touch();}); requestAnimationFrame(()=>grow(ta)); box.append(ta);
@@ -1324,7 +1340,7 @@ function fieldEl(f,st,touch){
   return box;
 }
 /* ---------- export PDF d'un plan ---------- */
-function filled(f,v){ if(v==null)return false; if(f.t==='text')return !!String(v).trim(); if(f.t==='chips')return v.length>0; if(f.t==='table')return v.some(r=>r.some(c=>String(c).trim())); if(f.t==='week')return Object.values(v).some(x=>String(x).trim()); if(f.t==='scale')return !!(v.v||String(v.n||'').trim()); if(f.t==='feu')return Object.values(v).some(m=>Object.keys(m.d||{}).length||String(m.n||'').trim()); return false; }
+function filled(f,v){ if(v==null)return false; if(f.t==='choice')return !!v; if(f.t==='text')return !!String(v).trim(); if(f.t==='chips')return v.length>0; if(f.t==='table')return v.some(r=>r.some(c=>String(c).trim())); if(f.t==='week')return Object.values(v).some(x=>String(x).trim()); if(f.t==='scale')return !!(v.v||String(v.n||'').trim()); if(f.t==='feu')return Object.values(v).some(m=>Object.keys(m.d||{}).length||String(m.n||'').trim()); return false; }
 async function exportPlan(key,st,item){
   const F=FORMS[key]; const J=await pdfLib();
   const P=pdfDoc(J,F.title,(st._nom?st._nom+' · ':'')+(item?'Fiche du '+new Date(item.t).toLocaleDateString('fr-CH',{day:'numeric',month:'long',year:'numeric'})+'. ':'')+'Exporté le '+today()+'. '+F.credit);
@@ -1335,6 +1351,7 @@ async function exportPlan(key,st,item){
     fs.forEach(f=>{const v=st[f.id]; ensure(P,12); para(P,f.label,{bold:true,size:10});
       if(f.t==='text'){para(P,v);P.y+=2;}
       else if(f.t==='chips'){para(P,v.join(', '));P.y+=2;}
+      else if(f.t==='choice'){para(P,v);P.y+=2;}
       else if(f.t==='scale'){para(P,(v.v?'Niveau : '+v.v+(v.n?'. ':''):'')+(v.n||''));P.y+=2;}
       else if(f.t==='table'){const head=f.cols.map(colName).concat(f.check?[f.check]:[]); table(P,head,v.filter(r=>r.some(c=>String(c).trim())));}
       else if(f.t==='week'){table(P,[''].concat(f.days),SLOTS.map(s=>[s].concat(f.days.map(d=>v[d+'|'+s]||''))),{styles:{fontSize:8,cellPadding:1.5}});}
@@ -1388,18 +1405,20 @@ async function openForm(key,itemId){
   document.getElementById('fmclose').focus();
 }
 /* ---------- SUDS ---------- */
-const SUDS=[[100,'Niveau de détresse le plus élevé. Sentiment de perte de contrôle.'],[90,'Extrêmement en détresse. Des symptômes physiologiques sont présents.'],[80,'Très en détresse, concentration difficile. Symptômes physiologiques présents.'],[70,'Assez en détresse, perte de concentration. Symptômes physiologiques présents.'],[60,'Détresse ou anxiété modérée à forte.'],[50,'Détresse ou anxiété modérée.'],[40,'Détresse ou anxiété légère à modérée.'],[30,'Détresse ou anxiété légère, sans gêne pour fonctionner.'],[20,'Détresse ou anxiété minimale.'],[10,'Attentif, concentré, en pleine capacité de concentration.'],[0,'Aucune détresse, détendu, calme.']];
+const WB=['Pas bien du tout : sentiment de perdre le contrôle.','Extrêmement mal : le corps réagit fort (cœur, souffle, tremblements…).','Très mal : se concentrer devient très difficile, le corps réagit.','Mal : la concentration se perd, le corps réagit.','Assez mal : tension ou anxiété modérée à forte.','Moyennement : tension ou anxiété modérée.','Ça va à peu près : tension ou anxiété légère à modérée.','Ça va : un peu de tension, sans gêne pour avancer.','Bien : très peu de tension.','Très bien : attentif·ve, concentré·e, en pleine forme.','Au mieux : détendu·e, calme.'];
 const SKILL=v=>v>=85?'STOP, TIPP':v>=65?'Se distraire avec ACCEPTS':v>=55?'Auto-apaisement':v>=45?'IMPROVE':v>=30?'Avantages et inconvénients':'Acceptation radicale';
 const SCOL=v=>['#cfe3c8','#cfe3c8','#a9cf97','#b7d0e2','#9bbccd','#f1dd85','#f4c450','#f1a46b','#e9867a','#de6468','#cf3f4d'][Math.round(v/10)];
-const anchor=v=>SUDS.find(a=>v>=a[0]-4)||SUDS[SUDS.length-1];
+const anchor=w=>WB[Math.round(w/10)];
+const WCOL=w=>SCOL(100-w);
 async function openSuds(){
-  openShell('Mon échelle de détresse (SUDS)'); curKey='suds';
+  openShell('Mon échelle de bien-être'); curKey='suds';
   const st=await load('suds'); st.e=st.e||[]; curState=st; const b=await getBackend();
+  if(!st.wb){st.e.forEach(e=>{e.v=100-e.v;}); st.wb=1; if(st.e.length)await save('suds',st);}
   fbody.innerHTML='';
-  const intro=$('div',{class:'fmintro'},$('p',{text:'Note ta détresse de 0 à 100, honnêtement, et ce qui se passe. '+(b.mode==='db'?'Enregistré sur ton compte, visible par toi seul·e.':'Enregistré sur cet appareil.')}));
+  const intro=$('div',{class:'fmintro'},$('p',{text:'Note comment tu te sens, de 0 (pas bien du tout) à 100 (très bien), et ce qui se passe. '+(b.mode==='db'?'Enregistré sur ton compte, visible par toi seul·e.':'Enregistré sur cet appareil.')}));
   fbody.append(intro);
-  const mk=(lbl)=>{const r=$('input',{type:'range',min:0,max:100,step:5,'aria-label':lbl}); r.value=50; const val=$('output',{class:'sval'}); const desc=$('p',{class:'sdesc'}); const upd=()=>{const v=+r.value; val.textContent=v; val.style.background=SCOL(v); desc.textContent=anchor(v)[1]+' · Piste de compétence TCD : '+SKILL(v)+'.';}; r.addEventListener('input',upd); upd(); return {r,val,desc,box:$('div',{class:'sbox'},$('label',{class:'fl',text:lbl}),$('div',{class:'srow'},val,r),desc)};};
-  const A=mk('Mon niveau de détresse maintenant');
+  const mk=(lbl)=>{const r=$('input',{type:'range',min:0,max:100,step:5,'aria-label':lbl}); r.value=50; const val=$('output',{class:'sval'}); const desc=$('p',{class:'sdesc'}); const upd=()=>{const v=+r.value; val.textContent=v; val.style.background=WCOL(v); desc.textContent=anchor(v)+(v<70?' · Piste de compétence TCD : '+SKILL(100-v)+'.':'');}; r.addEventListener('input',upd); upd(); return {r,val,desc,box:$('div',{class:'sbox'},$('label',{class:'fl',text:lbl}),$('div',{class:'srow'},val,r),desc)};};
+  const A=mk('Mon bien-être maintenant');
   const sit=$('textarea',{rows:2,placeholder:'La situation, ce qui se passe','aria-label':'Situation'});
   const fait=$('textarea',{rows:2,placeholder:'Ce que je fais ou vais faire (outil, personne, action)','aria-label':'Ce que je fais'});
   const ok=$('button',{type:'button',class:'fprim',text:'Noter'});
@@ -1413,13 +1432,13 @@ async function openSuds(){
     const pts=E.slice(-30); const W=600,H=160,px=i=>pts.length<2?W/2:20+i*(W-40)/(pts.length-1),py=v=>H-14-(v/100)*(H-28);
     let svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Évolution des '+pts.length+' dernières notes"><line x1="20" x2="'+(W-20)+'" y1="'+py(50)+'" y2="'+py(50)+'" class="sg"/><text x="2" y="'+(py(50)+4)+'" class="st">50</text><text x="2" y="'+(py(100)+4)+'" class="st">100</text><text x="8" y="'+(py(0)+4)+'" class="st">0</text>';
     if(pts.length>1)svg+='<polyline class="sl" points="'+pts.map((e,i)=>px(i)+','+py(e.v)).join(' ')+'"/>';
-    pts.forEach((e,i)=>{svg+='<circle cx="'+px(i)+'" cy="'+py(e.v)+'" r="5" fill="'+SCOL(e.v)+'" stroke="#333" stroke-width=".6"><title>'+new Date(e.t).toLocaleString('fr-CH')+' : '+e.v+'</title></circle>';});
+    pts.forEach((e,i)=>{svg+='<circle cx="'+px(i)+'" cy="'+py(e.v)+'" r="5" fill="'+WCOL(e.v)+'" stroke="#333" stroke-width=".6"><title>'+new Date(e.t).toLocaleString('fr-CH')+' : '+e.v+'</title></circle>';});
     chart.innerHTML=svg+'</svg>';
     E.slice().reverse().forEach(e=>{const i=E.indexOf(e);
-      list.append($('div',{class:'sent'},$('span',{class:'sval sm',text:String(e.v),style:'background:'+SCOL(e.v)}),$('div',{},$('b',{text:new Date(e.t).toLocaleString('fr-CH',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}),e.s?$('p',{text:e.s}):null,e.f?$('p',{class:'fhint',text:'→ '+e.f}):null),$('button',{type:'button',class:'fdel','aria-label':'Supprimer cette note',text:'×',onclick:async()=>{E.splice(i,1);setStat(STAT[await save('suds',st)]);draw();}})));});
+      list.append($('div',{class:'sent'},$('span',{class:'sval sm',text:String(e.v),style:'background:'+WCOL(e.v)}),$('div',{},$('b',{text:new Date(e.t).toLocaleString('fr-CH',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}),e.s?$('p',{text:e.s}):null,e.f?$('p',{class:'fhint',text:'→ '+e.f}):null),$('button',{type:'button',class:'fdel','aria-label':'Supprimer cette note',text:'×',onclick:async()=>{E.splice(i,1);setStat(STAT[await save('suds',st)]);draw();}})));});
   };
   ok.onclick=async()=>{st.e.push({t:Date.now(),v:+A.r.value,s:sit.value.trim(),f:fait.value.trim()}); sit.value='';fait.value='';grow(sit);grow(fait); setStat('…'); draw(); setStat(STAT[await save('suds',st)]); };
-  fexp.onclick=async()=>{ fexp.disabled=true; let r='fail'; try{const J=await pdfLib(); const P=pdfDoc(J,'Mon suivi SUDS','Échelle subjective de détresse (0 à 100). Exporté le '+today()+'.'); if(!st.e.length)para(P,'Aucune note.'); else table(P,['Date','Niveau','Situation','Ce que j\'ai fait'],st.e.map(e=>[new Date(e.t).toLocaleString('fr-CH',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),String(e.v),e.s,e.f]),{columnStyles:{0:{cellWidth:32},1:{cellWidth:16,halign:'center'}}}); r=await offer(P.doc,'SUDS-suivi-'+fileStamp()+'.pdf');}catch(e){} fexp.disabled=false; if(r==='fail')setStat('Export impossible ici'); };
+  fexp.onclick=async()=>{ fexp.disabled=true; let r='fail'; try{const J=await pdfLib(); const P=pdfDoc(J,'Mon suivi de bien-être','Échelle de bien-être : 0 = pas bien du tout, 100 = très bien (inspirée de l\'échelle SUDS). Exporté le '+today()+'.'); if(!st.e.length)para(P,'Aucune note.'); else table(P,['Date','Niveau','Situation','Ce que j\'ai fait'],st.e.map(e=>[new Date(e.t).toLocaleString('fr-CH',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),String(e.v),e.s,e.f]),{columnStyles:{0:{cellWidth:32},1:{cellWidth:16,halign:'center'}}}); r=await offer(P.doc,'Bien-etre-suivi-'+fileStamp()+'.pdf');}catch(e){} fexp.disabled=false; if(r==='fail')setStat('Export impossible ici'); };
   draw(); document.getElementById('fmclose').focus();
 }
 /* ---------- Étoile du rétablissement et un-recovery star ---------- */

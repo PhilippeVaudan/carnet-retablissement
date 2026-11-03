@@ -1,6 +1,6 @@
 /* Mon carnet rétablissement – fonctionnement hors ligne.
    À chaque mise à jour du carnet, augmente le numéro de VERSION ci-dessous. */
-const VERSION = 'v6';
+const VERSION = 'v7';
 const CORE = 'carnet-core-' + VERSION;
 const FILES = 'carnet-fichiers';
 const CORE_FILES = [
