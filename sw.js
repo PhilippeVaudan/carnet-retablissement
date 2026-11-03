@@ -1,6 +1,6 @@
 /* Mon carnet rétablissement – fonctionnement hors ligne.
    À chaque mise à jour du carnet, augmente le numéro de VERSION ci-dessous. */
-const VERSION = 'v3';
+const VERSION = 'v4';
 const CORE = 'carnet-core-' + VERSION;
 const FILES = 'carnet-fichiers';
 const CORE_FILES = [
@@ -29,7 +29,7 @@ self.addEventListener('fetch', e => {
   if (isPage) {
     // Page : réseau d'abord (pour recevoir les mises à jour), sinon la copie hors ligne
     e.respondWith(
-      fetch(req).then(r => { const copy = r.clone(); caches.open(CORE).then(c => c.put('index.html', copy)); return r; })
+      fetch(req, { cache: 'no-cache' }).then(r => { const copy = r.clone(); caches.open(CORE).then(c => c.put('index.html', copy)); return r; })
         .catch(() => caches.match('index.html', { ignoreSearch: true }))
     );
     return;
