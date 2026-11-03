@@ -380,7 +380,7 @@ try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label);
 <div class="panel home" data-title="Sommaire" id="p-accueil">
 <div class="hero">
 <button type="button" class="themeBtn hthemeBtn" data-long="1" aria-label="Changer de mode">☾ Mode sombre</button>
-<span class="eyebrow">Par Philippe Vaudan, pair praticien en santé mentale · version du 3 novembre 2026 (3)</span>
+<span class="eyebrow">Par Philippe Vaudan, pair praticien en santé mentale · version du 3 novembre 2026 (4)</span>
 <h1 class="htitle">Mon carnet rétablissement</h1>
 <p>Des repères pour comprendre ce qu’on traverse, et des outils à remplir pour prendre soin de soi. Lis dans l’ordre que tu veux, à ton rythme.</p>
 <div class="search"><label class="sr" for="q">Rechercher dans le carnet</label><span aria-hidden="true" class="loupe"><svg height="20" viewbox="0 0 24 24" width="20"><circle cx="10.5" cy="10.5" fill="none" r="6.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path></svg></span><input autocomplete="off" id="q" placeholder="Recherche" type="search"/></div>
@@ -398,7 +398,7 @@ try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label);
 <h2 class="hsec">Ressources</h2>
 <div class="hmods">
 <article class="hmod"><a class="hmodhead" href="#outils"><h3>Outils</h3></a><ol class="hthemes">
-<li><a href="#out-revim"><span class="dot"></span>ReViM</a></li><li><a href="#out-wrap"><span class="dot"></span>WRAP</a></li><li><a href="#out-etoile"><span class="dot"></span>Étoile du rétablissement</a></li><li><a href="#out-gratitude"><span class="dot"></span>Carnet de gratitude</a></li><li><a href="#out-suds"><span class="dot"></span>Échelle de bien-être</a></li><li><a href="#out-tcd"><span class="dot"></span>Émotions (TCD)</a></li><li><a href="#out-cercles"><span class="dot"></span>Cercles d’influence</a></li><li><a href="#out-visual"><span class="dot"></span>Visual board</a></li></ol></article>
+<li><a href="#out-revim"><span class="dot"></span>ReViM</a></li><li><a href="#out-wrap"><span class="dot"></span>WRAP</a></li><li><a href="#out-etoile"><span class="dot"></span>Étoile du rétablissement</a></li><li><a href="#out-gratitude"><span class="dot"></span>Carnet de gratitude</a></li><li><a href="#out-suds"><span class="dot"></span>Échelle de bien-être</a></li><li><a href="#out-respi"><span class="dot"></span>Respiration</a></li><li><a href="#out-tcd"><span class="dot"></span>Émotions (TCD)</a></li><li><a href="#out-cercles"><span class="dot"></span>Cercles d’influence</a></li><li><a href="#out-visual"><span class="dot"></span>Visual board</a></li><li><a href="#out-blocs"><span class="dot"></span>Blocs</a></li></ol></article>
 <article class="hmod"><a class="hmodhead" href="#lectures"><h3>Lectures</h3></a></article>
 <article class="hmod"><a class="hmodhead" href="#aide"><h3>Où trouver de l’aide</h3></a></article>
 </div></div>
@@ -821,6 +821,28 @@ try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label);
 <p class="idea">Noter comment tu te sens de 0 à 100, honnêtement : 0, c’est pas bien du tout, 100, c’est très bien. Pour mieux te connaître, voir comment ça évolue, et choisir l’outil qui convient au moment.</p>
 <div class="fillrow"><button type="button" class="fillbtn" data-form="suds">✎ Noter mon bien-être et suivre mon évolution</button></div>
 <div class="stack"><div class="card t"><div class="k">L’échelle d’origine</div><p>Cet outil s’inspire de l’échelle SUDS, qui mesure la détresse dans l’autre sens : 0, c’est calme, 100, c’est la détresse la plus forte. Le document d’origine, avec les compétences à essayer selon le niveau :</p><p style="margin-top:6px"><a href="ressources/SUDS-echelle-detresse.pdf">Ouvrir (PDF)</a></p></div></div></section>
+<section class="s" data-nav="Respiration" id="out-respi"><h2>Respiration</h2>
+<p class="idea">Quand l’angoisse monte ou que tout va trop vite, ralentir sa respiration aide le corps à se calmer. Suis le cercle : il grandit quand tu inspires, il diminue quand tu expires.</p>
+<div class="breath block" id="breath">
+<div class="bpick" role="group" aria-label="Choisir un exercice">
+<button type="button" class="bex on" data-ex="coherence" aria-pressed="true">Cohérence cardiaque</button>
+<button type="button" class="bex" data-ex="carre" aria-pressed="false">Respiration carrée</button>
+<button type="button" class="bex" data-ex="longue" aria-pressed="false">Expiration longue</button>
+</div>
+<p class="bdesc"></p>
+<div class="bstage" aria-live="polite"><div class="bcircle"></div><div class="btext"><b class="blabel">Prêt·e ?</b><span class="bcount"></span></div></div>
+<div class="bctrl">
+<div class="bdur" role="group" aria-label="Durée"><button type="button" class="bd" data-min="1" aria-pressed="false">1 min</button><button type="button" class="bd on" data-min="3" aria-pressed="true">3 min</button><button type="button" class="bd" data-min="5" aria-pressed="false">5 min</button></div>
+<button type="button" class="fprim bgo">Commencer</button>
+<span class="bleft"></span>
+</div>
+</div>
+<div class="stack block">
+<div class="card t"><div class="k">Pour bien faire</div><ul class="l"><li>Assieds-toi confortablement, le dos droit mais pas raide, les pieds au sol.</li><li>Inspire par le nez, en laissant le ventre se gonfler. Expire doucement par la bouche ou le nez.</li><li>Ne force pas : si un rythme est trop long pour toi, choisis-en un autre.</li><li>Si la tête te tourne, arrête et reprends ta respiration normale.</li></ul></div>
+<div class="card t"><div class="k">Les trois exercices</div><p><b>Cohérence cardiaque</b> : 5 secondes pour inspirer, 5 pour expirer, soit 6 respirations par minute. L’idéal, c’est 5 minutes, jusqu’à trois fois par jour.</p><p style="margin-top:6px"><b>Respiration carrée</b> : inspirer, retenir, expirer, retenir, 4 secondes chacun. Pour retrouver son calme et sa concentration.</p><p style="margin-top:6px"><b>Expiration longue</b> : expirer plus longtemps qu’on inspire (4 et 6 secondes). Ça apaise vite, par exemple avant de dormir ou quand l’angoisse monte.</p></div>
+<div class="card t"><div class="k">Et après ?</div><p>Prends un moment pour remarquer comment tu te sens. Tu peux le noter sur ton <a href="#out-suds">échelle de bien-être</a>, avant et après l’exercice.</p></div>
+</div>
+</section>
 <section class="s" data-nav="Émotions (TCD)" id="out-tcd"><h2>Émotions : les fiches de la TCD</h2>
 <p class="idea">La thérapie comportementale dialectique (TCD) a été créée par Marsha Linehan, qui a elle-même traversé de grandes souffrances. Elle aide à accepter ce qu’on vit et, en même temps, à changer ce qui fait souffrir.</p>
 <div class="fillrow"><button type="button" class="fillbtn" data-form="tcd-ft1">✎ Peser le pour et le contre</button><button type="button" class="fillbtn" data-form="tcd-ft2">✎ Comprendre un comportement (analyse en chaîne)</button></div>
@@ -860,6 +882,24 @@ try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label);
 <li>Accroche-le là où tu passes souvent, et change-le quand tu veux.</li>
 <li>Pour transformer un rêve en étapes : la partie « objectifs » du <a href="#out-revim">plan ReViM</a>.</li>
 </ul></div></details>
+</section>
+<section class="s" data-nav="Blocs" id="out-blocs"><h2>Blocs</h2>
+<p class="idea">Un petit jeu pour se changer les idées : range les blocs qui tombent pour compléter des lignes.</p>
+<div class="blocs block" id="blocs">
+<div class="bwrap"><canvas width="240" height="480" aria-label="Plateau de jeu"></canvas><div class="bover"><b>Blocs</b><span>Complète des lignes pour les faire disparaître.</span></div></div>
+<div class="bside">
+<div class="bstat"><span>Score</span><b class="bsc">0</b></div>
+<div class="bstat"><span>Lignes</span><b class="bli">0</b></div>
+<div class="bstat"><span>Niveau</span><b class="blv">1</b></div>
+<div class="bstat"><span>Record</span><b class="bbe">0</b></div>
+<div class="bstat"><span>Suivant</span><canvas class="bnext" width="80" height="80"></canvas></div>
+<button type="button" class="fprim bplay">Jouer</button>
+</div>
+</div>
+<div class="bpad" aria-label="Commandes">
+<button type="button" data-k="left" aria-label="Gauche">◀</button><button type="button" data-k="rot" aria-label="Tourner">⟳</button><button type="button" data-k="right" aria-label="Droite">▶</button><button type="button" data-k="down" aria-label="Descendre">▼</button><button type="button" data-k="drop" aria-label="Lâcher">⤓</button>
+</div>
+<p class="added">Sur ordinateur : les flèches pour bouger et tourner, la barre d’espace pour lâcher le bloc, P pour faire une pause.</p>
 </section>
 
 
@@ -1785,4 +1825,113 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-form]');if
   }
 })();
 </script>
+<style>
+.bpick,.bdur{display:flex;flex-wrap:wrap;gap:6px}
+.bex,.bd{font:inherit;font-size:.88rem;font-weight:600;border:1px solid var(--line);background:var(--paper);color:var(--fg);border-radius:999px;padding:7px 14px;cursor:pointer}
+.bex.on,.bd.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.bdesc{color:var(--muted);font-size:.92rem;margin:10px 0 4px;max-width:62ch}
+.bstage{position:relative;width:min(300px,100%);aspect-ratio:1;margin:8px auto;display:grid;place-items:center}
+.bcircle{position:absolute;width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,var(--teal-soft) 0%,var(--teal) 140%);transform:scale(.45);transition-property:transform;transition-timing-function:ease-in-out}
+.btext{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--fg)}
+.blabel{font-family:var(--display);font-size:1.6rem}.bcount{font-size:1.1rem;color:var(--muted);min-height:1.4em}
+.bctrl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center}.bleft{color:var(--muted);font-size:.9rem;min-width:4em}
+@media (prefers-reduced-motion:reduce){.bcircle{transition-duration:0s!important}}
+.blocs{display:flex;gap:14px;align-items:flex-start;justify-content:center}
+.bwrap{position:relative;flex:none}.blocs canvas{display:block;border-radius:8px;border:1px solid var(--line);background:var(--paper)}
+.bwrap>canvas{width:min(240px,58vw);height:auto}
+.bover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:16px;background:color-mix(in srgb,var(--paper) 82%,transparent);border-radius:8px}
+.bover b{font-family:var(--display);font-size:1.5rem}.bover span{font-size:.88rem;color:var(--muted)}
+.bside{display:flex;flex-direction:column;gap:8px;min-width:90px}
+.bstat{display:flex;flex-direction:column;font-size:.78rem;color:var(--muted)}.bstat b{font-size:1.15rem;color:var(--fg)}
+.bnext{width:70px;height:70px;margin-top:4px}
+.bpad{display:flex;justify-content:center;gap:8px;margin-top:12px;touch-action:manipulation}
+.bpad button{font:inherit;font-size:1.25rem;width:54px;height:50px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--fg);cursor:pointer;user-select:none;-webkit-user-select:none}
+.bpad button:active{background:var(--teal-soft)}
+</style>
+<script>
+/* ---------- Respiration ---------- */
+(function(){
+  const root=document.getElementById('breath'); if(!root)return;
+  const EX={coherence:{d:'5 secondes pour inspirer, 5 pour expirer.',p:[['Inspire',5,1],['Expire',5,.45]]},
+    carre:{d:'Inspirer, retenir, expirer, retenir : 4 secondes chacun.',p:[['Inspire',4,1],['Retiens',4,1],['Expire',4,.45],['Retiens',4,.45]]},
+    longue:{d:'Inspirer 4 secondes, expirer 6 secondes.',p:[['Inspire',4,1],['Expire',6,.45]]}};
+  let ex='coherence',min=3,run=false,t1=null,t2=null,end=0;
+  const C=root.querySelector('.bcircle'),L=root.querySelector('.blabel'),N=root.querySelector('.bcount'),G=root.querySelector('.bgo'),LEFT=root.querySelector('.bleft'),D=root.querySelector('.bdesc');
+  const desc=()=>{D.textContent=EX[ex].d;}; desc();
+  const pick=(sel,attr,fn)=>root.querySelectorAll(sel).forEach(b=>b.onclick=()=>{if(run)stop();root.querySelectorAll(sel).forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b);});fn(b.dataset[attr]);});
+  pick('.bex','ex',v=>{ex=v;desc();}); pick('.bd','min',v=>{min=+v;});
+  const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  function phase(i){
+    if(!run)return; const P=EX[ex].p, [lab,sec,sc]=P[i%P.length];
+    if(Date.now()>=end && i%P.length===0){finish();return;}
+    L.textContent=lab; C.style.transitionDuration=sec+'s'; C.style.transform='scale('+sc+')';
+    let n=sec; N.textContent=n; clearInterval(t2);
+    t2=setInterval(()=>{n--; if(n>0)N.textContent=n; const left=Math.max(0,Math.ceil((end-Date.now())/1000)); LEFT.textContent=fmt(left);},1000);
+    t1=setTimeout(()=>phase(i+1),sec*1000);
+  }
+  function start(){run=true;end=Date.now()+min*60000;G.textContent='Arrêter';LEFT.textContent=fmt(min*60);phase(0);}
+  function stop(){run=false;clearTimeout(t1);clearInterval(t2);G.textContent='Commencer';L.textContent='Prêt·e ?';N.textContent='';LEFT.textContent='';C.style.transitionDuration='1.2s';C.style.transform='scale(.45)';}
+  function finish(){stop();L.textContent='Bravo';N.textContent='Remarque comment tu te sens.';}
+  G.onclick=()=>run?stop():start();
+  window.addEventListener('hashchange',()=>{if(run&&location.hash!=='#out-respi')stop();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&run)stop();});
+})();
+/* ---------- Blocs ---------- */
+(function(){
+  const root=document.getElementById('blocs'); if(!root)return;
+  const cv=root.querySelector('.bwrap canvas'),cx=cv.getContext('2d'),nv=root.querySelector('.bnext'),nx=nv.getContext('2d');
+  const W=10,H=20,S=24,OV=root.querySelector('.bover'),PLAY=root.querySelector('.bplay');
+  const SH={I:[[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],O:[[1,1],[1,1]],T:[[0,1,0],[1,1,1],[0,0,0]],S:[[0,1,1],[1,1,0],[0,0,0]],Z:[[1,1,0],[0,1,1],[0,0,0]],J:[[1,0,0],[1,1,1],[0,0,0]],L:[[0,0,1],[1,1,1],[0,0,0]]};
+  const CV={I:'--teal',O:'--ochre',T:'--navy',S:'--sage',Z:'--coral',J:'--navy',L:'--ochre'};
+  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim()||'#888';
+  let grid,cur,next,score,lines,level,best=0,state='idle',acc=0,last=0,bag=[];
+  try{best=+localStorage.getItem('carnet-blocs-best')||0;}catch(e){}
+  const $s=c=>root.querySelector(c);
+  const newGrid=()=>Array.from({length:H},()=>Array(W).fill(0));
+  const draw7=()=>{if(!bag.length){bag=Object.keys(SH);for(let i=bag.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[bag[i],bag[j]]=[bag[j],bag[i]];}}return bag.pop();};
+  const mk=k=>({k,m:SH[k].map(r=>r.slice()),x:Math.floor((W-SH[k][0].length)/2),y:k==='I'?-1:0});
+  const rot=m=>m[0].map((_,i)=>m.map(r=>r[i]).reverse());
+  const hit=(p,m=p.m,x=p.x,y=p.y)=>m.some((r,j)=>r.some((v,i)=>v&&(x+i<0||x+i>=W||y+j>=H||(y+j>=0&&grid[y+j][x+i]))));
+  const ui=()=>{$s('.bsc').textContent=score;$s('.bli').textContent=lines;$s('.blv').textContent=level;$s('.bbe').textContent=best;};
+  function cell(c,x,y,col,s){c.fillStyle=col;c.fillRect(x*s+1,y*s+1,s-2,s-2);c.fillStyle='rgba(255,255,255,.18)';c.fillRect(x*s+1,y*s+1,s-2,4);}
+  function render(){
+    cx.fillStyle=css('--paper');cx.fillRect(0,0,cv.width,cv.height);cx.strokeStyle=css('--line');cx.lineWidth=1;
+    for(let i=1;i<W;i++){cx.beginPath();cx.moveTo(i*S+.5,0);cx.lineTo(i*S+.5,H*S);cx.stroke();}
+    grid.forEach((r,y)=>r.forEach((v,x)=>{if(v)cell(cx,x,y,css(CV[v]),S);}));
+    if(cur){let gy=cur.y;while(!hit(cur,cur.m,cur.x,gy+1))gy++;cx.globalAlpha=.22;cur.m.forEach((r,j)=>r.forEach((v,i)=>{if(v&&gy+j>=0)cell(cx,cur.x+i,gy+j,css(CV[cur.k]),S);}));cx.globalAlpha=1;
+      cur.m.forEach((r,j)=>r.forEach((v,i)=>{if(v&&cur.y+j>=0)cell(cx,cur.x+i,cur.y+j,css(CV[cur.k]),S);}));}
+    nx.clearRect(0,0,80,80);if(next){const m=SH[next],s=18,o=(80-m.length*s)/2;m.forEach((r,j)=>r.forEach((v,i)=>{if(v)cell(nx,i,j,css(CV[next]),s);}));nx.setTransform(1,0,0,1,0,0);}
+  }
+  function lock(){
+    cur.m.forEach((r,j)=>r.forEach((v,i)=>{if(v&&cur.y+j>=0)grid[cur.y+j][cur.x+i]=cur.k;}));
+    if(cur.m.some((r,j)=>r.some(v=>v&&cur.y+j<0))){over();return;}
+    let n=0;for(let y=H-1;y>=0;y--){if(grid[y].every(v=>v)){grid.splice(y,1);grid.unshift(Array(W).fill(0));n++;y++;}}
+    if(n){score+=[0,100,300,500,800][n]*level;lines+=n;level=1+Math.floor(lines/10);}
+    cur=mk(next);next=draw7();if(hit(cur))over();ui();
+  }
+  function over(){state='over';cur=null;if(score>best){best=score;try{localStorage.setItem('carnet-blocs-best',best);}catch(e){}}ui();render();OV.hidden=false;OV.innerHTML='<b>Partie terminée</b><span>Score : '+score+'</span>';PLAY.textContent='Rejouer';}
+  function move(k){
+    if(state!=='play'||!cur)return;
+    if(k==='left'&&!hit(cur,cur.m,cur.x-1))cur.x--;
+    else if(k==='right'&&!hit(cur,cur.m,cur.x+1))cur.x++;
+    else if(k==='down'){if(!hit(cur,cur.m,cur.x,cur.y+1)){cur.y++;score+=1;}else lock();acc=0;}
+    else if(k==='drop'){while(!hit(cur,cur.m,cur.x,cur.y+1)){cur.y++;score+=2;}lock();acc=0;}
+    else if(k==='rot'){const m=rot(cur.m);for(const dx of [0,-1,1,-2,2]){if(!hit(cur,m,cur.x+dx)){cur.m=m;cur.x+=dx;break;}}}
+    ui();render();
+  }
+  function loop(t){if(state!=='play')return;const dt=t-last;last=t;acc+=dt;const sp=Math.max(90,800-(level-1)*70);if(acc>sp){acc=0;if(!hit(cur,cur.m,cur.x,cur.y+1))cur.y++;else lock();}render();requestAnimationFrame(loop);}
+  function play(){grid=newGrid();bag=[];next=draw7();cur=mk(draw7());score=0;lines=0;level=1;state='play';OV.hidden=true;PLAY.textContent='Pause';ui();last=performance.now();acc=0;requestAnimationFrame(loop);}
+  function pause(){if(state==='play'){state='pause';OV.hidden=false;OV.innerHTML='<b>Pause</b><span>Touche Reprendre pour continuer.</span>';PLAY.textContent='Reprendre';}else if(state==='pause'){state='play';OV.hidden=true;PLAY.textContent='Pause';last=performance.now();requestAnimationFrame(loop);}}
+  PLAY.onclick=()=>{if(state==='idle'||state==='over')play();else pause();};
+  document.querySelectorAll('.bpad button').forEach(b=>{let iv=null;const go=()=>move(b.dataset.k);
+    b.addEventListener('pointerdown',e=>{e.preventDefault();go();if(b.dataset.k!=='rot'&&b.dataset.k!=='drop'){clearInterval(iv);iv=setInterval(go,110);}});
+    ['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>clearInterval(iv)));});
+  document.addEventListener('keydown',e=>{if(state==='idle'||state==='over'||location.hash!=='#out-blocs')return;const m={ArrowLeft:'left',ArrowRight:'right',ArrowDown:'down',ArrowUp:'rot',' ':'drop'};
+    if(e.key==='p'||e.key==='P'){pause();e.preventDefault();return;} if(m[e.key]&&state==='play'){e.preventDefault();move(m[e.key]);}});
+  window.addEventListener('hashchange',()=>{if(state==='play'&&location.hash!=='#out-blocs')pause();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play')pause();});
+  grid=newGrid();ui();render();
+})();
+</script>
+
 </body></html>
