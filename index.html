@@ -380,7 +380,7 @@ try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label);
 <div class="panel home" data-title="Sommaire" id="p-accueil">
 <div class="hero">
 <button type="button" class="themeBtn hthemeBtn" data-long="1" aria-label="Changer de mode">☾ Mode sombre</button>
-<span class="eyebrow">Par Philippe Vaudan, pair praticien en santé mentale · version du 3 novembre 2026 (5)</span>
+<span class="eyebrow">Par Philippe Vaudan, pair praticien en santé mentale · version du 3 novembre 2026 (6)</span>
 <h1 class="htitle">Mon carnet rétablissement</h1>
 <p>Des repères pour comprendre ce qu’on traverse, et des outils à remplir pour prendre soin de soi. Lis dans l’ordre que tu veux, à ton rythme.</p>
 <div class="search"><label class="sr" for="q">Rechercher dans le carnet</label><span aria-hidden="true" class="loupe"><svg height="20" viewbox="0 0 24 24" width="20"><circle cx="10.5" cy="10.5" fill="none" r="6.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path></svg></span><input autocomplete="off" id="q" placeholder="Recherche" type="search"/></div>
@@ -828,6 +828,13 @@ try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label);
 <button type="button" class="bex on" data-ex="coherence" aria-pressed="true">Cohérence cardiaque</button>
 <button type="button" class="bex" data-ex="carre" aria-pressed="false">Respiration carrée</button>
 <button type="button" class="bex" data-ex="longue" aria-pressed="false">Expiration longue</button>
+<button type="button" class="bex" data-ex="perso" aria-pressed="false">Ma séance</button>
+</div>
+<div class="bperso" hidden>
+<div class="bstep" data-p="0"><span>Inspirer (s)</span><button type="button" data-d="-1" aria-label="Moins">−</button><b>4</b><button type="button" data-d="1" aria-label="Plus">+</button><small>s</small></div>
+<div class="bstep" data-p="1"><span>Retenir (s)</span><button type="button" data-d="-1" aria-label="Moins">−</button><b>0</b><button type="button" data-d="1" aria-label="Plus">+</button><small>s</small></div>
+<div class="bstep" data-p="2"><span>Expirer (s)</span><button type="button" data-d="-1" aria-label="Moins">−</button><b>6</b><button type="button" data-d="1" aria-label="Plus">+</button><small>s</small></div>
+<div class="bstep" data-p="3"><span>Retenir (s)</span><button type="button" data-d="-1" aria-label="Moins">−</button><b>0</b><button type="button" data-d="1" aria-label="Plus">+</button><small>s</small></div>
 </div>
 <p class="bdesc"></p>
 <div class="bstage" aria-live="polite"><div class="bcircle"></div><div class="btext"><b class="blabel">Prêt·e ?</b><span class="bcount"></span></div></div>
@@ -839,7 +846,7 @@ try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label);
 </div>
 <div class="stack block">
 <div class="card t"><div class="k">Pour bien faire</div><ul class="l"><li>Assieds-toi confortablement, le dos droit mais pas raide, les pieds au sol.</li><li>Inspire par le nez, en laissant le ventre se gonfler. Expire doucement par la bouche ou le nez.</li><li>Ne force pas : si un rythme est trop long pour toi, choisis-en un autre.</li><li>Si la tête te tourne, arrête et reprends ta respiration normale.</li></ul></div>
-<div class="card t"><div class="k">Les trois exercices</div><p><b>Cohérence cardiaque</b> : 5 secondes pour inspirer, 5 pour expirer, soit 6 respirations par minute. L’idéal, c’est 5 minutes, jusqu’à trois fois par jour.</p><p style="margin-top:6px"><b>Respiration carrée</b> : inspirer, retenir, expirer, retenir, 4 secondes chacun. Pour retrouver son calme et sa concentration.</p><p style="margin-top:6px"><b>Expiration longue</b> : expirer plus longtemps qu’on inspire (4 et 6 secondes). Ça apaise vite, par exemple avant de dormir ou quand l’angoisse monte.</p></div>
+<div class="card t"><div class="k">Les exercices</div><p><b>Cohérence cardiaque</b> : 5 secondes pour inspirer, 5 pour expirer, soit 6 respirations par minute. L’idéal, c’est 5 minutes, jusqu’à trois fois par jour.</p><p style="margin-top:6px"><b>Respiration carrée</b> : inspirer, retenir, expirer, retenir, 4 secondes chacun. Pour retrouver son calme et sa concentration.</p><p style="margin-top:6px"><b>Expiration longue</b> : expirer plus longtemps qu’on inspire (4 et 6 secondes). Ça apaise vite, par exemple avant de dormir ou quand l’angoisse monte.</p><p style="margin-top:6px"><b>Ma séance</b> : tu choisis toi-même la durée de chaque temps. Mets 0 aux temps « retenir » si tu ne veux pas de pause.</p></div>
 <div class="card t"><div class="k">Et après ?</div><p>Prends un moment pour remarquer comment tu te sens. Tu peux le noter sur ton <a href="#out-suds">échelle de bien-être</a>, avant et après l’exercice.</p></div>
 </div>
 </section>
@@ -897,9 +904,8 @@ try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label);
 </div>
 </div>
 <div class="bpad" aria-label="Commandes">
-<button type="button" data-k="left" aria-label="Gauche">◀</button><button type="button" data-k="rot" aria-label="Tourner">⟳</button><button type="button" data-k="right" aria-label="Droite">▶</button><button type="button" data-k="down" aria-label="Descendre">▼</button><button type="button" data-k="drop" aria-label="Lâcher">⤓</button>
+<button type="button" data-k="left" aria-label="Gauche">◀</button><span class="bmid"><button type="button" data-k="rot" aria-label="Tourner">⟳</button><button type="button" data-k="down" aria-label="Descendre plus vite">▼</button></span><button type="button" data-k="right" aria-label="Droite">▶</button>
 </div>
-<p class="added">Sur ordinateur : les flèches pour bouger et tourner, la barre d’espace pour lâcher le bloc, P pour faire une pause.</p>
 </section>
 
 
@@ -1829,6 +1835,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-form]');if
 .bpick,.bdur{display:flex;flex-wrap:wrap;gap:6px}
 .bex,.bd{font:inherit;font-size:.88rem;font-weight:600;border:1px solid var(--line);background:var(--paper);color:var(--fg);border-radius:999px;padding:7px 14px;cursor:pointer}
 .bex.on,.bd.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.bperso{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px;max-width:520px}.bstep{display:flex;align-items:center;gap:8px;background:var(--teal-soft);border-radius:10px;padding:8px 10px}.bstep span{flex:1;font-weight:600;font-size:.9rem}.bstep b{min-width:1.6em;text-align:center;font-size:1.1rem}.bstep small{display:none}.bstep button{font:inherit;font-size:1.1rem;width:32px;height:32px;flex:none;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--fg);cursor:pointer}
 .bdesc{color:var(--muted);font-size:.92rem;margin:10px 0 4px;max-width:62ch}
 .bstage{position:relative;width:min(300px,100%);aspect-ratio:1;margin:8px auto;display:grid;place-items:center}
 .bcircle{position:absolute;width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,var(--teal-soft) 0%,var(--teal) 140%);transform:scale(.45);transition-property:transform;transition-timing-function:ease-in-out}
@@ -1844,8 +1851,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-form]');if
 .bside{display:flex;flex-direction:column;gap:8px;min-width:90px}
 .bstat{display:flex;flex-direction:column;font-size:.78rem;color:var(--muted)}.bstat b{font-size:1.15rem;color:var(--fg)}
 .bnext{width:70px;height:70px;margin-top:4px}
-.bpad{display:flex;justify-content:center;gap:8px;margin-top:12px;touch-action:manipulation}
-.bpad button{font:inherit;font-size:1.25rem;width:54px;height:50px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--fg);cursor:pointer;user-select:none;-webkit-user-select:none}
+.bpad{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px auto 0;max-width:380px;touch-action:manipulation}.bmid{display:flex;gap:10px}#out-blocs,#out-blocs *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.bpad button{font:inherit;font-size:1.3rem;width:64px;height:56px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--fg);cursor:pointer;user-select:none;-webkit-user-select:none}
 .bpad button:active{background:var(--teal-soft)}
 </style>
 <script>
@@ -1854,12 +1861,20 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-form]');if
   const root=document.getElementById('breath'); if(!root)return;
   const EX={coherence:{d:'5 secondes pour inspirer, 5 pour expirer.',p:[['Inspire',5,1],['Expire',5,.45]]},
     carre:{d:'Inspirer, retenir, expirer, retenir : 4 secondes chacun.',p:[['Inspire',4,1],['Retiens',4,1],['Expire',4,.45],['Retiens',4,.45]]},
-    longue:{d:'Inspirer 4 secondes, expirer 6 secondes.',p:[['Inspire',4,1],['Expire',6,.45]]}};
+    longue:{d:'Inspirer 4 secondes, expirer 6 secondes.',p:[['Inspire',4,1],['Expire',6,.45]]},
+    perso:{d:'',p:[]}};
+  let MY=[4,0,6,0]; try{const v=JSON.parse(localStorage.getItem('carnet-respi-perso')||'null'); if(Array.isArray(v)&&v.length===4)MY=v;}catch(e){}
+  const PERSO=root.querySelector('.bperso');
+  const buildPerso=()=>{const p=[['Inspire',MY[0],1]]; if(MY[1])p.push(['Retiens',MY[1],1]); p.push(['Expire',MY[2],.45]); if(MY[3])p.push(['Retiens',MY[3],.45]); EX.perso.p=p;
+    EX.perso.d='Ta cadence : inspirer '+MY[0]+' s'+(MY[1]?', retenir '+MY[1]+' s':'')+', expirer '+MY[2]+' s'+(MY[3]?', retenir '+MY[3]+' s':'')+'. Règle chaque temps avec − et +.';
+    PERSO.querySelectorAll('.bstep').forEach(st=>{st.querySelector('b').textContent=MY[+st.dataset.p];});};
+  buildPerso();
+  PERSO.querySelectorAll('.bstep button').forEach(btn=>btn.onclick=()=>{const i=+btn.closest('.bstep').dataset.p, mn=(i===0||i===2)?1:0; MY[i]=Math.max(mn,Math.min(15,MY[i]+ +btn.dataset.d)); try{localStorage.setItem('carnet-respi-perso',JSON.stringify(MY));}catch(e){} if(run)stop(); buildPerso(); desc();});
   let ex='coherence',min=3,run=false,t1=null,t2=null,end=0;
   const C=root.querySelector('.bcircle'),L=root.querySelector('.blabel'),N=root.querySelector('.bcount'),G=root.querySelector('.bgo'),LEFT=root.querySelector('.bleft'),D=root.querySelector('.bdesc');
   const desc=()=>{D.textContent=EX[ex].d;}; desc();
   const pick=(sel,attr,fn)=>root.querySelectorAll(sel).forEach(b=>b.onclick=()=>{if(run)stop();root.querySelectorAll(sel).forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b);});fn(b.dataset[attr]);});
-  pick('.bex','ex',v=>{ex=v;desc();}); pick('.bd','min',v=>{min=+v;});
+  pick('.bex','ex',v=>{ex=v;PERSO.hidden=v!=='perso';desc();}); pick('.bd','min',v=>{min=+v;});
   const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
   function phase(i){
     if(!run)return; const P=EX[ex].p, [lab,sec,sc]=P[i%P.length];
