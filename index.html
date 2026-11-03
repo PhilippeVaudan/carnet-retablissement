@@ -302,6 +302,7 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 .sbtns{display:flex;gap:4px}.sb{font:inherit;font-size:.85rem;font-weight:700;width:36px;height:32px;border-radius:6px;border:1px solid var(--line);background:var(--paper);color:var(--fg);cursor:pointer}.sb.on{background:var(--c);border-color:var(--c);color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.35)}
 .sent .chip{flex:none;align-self:center}
 .sb.wide{width:auto;min-width:44px;padding:0 10px}
+.gprev ul.l{margin:4px 0 2px}.gprev .fhint{margin-top:2px}
 </style>
 <style>
 .sos{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--fg);background:var(--coral-soft);border:1px solid var(--coral);border-radius:10px;padding:12px 16px;margin:18px 0 6px;max-width:760px}
@@ -1164,7 +1165,12 @@ FORMS['gratitude']={multi:true,title:'Carnet de gratitude',short:'Carnet-de-grat
     {t:'text',id:'g3',label:'Une troisième',small:true},
     {t:'text',id:'pourquoi',label:'Pourquoi ça compte pour moi, ou ce que j’ai fait pour que ça arrive (facultatif)'},
     {t:'text',id:'merci',label:'Quelqu’un que j’aimerais remercier (facultatif)',small:true}
-  ]}]};
+  ]}],
+  preview:(d,$)=>{const g=['g1','g2','g3'].map(k=>(d[k]||'').trim()).filter(Boolean);const box=$('div',{class:'gprev'});
+    if(g.length)box.append($('ul',{class:'l'},...g.map(t=>$('li',{text:t}))));else box.append($('p',{class:'fhint',text:'(page vide)'}));
+    if((d.pourquoi||'').trim())box.append($('p',{class:'fhint',text:d.pourquoi.trim()}));
+    if((d.merci||'').trim())box.append($('p',{class:'fhint',text:'Merci à : '+d.merci.trim()}));
+    return box;}};
 
 const LIENS=['Action','Sensation corporelle','Pensée','Événement','Sentiment'];
 Object.assign(FORMS,{
@@ -1363,7 +1369,7 @@ async function openForm(key,itemId){
       root.items.slice().reverse().forEach(it=>{const i=root.items.indexOf(it); const first=F.parts[0].fields.find(f=>f.t==='text'); const tt=(it.d[F.titleField||(first&&first.id)]||'').trim();
         let armed=false; const del=$('button',{type:'button',class:'fdel','aria-label':'Supprimer cette fiche',text:'×'});
         del.onclick=async()=>{if(!armed){armed=true;del.textContent='Sûr ?';del.style.width='auto';setTimeout(()=>{armed=false;del.textContent='×';del.style.width='';},3500);return;}root.items.splice(i,1);setStat(STAT[await save(key,root)]);openForm(key);};
-        L.append($('div',{class:'sent'},$('div',{},$('b',{text:new Date(it.t).toLocaleDateString('fr-CH',{weekday:'short',day:'numeric',month:'long',year:'numeric'})}),$('p',{text:tt?(tt.length>110?tt.slice(0,110)+'…':tt):'(sans titre)'})),$('button',{type:'button',class:'chip',text:'Ouvrir',onclick:()=>openForm(key,it.id)}),del));});
+        L.append($('div',{class:'sent'},$('div',{},$('b',{text:new Date(it.t).toLocaleDateString('fr-CH',{weekday:'short',day:'numeric',month:'long',year:'numeric'})}),(F.preview?F.preview(it.d,$):$('p',{text:tt?(tt.length>110?tt.slice(0,110)+'…':tt):'(sans titre)'}))),$('button',{type:'button',class:'chip',text:F.preview?'Modifier':'Ouvrir',onclick:()=>openForm(key,it.id)}),del));});
       fbody.append(L); document.getElementById('fmclose').focus(); return;
     }
     item=root.items.find(x=>x.id===itemId); if(!item){openForm(key);return;} st=item.d;
