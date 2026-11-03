@@ -23,6 +23,11 @@
   --navy:#9fb6d9; --teal:#5cc2b9; --coral:#ef8a74; --ochre:#e2b75a; --sage:#a9c56d;
   --teal-soft:#16302f; --coral-soft:#3a221d; --ochre-soft:#352b16; --navy-soft:#1e2a3c; --sage-soft:#222c16;
   --on-navy:#10161f; --shade:rgba(0,0,0,.9); color-scheme:dark }
+:root[data-theme="dark"]{
+  --bg:#10161f; --paper:#17202b; --side:#131b25; --fg:#e7ebf0; --muted:#9aa6b5; --line:#2a3542;
+  --navy:#9fb6d9; --teal:#5cc2b9; --coral:#ef8a74; --ochre:#e2b75a; --sage:#a9c56d;
+  --teal-soft:#16302f; --coral-soft:#3a221d; --ochre-soft:#352b16; --navy-soft:#1e2a3c; --sage-soft:#222c16;
+  --on-navy:#10161f; --shade:rgba(0,0,0,.9); color-scheme:dark }
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -315,9 +320,20 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 @media (max-width:420px){.vbt.big{grid-column:span 1}}
 .tale{max-width:66ch;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;padding:14px 18px;font-family:var(--display);font-size:1.05rem;line-height:1.6}.tale p+p{margin-top:10px}
 </style>
-<div class="mbar"><button id="homeBtn" type="button">← Sommaire</button><span id="mbarTitle">Mon carnet rétablissement</span><button aria-label="Rechercher" class="searchBtn mtoc" type="button"><svg aria-hidden="true" height="18" style="display:block" viewbox="0 0 24 24" width="18"><circle cx="10.5" cy="10.5" fill="none" r="6.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path></svg></button><button aria-controls="side" aria-expanded="false" aria-label="Thèmes" class="mtoc" id="menuBtn" type="button">☰</button></div>
+<style>.hero{position:relative}.hthemeBtn{align-self:flex-end;font-size:.88rem;font-weight:600;color:var(--fg);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;margin-bottom:4px}.themeBtn{font:inherit;cursor:pointer}.mbar .themeBtn{font-size:1.05rem;line-height:1}.side .themeBtn.navlink{margin-bottom:8px}</style>
+<script>(function(){var K='classeur-theme',r=document.documentElement;function sys(){return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+function cur(){return r.dataset.theme||sys();}
+function label(){var t=cur();document.querySelectorAll('.themeBtn').forEach(function(b){var d=t==='dark';b.setAttribute('aria-label',d?'Passer en mode clair':'Passer en mode sombre');b.title=b.getAttribute('aria-label');b.innerHTML=b.dataset.long?(d?'<span aria-hidden="true">☀</span> Mode clair':'<span aria-hidden="true">☾</span> Mode sombre'):(d?'☀':'☾');});}
+function apply(t){r.dataset.theme=t;r.style.colorScheme=t;label();}
+var s=null;try{s=localStorage.getItem(K);}catch(e){} if(s==='dark'||s==='light'){r.dataset.theme=s;r.style.colorScheme=s;}
+window.toggleTheme=function(){var n=cur()==='dark'?'light':'dark';apply(n);try{localStorage.setItem(K,n);}catch(e){}};
+document.addEventListener('DOMContentLoaded',label);document.addEventListener('click',function(e){if(e.target.closest('.themeBtn'))window.toggleTheme();});
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label);}catch(e){}
+})();</script>
+<div class="mbar"><button id="homeBtn" type="button">← Sommaire</button><span id="mbarTitle">Mon carnet rétablissement</span><button type="button" class="themeBtn mtoc" aria-label="Changer de mode">☾</button><button aria-label="Rechercher" class="searchBtn mtoc" type="button"><svg aria-hidden="true" height="18" style="display:block" viewbox="0 0 24 24" width="18"><circle cx="10.5" cy="10.5" fill="none" r="6.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path></svg></button><button aria-controls="side" aria-expanded="false" aria-label="Thèmes" class="mtoc" id="menuBtn" type="button">☰</button></div>
 <div class="app">
 <aside aria-label="Sommaire du carnet" class="side" id="side">
+<button type="button" class="navlink themeBtn" data-long="1" aria-label="Changer de mode">☾ Mode sombre</button>
 <button class="navlink searchBtn" style="margin-bottom:8px" type="button"><svg aria-hidden="true" height="16" style="display:block" viewbox="0 0 24 24" width="16"><circle cx="10.5" cy="10.5" fill="none" r="6.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path></svg>Rechercher</button>
 <div class="brand"><h1>Mon carnet rétablissement</h1><p>Par Philippe Vaudan, pair praticien en santé mentale</p></div>
 <button class="navlink" id="installNav" type="button">📲 Installer le carnet</button>
@@ -363,7 +379,8 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 <main><div class="content">
 <div class="panel home" data-title="Sommaire" id="p-accueil">
 <div class="hero">
-<span class="eyebrow">Par Philippe Vaudan, pair praticien en santé mentale · version du 3 novembre 2026 (2)</span>
+<button type="button" class="themeBtn hthemeBtn" data-long="1" aria-label="Changer de mode">☾ Mode sombre</button>
+<span class="eyebrow">Par Philippe Vaudan, pair praticien en santé mentale · version du 3 novembre 2026 (3)</span>
 <h1 class="htitle">Mon carnet rétablissement</h1>
 <p>Des repères pour comprendre ce qu’on traverse, et des outils à remplir pour prendre soin de soi. Lis dans l’ordre que tu veux, à ton rythme.</p>
 <div class="search"><label class="sr" for="q">Rechercher dans le carnet</label><span aria-hidden="true" class="loupe"><svg height="20" viewbox="0 0 24 24" width="20"><circle cx="10.5" cy="10.5" fill="none" r="6.5" stroke="currentColor" stroke-width="2.2"></circle><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path></svg></span><input autocomplete="off" id="q" placeholder="Recherche" type="search"/></div>
@@ -794,7 +811,7 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 </section>
 <section class="s" data-nav="Carnet de gratitude" id="out-gratitude"><h2>Carnet de gratitude</h2>
 <p class="idea">Chaque jour, noter trois choses pour lesquelles tu ressens de la gratitude. Pas besoin de grandes choses : un café au soleil, un message d’un·e ami·e, un moment de calme, un repas qui t’a fait du bien.</p>
-<div class="fillrow"><button type="button" class="fillbtn" data-form="gratitude">✎ Écrire dans mon carnet de gratitude</button></div>
+<div class="fillrow"><button type="button" class="fillbtn" data-form="gratitude">✎ Mon carnet de gratitude</button></div>
 <div class="stack">
 <div class="card t"><div class="k">Pourquoi ça peut aider</div><p>Quand ça va mal, le cerveau remarque surtout ce qui ne va pas. Ce petit exercice entraîne le regard à voir aussi ce qui tient encore debout. Ce n’est pas nier ce qui est dur : les deux peuvent exister en même temps.</p></div>
 <div class="card t"><div class="k">Quelques conseils</div><ul class="l"><li>Choisis un moment fixe, par exemple le soir avant de dormir.</li><li>Sois précis·e : « la voisine m’a souri dans l’escalier » plutôt que « ma vie ».</li><li>Tu peux sauter des jours. Ce n’est pas un devoir, et il n’y a pas de bonne réponse.</li><li>Les jours difficiles, une seule chose suffit. Même toute petite.</li><li>De temps en temps, relis les pages d’avant.</li></ul></div>
@@ -811,7 +828,7 @@ a[href$=".pdf"]:hover{background:color-mix(in srgb,currentColor 10%,transparent)
 <div class="card t"><div class="k">Pour aller plus loin</div><p>Ces deux fiches viennent du manuel de Marsha Linehan, « Documents et fiches de travail pour l’entraînement aux compétences TCD ». Il existe des groupes de compétences TCD : tu peux en parler à ton ou ta thérapeute.</p></div></div></section>
 <section class="s" data-nav="Cercles d’influence" id="out-cercles"><h2>Les cercles d’influence</h2>
 <p class="idea">Quand tout se mélange dans la tête, cet outil aide à trier ce qui te préoccupe, et à savoir où mettre ton énergie.</p>
-<div class="fillrow"><button type="button" class="fillbtn" data-form="cercles">✎ Trier une situation dans mes cercles</button></div>
+<div class="fillrow"><button type="button" class="fillbtn" data-form="cercles">✎ Mes cercles</button></div>
 <p style="max-width:66ch">On dessine trois cercles, l’un dans l’autre.</p>
 <div class="fig block">
 <svg aria-label="Trois cercles l’un dans l’autre : au centre ce que je contrôle, autour ce que j’influence, à l’extérieur ce dont je lâche prise" role="img" style="max-width:320px" viewBox="0 0 300 200">
