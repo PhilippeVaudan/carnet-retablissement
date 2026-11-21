@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="1995">
+<meta name="theme-color" content="#3B2A5C">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1995 — carnet de film</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4f1ea; --ink:#1d1b18; --muted:#6b655c; --line:#d9d3c7;
+  --accent:#b8441f; --card:#fffdf8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink)}
+body{font:16px/1.55 Archivo, system-ui, sans-serif; -webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+.wrap{max-width:760px;margin:0 auto;padding:20px 18px 60px}
+
+/* Accueil */
+.cover{padding:18px 0 22px;border-bottom:3px solid var(--ink);margin-bottom:22px}
+.cover .kicker{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cover h1{font-weight:800;font-size:64px;line-height:.95;margin:10px 0 8px;letter-spacing:-.02em}
+.cover p{margin:0;color:var(--muted);max-width:52ch}
+.toc{list-style:none;margin:0;padding:0}
+.toc li{margin:0 0 10px}
+.toc a{cursor:pointer;display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);
+  background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 14px}
+.toc a:active,.toc a:hover{border-color:var(--ink)}
+.num{font:500 13px/1 "IBM Plex Mono",monospace;color:var(--accent)}
+.toc .txt{flex:1;display:flex;flex-direction:column;gap:3px}
+.toc .t{font-weight:600;font-size:17px;line-height:1.25}
+.toc .d{font-size:13.5px;color:var(--muted);line-height:1.35}
+.toc .arr{font-size:22px;color:var(--muted)}
+.foot{margin-top:26px;font-size:13px;color:var(--muted)}
+
+/* Rubriques */
+.bar{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;
+  background:var(--paper);padding:10px 0;border-bottom:1px solid var(--line);margin-bottom:14px}
+.back{font-weight:600;text-decoration:none;font-size:15px;padding:6px 10px 6px 0}
+.where{font:500 12px/1 "IBM Plex Mono",monospace;color:var(--muted)}
+.sec h1{font-weight:800;font-size:30px;line-height:1.1;margin:6px 0 16px;letter-spacing:-.01em}
+.sec h1 .num{display:block;font-size:13px;margin-bottom:6px}
+.content h2{font-size:20px;margin:28px 0 8px;padding-top:12px;border-top:1px solid var(--line)}
+.content h3{font-size:16px;margin:20px 0 6px;color:var(--accent)}
+.content p,.content li{max-width:68ch}
+.content ul,.content ol{padding-left:20px}
+.content li{margin:4px 0}
+.content li.task{list-style:none;margin-left:-20px;display:flex;gap:8px}
+.content li.task .box{flex:none;width:14px;height:14px;border:1.5px solid var(--muted);border-radius:3px;margin-top:5px}
+.tbl{margin:12px 0 18px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.4;background:var(--card)}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+th{background:#ebe5d8;font-weight:600}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:34px;padding-top:14px;border-top:3px solid var(--ink);font-weight:600;font-size:14px}
+.pn a{text-decoration:none}
+
+@media (max-width:520px){
+  .cover h1{font-size:52px}
+  table{font-size:13px}
+  th,td{padding:6px}
+}
+
+/* Impression / PDF : tout le carnet, tableaux à la largeur d'une A4 */
+@page{size:A4;margin:16mm 14mm}
+@media print{
+  body{background:#fff;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  .view{display:block!important}
+  .view[hidden]{display:block!important}
+  .bar,.pn,.toc .arr{display:none}
+  .sec{break-before:page}
+  .tbl{overflow:visible}
+  table{font-size:9pt;table-layout:fixed;width:100%}
+  th,td{padding:4px 5px}
+  tr{break-inside:avoid}
+  a{color:var(--ink)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="view home" id="v-sommaire">
+  <div class="cover">
+    <div class="kicker">Carnet de film · document de travail</div>
+    <h1>1995</h1>
+    <p>Une bande de skateurs à Lausanne, d'avril 1994 à l'hiver 1995. Pourquoi une jeunesse privilégiée va-t-elle si mal ?</p>
+  </div>
+  <ol class="toc">
+<li><a href="#genese"><span class="num">01</span><span class="txt"><span class="t">Genèse</span><span class="d">L&#x27;idée, la question du film, les références, la forme</span></span><span class="arr">›</span></a></li>
+<li><a href="#chronologie"><span class="num">02</span><span class="txt"><span class="t">Chronologie et faits historiques</span><span class="d">Crise, sida, contexte mondial, dates 1989-1999</span></span><span class="arr">›</span></a></li>
+<li><a href="#contexte"><span class="num">03</span><span class="txt"><span class="t">Contexte</span><span class="d">L&#x27;héroïne en 1994-1995 : réseaux, route des Balkans</span></span><span class="arr">›</span></a></li>
+<li><a href="#generations"><span class="num">04</span><span class="txt"><span class="t">Génération X vs Génération Z</span><span class="d">Coupland, McJob, Cobain, la jeunesse d&#x27;aujourd&#x27;hui</span></span><span class="arr">›</span></a></li>
+<li><a href="#personnages"><span class="num">05</span><span class="txt"><span class="t">Personnages</span><span class="d">La bande, les quatre trajectoires</span></span><span class="arr">›</span></a></li>
+<li><a href="#musique"><span class="num">06</span><span class="txt"><span class="t">Musique</span><span class="d">Musique originale, morceaux d&#x27;époque, droits</span></span><span class="arr">›</span></a></li>
+<li><a href="#archives"><span class="num">07</span><span class="txt"><span class="t">Archives</span><span class="d">Où chercher images et documents, les films de référence</span></span><span class="arr">›</span></a></li>
+<li><a href="#verifications"><span class="num">08</span><span class="txt"><span class="t">Vérifications</span><span class="d">Tes souvenirs confrontés aux sources, ce qui reste à vérifier</span></span><span class="arr">›</span></a></li>
+  </ol>
+  <p class="foot">Mis à jour le 18 novembre 2026, 14 h 30.</p>
+</section>
+
+<section class="view sec" id="v-genese" data-slug="genese" hidden><div class="bar"><a class="back" href="#sommaire">‹ Sommaire</a><span class="where">01 / 08</span></div><h1><span class="num">01</span>Genèse</h1><div class="content"><p>Hypothèse de départ : une bande de skateurs à Lausanne, en 1994-1995. Point d'ancrage : le suicide de Kurt Cobain, le 5 avril 1994.</p>
+<h2>Les idées en vrac</h2>
+<ul>
+<li>Une bande de skateurs à Lausanne plutôt qu'à Martigny : une ville que tu connais mieux, et plus intéressante à filmer.</li>
+<li>Au skatepark, tout le monde est skateur ; à côté, chacun a sa vie. Un étudiant, un apprenti, un en rupture, un en couple.</li>
+<li>Des filles traînent avec la bande. À l'époque, peu de filles faisaient du skate : une réalité à montrer telle quelle.</li>
+<li>Pas insouciants : peur du sida, crise économique, guerre en Bosnie, sortie de la guerre froide.</li>
+<li>Le mécanisme : ecstasy le week-end à Berne, héroïne le dimanche pour encaisser la descente, puis la chute.</li>
+<li>Les conséquences : overdoses, suicides, décompensations psychiatriques.</li>
+<li>Les personnages s'inspirent de tes potes, et de toi.</li>
+<li>Un personnage qui cache son homosexualité à la bande. Inspiré de ton batteur : il ne l'a dit que des années plus tard, revenu des États-Unis pour vous revoir.</li>
+<li>Un film qu'on n'arriverait pas à dater, comme <em>Rusty James</em> ? Idée mise de côté pour l'instant (règle Pixar : on jette les premières idées), on reste ancré dans les années 90. Mais c'est jouable côté looks : Carhartt, Adidas, Vans existaient déjà. La grosse différence, c'est le téléphone portable.</li>
+<li>La forme finale reste ouverte : un film, peut-être un livre.</li>
+</ul>
+<h2>La question du film</h2>
+<p>Pourquoi une jeunesse privilégiée va-t-elle si mal ? Hier la Gen X, aujourd'hui la Gen Z.</p>
+<h2>Mon questionnement</h2>
+<p>Ce qu'il y a dessous : ta réflexion à voix haute, mise en forme. C'est ta vision, pas un constat sociologique vérifié ; les points vérifiables sont sourcés.</p>
+<h3>Ce que j'ai envie de dire</h3>
+<ul>
+<li><strong>« Boomer ».</strong> Pour la Gen Z, le mot ne désigne plus les baby-boomers : c'est devenu « vieux con », et dès qu'on a un certain âge, on est un boomer. L'expression « OK boomer » a décollé en 2019 chez les milléniaux et la Gen Z, en réponse à des gens plus âgés mis dans le même sac que les baby-boomers (<a href="https://www.milwaukeeindependent.com/?p=112518" target="_blank" rel="noopener">Milwaukee Independent</a>).</li>
+<li><strong>« Vous nous avez laissé un monde de merde. »</strong> Ta réponse : ce monde, ce n'est ni la Gen X ni la Gen Z qui l'ont fait. Il date d'avant, des vrais baby-boomers, et la Gen X l'a pris de plein fouet. A-t-elle amélioré les choses ? Sans doute pas. Mais ce n'est pas à elle de porter cette charge. Des chercheurs parlent de « Boomer blaming » : l'idée que l'ancienne génération a légué à la Gen Z ses problèmes, des inégalités au climat (<a href="https://theconversation.edu.au/ok-boomer-how-a-tiktok-meme-traces-the-rise-of-gen-z-political-consciousness-165811" target="_blank" rel="noopener">The Conversation</a>).</li>
+<li><strong>Après MeToo.</strong> Tu as l'impression que la Gen Z voit les hommes de ton âge comme des abuseurs en puissance, amateurs d'humour gras. Ta réponse : cet humour, vous le subissiez plus que vous ne l'aimiez.</li>
+</ul>
+<h3>Subir ou s'afficher</h3>
+<ul>
+<li>Ton intuition : la Gen X avait la même sensibilité que la Gen Z, mais elle subissait et se taisait, encore sous l'emprise des vrais boomers. La Gen Z, elle, s'affiche et s'exprime.</li>
+<li>L'exemple de ton batteur : gay, il n'a rien dit tant qu'il vivait en Suisse.</li>
+<li>C'était encore plus vrai en Suisse, et dans les cantons ruraux.</li>
+<li>Aujourd'hui, la Gen Z côtoie une Gen X et des milléniaux plutôt ouverts à ce qu'elle dit. Il reste des boomers en désaccord, mais elle peut parler bien plus facilement que vous à son âge.</li>
+</ul>
+<h3>Le message : « on est comme vous »</h3>
+<p>Te faire le porte-parole de ce que vous avez vécu, remettre l'église au milieu du village, et dire à la Gen Z : on est comme vous.</p>
+<h3>Ma démarche</h3>
+<ul>
+<li>Tu as toujours eu beaucoup d'idées (musique, écriture), sans aller au bout : écrasé par tes idoles, convaincu de ne jamais faire aussi bien.</li>
+<li>Avec le cinéma, tu n'as pas ce complexe : tu ne te compares pas à un réalisateur. Tu y vas avec naïveté, et c'est peut-être ce qui te permettra d'aboutir.</li>
+<li>Pour toi, un film, c'est une histoire, mais surtout des images, des acteurs, des décors, de la musique mis ensemble. Comme en réalisation radio : tu assembles des éléments faits par d'autres pour que le tout soit beau et plaisant.</li>
+<li>Ta peur : « l'espoir ridicule », mettre beaucoup de temps dans un projet qui n'aboutit pas. Parler plutôt que taper rend l'essai moins coûteux.</li>
+</ul>
+<h3>Questions pour préciser ton intention</h3>
+<ul>
+<li>À qui parle le film ? Ta réponse : à tout le monde.</li>
+<li>Réhabiliter la Gen X, ou montrer qu'on se ressemble ? Ta réponse : montrer qu'on se ressemble, pas une revanche.</li>
+<li>Le risque du plaidoyer : un film qui répond aux reproches de la Gen Z peut tourner au règlement de comptes. Comment raconter sans juger ?</li>
+<li>Un miroir à creuser : la Gen X aussi rejetait ses aînés et leurs étiquettes (voir Coupland). La Gen Z fait-elle avec vous ce que vous faisiez avec les boomers ? « OK boomer » est d'ailleurs né quand la Gen Z se sentait traitée de génération « fragile » (<a href="https://www.thenewdaily.com.au/entertainment/people-entertainment/2021/08/20/ok-boomer-gen-z-politics" target="_blank" rel="noopener">The New Daily</a>).</li>
+<li>Le silence de ta génération (le batteur, les potes qui tombent sans rien dire) : est-ce le vrai sujet du film ?</li>
+<li>Que veux-tu que le spectateur ressente en sortant de la salle ? Première réponse : pas une revanche d'une génération sur l'autre, mais « on est les mêmes, on est ensemble ».</li>
+</ul>
+<h3>Réflexion du 18 novembre 2026</h3>
+<p>Ta pensée remise en ordre. Mes avis sont signalés « ⚠️ Point d'attention » : c'est le recul que je t'apporte, à prendre ou à laisser.</p>
+<p><strong>1. Le but : ensemble, pas contre.</strong> Ni opposer la Gen X et la Gen Z, ni prendre une revanche. Dire : on est les mêmes, on vit des choses difficiles, on est ensemble. Le film parle à tout le monde.</p>
+<p><strong>2. L'hypothèse centrale : une dissonance cognitive.</strong> C'est peut-être la réponse à la question du film. Chez toi, il n'y a ni guerre, ni famine ; tu peux skater, avoir des potes, te créer un look et une identité, quel que soit ton milieu. En Suisse, on est bien. Et pourtant, on va mal.</p>
+<ul>
+<li>D'un côté, la souffrance réelle des autres (les pays en guerre), qu'on voit sans pouvoir s'y projeter.</li>
+<li>De l'autre, sa propre souffrance, qui paraît illégitime à côté.</li>
+<li>Entre les deux, une culpabilité souvent inconsciente : pourquoi moi, j'ai cette chance ?</li>
+<li>Par-dessus, une pression que tu juges absurde : marcher dans les pas de ceux d'avant.</li>
+<li>Ton idée : si on arrêtait de s'infliger de la souffrance entre nous, si on acceptait les gens comme ils sont, on pourrait mieux aider ailleurs.</li>
+<li><strong>Une réplique pour un personnage</strong> : « Putain, pourquoi on va pas sur la place Fédérale, et on bouge plus de là tant qu'il y a pas la paix en Bosnie ? » On pourrait agir, partager plus, et on ne le fait pas : la dissonance en une phrase.</li>
+<li><strong>La dissonance dans la dissonance</strong> : l'écart entre la Suisse et un pays d'Afrique, on le retrouve ici, dans la lutte des classes. Comme on est plutôt du bon côté, on passe vite dessus, et ça freine. Ta formule, que tu reconnais toi-même simplifiée et un peu méchante : en Suisse, soit on part avec tout dans les mains et on devient de droite pour en avoir encore plus, soit on part avec tout et on devient de gauche pour s'acheter une conscience (le travail social, par exemple). Dans les deux cas, on reste des privilégiés.</li>
+</ul>
+<p>Le terme est juste : pour le psychologue Leon Festinger (1957), la dissonance cognitive, c'est l'inconfort qu'on ressent quand on tient en même temps des idées, des valeurs ou des comportements contradictoires, et qu'on cherche à réduire (<a href="https://www.earlyyears.tv/cognitive-dissonance/" target="_blank" rel="noopener">EarlyYears, résumé de Festinger</a>).</p>
+<p><strong>3. « La souffrance ne se compare pas, elle s'additionne. »</strong> C'est ta phrase, celle que tu dis aux gens qui n'osent pas souffrir. Être privilégié n'empêche pas de souffrir, et cette souffrance compte aussi : toute souffrance est légitime, il n'y a pas de hiérarchie. Et peut-être que ne pas oser souffrir empêche aussi de se révolter, et donc de faire bouger le monde. C'est un message que tu veux faire passer.</p>
+<p><strong>4. Un monde hérité, des images qui marquent.</strong> Ce malaise vient de loin : la colonisation, la dette des pays africains, un modèle économique qu'on n'a pas choisi. Chaque génération a ses images. Toi, tu as grandi avec les famines en Afrique au téléjournal : en Éthiopie, la famine de 1983-1985 a fait entre 300 000 et 1,2 million de morts (<a href="https://en.wikipedia.org/wiki/1983%E2%80%931985_famine_in_Ethiopia" target="_blank" rel="noopener">Wikipedia</a>). Aujourd'hui, toutes générations confondues, on assiste en direct à ce que tu appelles un génocide, à Gaza, avec des images souvent plus difficiles à trouver, sur les réseaux.</p>
+<p><strong>5. « Boomer », une mentalité ; l'humanisme, à gauche.</strong> Pour toi, le boomer n'est pas une question d'âge mais de mentalité : la droite, toutes les droites, ce que tu appelles le « droitard ». Quand tu parles d'intelligence, tu parles d'humanisme : pour toi, c'est la gauche qui porte le message le plus humain, et la droite ne véhicule que la peur de l'étranger et des mythes : le self-made man, le ruissellement, « quand on veut, on peut », la méritocratie.</p>
+<p>Ce que disent les sources sur deux de ces mythes :</p>
+<ul>
+<li><strong>Le ruissellement.</strong> Une étude de la London School of Economics portant sur 18 pays et 50 ans (1965-2015) conclut que les baisses d'impôts pour les plus riches n'ont pas d'effet significatif sur la croissance ni sur le chômage, et qu'elles augmentent les inégalités (<a href="https://weforum.org/agenda/2021/01/tax-cuts-for-wealthy-impact-lse-study" target="_blank" rel="noopener">Forum économique mondial</a>).</li>
+<li><strong>La méritocratie.</strong> Selon l'OCDE (2018), il faudrait en moyenne quatre à cinq générations, jusqu'à 150 ans, pour qu'un enfant né dans une famille à faible revenu atteigne le revenu moyen (<a href="https://www.oecd.org/fr/publications/2019/05/under-pressure-the-squeezed-middle-class_f3fa7167/full-report.html" target="_blank" rel="noopener">OCDE</a>). En moyenne, 17 % des enfants d'origine modeste atteignent le haut de l'échelle des revenus, contre 42 % des enfants de familles aisées qui y restent (<a href="https://www.weka.fr/actualite/lutte-contre-les-exclusions/article/six-generations-pour-quun-enfant-pauvre-seleve-dans-lechelle-sociale-en-france-66822/" target="_blank" rel="noopener">Weka, rapport OCDE</a>).</li>
+</ul>
+<p><strong>⚠️ Point d'attention.</strong> Sur le ruissellement et la mobilité sociale, les sources vont dans ton sens. Mais « la droite n'a aucun message humaniste » est un jugement politique, pas un fait : ses défenseurs revendiquent leur propre humanisme (la démocratie chrétienne, la liberté et la responsabilité individuelles). Et la recherche sur intelligence et orientation politique ne montre qu'un lien faible : modeste avec le conservatisme social, de l'ordre de r = -0,20 (<a href="https://www.clearerthinking.org/post/what-is-the-relationship-between-iq-and-political-views" target="_blank" rel="noopener">ClearerThinking</a>), et quasi nul, voire inverse, sur l'économie, r = 0,07 (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9548663" target="_blank" rel="noopener">méta-analyse, 2021</a>).</p>
+<p><strong>⚠️ Point d'attention : pourquoi garder ta conviction politique hors de la thèse du film.</strong> Ta conviction est ton moteur ; elle ne doit pas devenir le message affiché. Cinq raisons :</p>
+<ol>
+<li><strong>Ton propre but.</strong> Tu veux un film qui parle à tout le monde, sans revanche. Un film qui désigne un camp coupable (« les droitards ») ferme la porte à une partie du public, et il recrée l'antagonisme que tu veux dépasser.</li>
+<li><strong>Ton propre message.</strong> « La souffrance ne se compare pas. » Si le film trie les bons et les méchants, il hiérarchise, justement.</li>
+<li><strong>La dissonance est plus large que le clivage gauche-droite.</strong> Un fils de bonne famille de droite peut ressentir la même culpabilité et le même malaise. C'est elle qui relie les générations : c'est ton vrai sujet.</li>
+<li><strong>Un spectateur à qui l'on fait la leçon décroche.</strong> Un message frontal fait tract. Le cinéma qui marque montre, et laisse le spectateur conclure. <em>Kids</em> ou <em>Requiem for a Dream</em> n'énoncent pas de thèse : ils montrent (ma lecture).</li>
+<li><strong>Ta conviction ne disparaît pas : elle choisit ce que tu montres.</strong> Concrètement :<ul>
+<li>dans les situations : l'apprenti à qui son père répète « quand on veut, on peut », alors qu'il n'y a pas de place d'apprentissage ;</li>
+<li>dans les personnages qui s'opposent : un pote qui croit au self-made man, un autre qui le démonte ;</li>
+<li>dans les répliques : « droitard », la place Fédérale, portées par un personnage, que le film ne valide ni ne condamne.</li>
+</ul>
+</li>
+</ol>
+<p><strong>6. Se taire ou s'affirmer.</strong> Une différence possible : la Gen X se taisait sur sa souffrance ; la Gen Z ose davantage dire qu'elle souffre. Autre hypothèse lancée à la volée : la Gen Z serait plus individualiste, la « quintessence du libéralisme », du moi-je ; on passerait de l'acceptation des différences à leur affirmation. Dans quel but ?</p>
+<p><strong>⚠️ Point d'attention.</strong> Hypothèse à confronter. Une étude sur le mème « OK boomer » y voit au contraire la Gen Z se penser comme une génération aux intérêts partagés (<a href="https://theconversation.edu.au/ok-boomer-how-a-tiktok-meme-traces-the-rise-of-gen-z-political-consciousness-165811" target="_blank" rel="noopener">The Conversation</a>). Les deux peuvent coexister : un bon terrain pour des personnages qui ne pensent pas pareil.</p>
+<p><strong>⚠️ Point d'attention : le cœur du film.</strong> Les points 1 (l'intention), 2 (la dissonance) et 3 (la souffrance qui s'additionne) forment le cœur. Les points 4 et 6 nourrissent les personnages et les images. Le point 5 est ton moteur personnel : il guide tes choix, sans devenir la thèse.</p>
+<h2>L'ancrage temporel</h2>
+<ul>
+<li>5 avril 1994 : suicide de Kurt Cobain, considéré comme le porte-voix de la Gen X. Point de départ retenu.</li>
+<li>Repère possible pour la suite : 14 février 1995, fermeture du Letten.</li>
+</ul>
+<h2>Images qui reviennent</h2>
+<ul>
+<li>Une télé allumée, un flash info : Cobain, la Bosnie, le Letten.</li>
+<li>Celui qui reste : le vendredi soir, les potes prennent le train pour Berne, lui reste, déçu.</li>
+<li>À l'école, un prof : « Vous ne trouverez jamais de travail. Pour vous, ce sera le chômage. »</li>
+<li>Le dimanche, la descente.</li>
+</ul>
+<h2>Référence : <em>Kids</em></h2>
+<ul>
+<li><em>Kids</em> (1995), réalisé par Larry Clark et écrit par Harmony Korine, film de jeunesse new-yorkais sur le sexe et la drogue chez les ados (<a href="https://ipfs.ssi.eecc.de/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/Kids_(film).html" target="_blank" rel="noopener">Wikipedia</a>).</li>
+<li>Musique de Lou Barlow et John Davis (The Folk Implosion) ; Korine, fan de Barlow, l'avait demandé (<a href="https://www.vice.com/fr/article/comment-la-bande-originale-de-kids-est-devenue-le-disque-emblematique-de-lete-1995/" target="_blank" rel="noopener">Vice</a>). « Natural One » devient un tube, sans figurer dans le film lui-même (<a href="https://wikipedia.com/wiki/Natural_One" target="_blank" rel="noopener">Wikipedia</a>).</li>
+<li>Ce qu'on en retient : le style vérité, des acteurs débutants, et une controverse sur l'exploitation du jeune casting.</li>
+</ul>
+<h2>Autres références</h2>
+<p><strong><em>Requiem for a Dream</em></strong> (Darren Aronofsky, 2000). La descente aux enfers de quatre protagonistes aux prises avec une dépendance (<a href="https://popenstock.uqam.ca/articles/requiem-for-a-dream-de-darren-aronofsky-une-critique-postmoderne-du-reve-americain" target="_blank" rel="noopener">UQAM</a>) : trois amis de Coney Island, Harry, Marion et Tyrone, et Sara, la mère de Harry (<a href="https://www.lacinetek.com/be-de/film/requiem-for-a-dream-vod" target="_blank" rel="noopener">LaCinetek</a>). Montage « hip-hop » : plus de 2 000 plans, contre 600 à 700 pour un film moyen (<a href="https://ipfs.aleph.im/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/Requiem_of_a_Dream.html" target="_blank" rel="noopener">Wikipedia</a>).</p>
+<p><em>Choral ou film de bande ?</em> Ma lecture : plutôt choral. Il y a un petit noyau de bande (les trois amis), mais la mère vit une trajectoire à part, et le film mène les quatre descentes en parallèle jusqu'à la fin. C'est le modèle de tes trajectoires qui se fracassent.</p>
+<p><strong><em>Skins</em></strong> (série britannique, E4, 2007-2013). Un groupe d'ados à Bristol pendant les deux dernières années de lycée (<a href="https://wikipedia.com/wiki/Skins_UK" target="_blank" rel="noopener">Wikipedia</a>). De jeunes acteurs inconnus, un casting renouvelé toutes les deux saisons, et une peinture désabusée du monde des adultes (<a href="https://franco.wiki/fr/Skins_(s%C3%A9rie_t%C3%A9l%C3%A9vis%C3%A9e%2C_2007).html" target="_blank" rel="noopener">franco.wiki</a>). Génération : des ados de la fin des années 2000, donc des milléniaux (Gen Y), plus la Gen X (<a href="https://www.theringer.com/tv/2022/10/17/23408000/british-teen-tv-shows-skins-inbetweeners-misfits-millennials" target="_blank" rel="noopener">The Ringer</a>).</p>
+<p><strong><em>The Outsiders</em></strong> (Francis Ford Coppola, 1983). Ça ne se passe pas dans les années 80 : l'histoire se déroule à Tulsa (Oklahoma) en 1965, entre deux bandes rivales, les Greasers, ados pauvres, et les Socs, ados riches (<a href="https://www.pbs.org/video/the-outsiders-ivslfr" target="_blank" rel="noopener">PBS</a>). S. E. Hinton commence le roman en 1965, à 15 ans, en s'inspirant de deux bandes de son lycée ; il paraît en 1967 (même source). Le film est en couleur.</p>
+<p><strong><em>Rusty James</em></strong> (<em>Rumble Fish</em>, Coppola, 1983). Tourné juste après <em>The Outsiders</em>, à Tulsa, avec la même équipe (<a href="https://medium.com/bryn-mawr-film-institute/new-illusion-the-outsiders-rumble-fish-and-coppola-in-the-early-80s-e6a0fa3f2e95" target="_blank" rel="noopener">Bryn Mawr Film Institute</a>), d'après un roman de Hinton paru en 1975 (<a href="https://cavac.at/cavacopedia/Rumble%20Fish" target="_blank" rel="noopener">Wikipedia</a>). En noir et blanc très contrasté (<a href="https://en.wikipedia.org/wiki/Rumble_Fish" target="_blank" rel="noopener">Wikipedia</a>). L'époque y est volontairement floue : un critique la décrit comme une réalité stylisée, entre années 50 et 80 (<a href="https://forums.fanedit.org/threads/a-few-reviews.9937/post-354238" target="_blank" rel="noopener">fanedit.org</a>). Avis isolé, à vérifier en revoyant le film.</p>
+<p><strong>Couleur ou noir et blanc ?</strong> Tu penches pour la couleur, comme <em>Kids</em>. La question reste ouverte.</p>
+<h2>La forme : film choral ou film de bande ?</h2>
+<p><strong>Le film choral.</strong> Plusieurs personnages principaux, souvent trois ou quatre, d'importance à peu près égale : pas de héros unique, mais des voix différentes reliées par un fil conducteur (<a href="https://nouvelles.ulaval.ca/2010/12/08/le-spectateur-dieu-ebb77134-3ecf-45d2-8eba-87a90c3d210c" target="_blank" rel="noopener">Université Laval</a>). Le nom vient de la musique : plusieurs voix qui chantent ensemble (<a href="https://www.erudit.org/fr/culture/sequences1081634/sequences1823041/65368ac.pdf" target="_blank" rel="noopener">Séquences, 2011</a>).</p>
+<p><strong>Genre ou pas ?</strong> La revue <em>Séquences</em> parle d'un « genre difficile à définir ». Je le vois plutôt comme une forme, une façon de construire le récit : on peut faire un drame choral ou une comédie chorale. Le genre de ton film serait plutôt le drame de jeunesse, comme <em>Kids</em>, avec une dimension sociale.</p>
+<p><strong>Les conventions du film choral</strong></p>
+<ul>
+<li>Pas de protagoniste unique : plusieurs trajectoires menées en parallèle, en montage alterné.</li>
+<li>Un fil conducteur qui les relie : un lieu, un événement, une période, un thème.</li>
+<li>Des croisements entre les trajectoires, parfois par coïncidence ; la recherche sur ces récits note des intrigues multiples et des coïncidences assumées (<a href="https://czasopisma.bg.ug.edu.pl/index.php/panoptikum/article/download/6515/5842/10158" target="_blank" rel="noopener">Panoptikum, 2021</a>).</li>
+<li>Le risque : une partie du public reste sur sa faim quant au sort de chaque personnage (Université Laval).</li>
+<li>Exemples cités par <em>Séquences</em> : <em>Grand Hotel</em> (1932), <em>Short Cuts</em> de Robert Altman (1993, qui relance la forme), <em>Magnolia</em>, <em>Crash</em>, <em>Babel</em>, <em>Love Actually</em>.</li>
+</ul>
+<p><strong>Le film de bande.</strong> Un groupe qui partage la plupart des scènes ; on suit la bande. Exemples : <em>Stand by Me</em> (Rob Reiner, 1986), quatre ados en quête (<a href="https://www.lalibre.be/culture/cinema/films/2023/02/22/la-petite-bande-un-joli-portrait-dun-groupe-dados-apprentis-revoltes-J53RZ4WMOJHEHKJIVZKH2J6W4I/" target="_blank" rel="noopener">La Libre</a>), <em>The Outsiders</em>, ou <em>Bande de filles</em> (Céline Sciamma, 2014), qui va « de la bande à l'héroïne » (<a href="https://intranet.veocinemas.fr/wp-content/uploads/2019/05/Bande-de-filles-de-C%C3%A9line-Sciamma.pdf" target="_blank" rel="noopener">dossier pédagogique CNC</a>).</p>
+<p><strong>Ton idée est entre les deux</strong> : un film de bande au départ (le skatepark, le groupe), qui devient choral quand les quatre trajectoires se séparent et se fracassent. Les trajectoires sont esquissées dans Personnages.</p>
+<p><strong>À lire</strong> : Maxime Labrecque, « Le film choral », <em>Séquences</em> n° 275, 2011 (PDF sur Érudit, lien ci-dessus).</p>
+<h2>Questions ouvertes</h2>
+<ul>
+<li>Rester en 1994-1995, transposer aujourd'hui, ou faire dialoguer les deux époques ?</li>
+<li>Un film de bande qui devient choral : est-ce la bonne forme ?</li>
+<li>Quelles quatre trajectoires, quelles quatre désillusions ?</li>
+<li>Couleur (piste actuelle) ou noir et blanc ?</li>
+</ul></div><nav class="pn"><span></span><a href="#chronologie">Chronologie et faits historiques ›</a></nav></section>
+<section class="view sec" id="v-chronologie" data-slug="chronologie" hidden><div class="bar"><a class="back" href="#sommaire">‹ Sommaire</a><span class="where">02 / 08</span></div><h1><span class="num">02</span>Chronologie et faits historiques</h1><div class="content"><p>Des famines des années 80 aux votations sur la drogue : 1983-1999 en Suisse et autour. Les lignes « source à ajouter » sont des faits connus, pas encore sourcés ici.</p>
+<h2>La crise économique</h2>
+<p><strong>Le début (1989-1991).</strong> Les prix du logement doublent entre 1980 et 1990 (<a href="https://www.cash.ch/news/top-news/so-konnte-sich-die-immobilienkrise-der-90er-wiederholen-398477" target="_blank" rel="noopener">cash.ch</a>). Face à l'inflation de la fin des années 80, la BNS resserre sa politique, et le marché immobilier bascule (<a href="https://www.snb.ch/fr/snb-explained/real-estate-market" target="_blank" rel="noopener">BNS</a>, <a href="https://www.ge.ch/dossier/politique-du-logement-geneve/oclpf-fete-ses-80-ans/annees-1990-quand-crise-immobiliere-redessine-role-etat" target="_blank" rel="noopener">État de Genève</a>). Certains historiens situent le début de la crise dès 1990 (<a href="https://archive-ouverte.unige.ch/unige:162630" target="_blank" rel="noopener">Université de Genève</a>).</p>
+<p><strong>Le développement (1991-1997).</strong> En octobre 1991, la Spar- und Leihkasse Thun ferme, première ruée bancaire notable du pays (<a href="https://en.wikipedia.org/wiki/Spar-_und_Leihkasse_Thun" target="_blank" rel="noopener">Wikipedia</a>). Récession de 1991 à 1993, puis stagnation. Le chômage passe de 1,1 % en 1991 à 5,2 % en 1997 (<a href="https://people.unil.ch/danieloesch/files/2014/05/Article_le_Temps_DOesch_Avril2009.pdf" target="_blank" rel="noopener">D. Oesch</a>).</p>
+<p><strong>Les répercussions.</strong> Le chômage s'installe : en 1997, la moitié des chômeurs le sont depuis plus de six mois. Il faut neuf ans à la Suisse pour retrouver ses emplois (Oesch). Dans le canton de Vaud, un habitant sur quatre connaît une période de chômage dans la décennie ; les ORP naissent en 1993 (<a href="https://www.vd.ch/actualites/communiques-de-presse-de-letat-de-vaud/detail/communique/un-quart-des-vaudois-a-vecu-une-periode-de-chomage-961779250" target="_blank" rel="noopener">État de Vaud</a>).</p>
+<h2>Le sida en 1994</h2>
+<ul>
+<li><strong>Le pic.</strong> 1994 est l'année la plus meurtrière en Suisse : 686 décès. 710 nouveaux cas de sida déclarés en 1994, 734 en 1995 (<a href="https://hls-dhs-dss.ch/fr/articles/025625/2015-07-08/" target="_blank" rel="noopener">DHS</a>). Aux États-Unis, le sida est alors la première cause de mort chez les 25-44 ans (<a href="https://www.blick.ch/fr/suisse/quarante-ans-apres-sa-decouverte-le-vih-nest-toujours-pas-vaincu-et-touche-une-centaine-de-suisses-chaque-annee-id19685873.html" target="_blank" rel="noopener">Blick</a>).</li>
+<li><strong>Les plus touchés.</strong> Hommes homosexuels et bisexuels, et usagers de drogue par injection (DHS). Le lien avec l'héroïne est direct pour ton histoire.</li>
+<li><strong>Pas de traitement efficace.</strong> Entre 1990 et 1994, environ 35 % des patients suivis reçoivent un traitement, surtout une monothérapie ; les combinaisons ne concernent que 6 % d'entre eux en 1994 (<a href="https://pesquisa.bvsalud.org/ses/resource/pt/mdl-9677169" target="_blank" rel="noopener">étude de cohorte suisse</a>). Les trithérapies arrivent en 1996 (<a href="https://www.letemps.ch/suisse/jour-geneve-desobei-sauver-malades-sida" target="_blank" rel="noopener">Le Temps</a>).</li>
+<li><strong>La prévention.</strong> Campagnes de l'OFSP à la télé, sur des affiches et dans les journaux, pour le préservatif et les seringues stériles. En 1994, un timbre de Niki de Saint Phalle pour la campagne de prévention (DHS).</li>
+<li><strong>Le test.</strong> Ton souvenir d'une longue attente du résultat : à sourcer (délai de laboratoire en 1994, démarche, centres de dépistage). Aujourd'hui, un test rapide donne un résultat en 20 minutes (<a href="https://www.ciao.ch/articles/test-vih-sida/" target="_blank" rel="noopener">ciao.ch</a>).</li>
+</ul>
+<h2>Le contexte mondial</h2>
+<ul>
+<li>Fin de la guerre froide : chute du mur (1989), fin de l'URSS (1991). Coupland décrit le début des années 90 comme une page blanche, quand Fukuyama annonce la « fin de l'histoire » (<a href="https://www.history.com/articles/1990s-the-good-decade" target="_blank" rel="noopener">History.com</a>).</li>
+<li>Guerres de Yougoslavie : Bosnie (1992-1995), Kosovo (1998-1999).</li>
+<li>Génocide des Tutsi au Rwanda, avril-juillet 1994 (source à ajouter).</li>
+<li>En Suisse, refus de l'Espace économique européen en décembre 1992 (source à ajouter).</li>
+</ul>
+<h2>Chronologie détaillée</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Événement</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1983-1985</td>
+<td>Famine en Éthiopie : 300 000 à 1,2 million de morts. Les images d'enfants affamés au téléjournal marquent ta génération</td>
+<td><a href="https://en.wikipedia.org/wiki/1983%E2%80%931985_famine_in_Ethiopia" target="_blank" rel="noopener">Wikipedia</a></td>
+</tr>
+<tr>
+<td>Nov. 1989</td>
+<td>Chute du mur de Berlin</td>
+<td>Source à ajouter</td>
+</tr>
+<tr>
+<td>Oct. 1990</td>
+<td>Opération fédérale « Benjamin » contre un trafic d'héroïne kosovar</td>
+<td><a href="https://journals.openedition.org/cemoti/692" target="_blank" rel="noopener">Cemoti</a></td>
+</tr>
+<tr>
+<td>15 mars 1991</td>
+<td>Parution de <em>Generation X</em> de Douglas Coupland</td>
+<td><a href="https://en.wikipedia.org/wiki/Generation_X:_Tales_for_an_Accelerated_Culture" target="_blank" rel="noopener">Wikipedia</a></td>
+</tr>
+<tr>
+<td>1991</td>
+<td>Premières grandes raves au Casino de Montreux</td>
+<td><a href="https://www.srf.ch/kultur/musik/geschichte-der-clubkultur-beat-bass-und-strobo-wie-sich-die-schweiz-freitanzte" target="_blank" rel="noopener">SRF</a></td>
+</tr>
+<tr>
+<td>1991-1993</td>
+<td>Récession : début de la « décennie perdue »</td>
+<td><a href="https://people.unil.ch/danieloesch/files/2014/05/Article_le_Temps_DOesch_Avril2009.pdf" target="_blank" rel="noopener">D. Oesch</a></td>
+</tr>
+<tr>
+<td>3 oct. 1991</td>
+<td>Fermeture de la Spar- und Leihkasse Thun, symbole de la crise immobilière</td>
+<td><a href="https://www.bilanz.ch/invest/wie-eine-thuner-regionalbank-zum-symbol-der-krise-wurde/wx1sm12" target="_blank" rel="noopener">Bilanz</a></td>
+</tr>
+<tr>
+<td>Déc. 1991</td>
+<td>Fin de l'URSS</td>
+<td>Source à ajouter</td>
+</tr>
+<tr>
+<td>5 févr. 1992</td>
+<td>Fermeture du Platzspitz à Zurich</td>
+<td><a href="https://www.swissinfo.ch/eng/drug-addiction_zurich-s-infamous-needle-park/37756262" target="_blank" rel="noopener">swissinfo</a></td>
+</tr>
+<tr>
+<td>1992-1995</td>
+<td>Guerre de Bosnie ; la Suisse accueille près de 30 000 personnes</td>
+<td><a href="https://www.sem.admin.ch/fr/tradition-humanitaire" target="_blank" rel="noopener">SEM</a></td>
+</tr>
+<tr>
+<td>5 sept. 1992</td>
+<td>Première Street Parade à Zurich</td>
+<td><a href="https://www.swissinfo.ch/eng/culture/raving-in-zurich-_up-to-million-prepare-to-party-at-street-parade/44308978" target="_blank" rel="noopener">swissinfo</a></td>
+</tr>
+<tr>
+<td>1993</td>
+<td>Premiers ORP (offices de placement) dans le canton de Vaud</td>
+<td><a href="https://www.vd.ch/actualites/communiques-de-presse-de-letat-de-vaud/detail/communique/un-quart-des-vaudois-a-vecu-une-periode-de-chomage-961779250" target="_blank" rel="noopener">État de Vaud</a></td>
+</tr>
+<tr>
+<td>1993-1994</td>
+<td>Début des raves de Roggwil (BE)</td>
+<td><a href="https://www.blick.ch/gesellschaft/europaeischer-techno-hotspot-in-roggwil-be-das-praegte-die-schweizer-clubszene-id20703743.html" target="_blank" rel="noopener">Blick</a> (1993), <a href="https://www.srf.ch/kultur/musik/geschichte-der-clubkultur-beat-bass-und-strobo-wie-sich-die-schweiz-freitanzte" target="_blank" rel="noopener">SRF</a> (1994)</td>
+</tr>
+<tr>
+<td>22 juil. 1993</td>
+<td>Dépôt de l'initiative « Jeunesse sans drogue »</td>
+<td><a href="https://entscheidsuche.ch/docs/CH_VB/CH_VB_001_du-28-septembre-1997_1997-11-25.pdf" target="_blank" rel="noopener">Feuille fédérale</a></td>
+</tr>
+<tr>
+<td>Début 1994</td>
+<td>Chômage vaudois à 8 %</td>
+<td><a href="https://www.vd.ch/actualites/communiques-de-presse-de-letat-de-vaud/detail/communique/un-quart-des-vaudois-a-vecu-une-periode-de-chomage-961779250" target="_blank" rel="noopener">État de Vaud</a></td>
+</tr>
+<tr>
+<td>1994</td>
+<td>Début de la prescription médicale d'héroïne à Zurich</td>
+<td><a href="https://www.swissinfo.ch/eng/demographics/ten-years-on-from-needle-park/2517882" target="_blank" rel="noopener">swissinfo</a></td>
+</tr>
+<tr>
+<td>5 avril 1994</td>
+<td>Suicide de Kurt Cobain à Seattle (corps retrouvé le 8 avril)</td>
+<td><a href="https://www.universalis.fr/encyclopedie/kurt-cobain/" target="_blank" rel="noopener">Universalis</a></td>
+</tr>
+<tr>
+<td>14 févr. 1995</td>
+<td>Fermeture du Letten à Zurich</td>
+<td><a href="https://www.srf.ch/news/zuerich-schaffhausen-wir-konnten-das-problem-nicht-alleine-loesen" target="_blank" rel="noopener">SRF</a></td>
+</tr>
+<tr>
+<td>Mai 1995</td>
+<td>Rave « Cubik ’95 » à Roggwil : 20 000 personnes</td>
+<td><a href="https://www.blick.ch/gesellschaft/europaeischer-techno-hotspot-in-roggwil-be-das-praegte-die-schweizer-clubszene-id20703743.html" target="_blank" rel="noopener">Blick</a></td>
+</tr>
+<tr>
+<td>1995</td>
+<td>Sortie de <em>Kids</em> (Larry Clark)</td>
+<td><a href="https://www.vice.com/fr/article/comment-la-bande-originale-de-kids-est-devenue-le-disque-emblematique-de-lete-1995/" target="_blank" rel="noopener">Vice</a></td>
+</tr>
+<tr>
+<td>Juil. 1995</td>
+<td>Massacre de Srebrenica</td>
+<td>Source à ajouter</td>
+</tr>
+<tr>
+<td>Oct. 1995</td>
+<td>Fin de la guerre en Bosnie</td>
+<td><a href="https://www.hls-dhs-dss.ch/textes/f/F032206.php" target="_blank" rel="noopener">DHS</a></td>
+</tr>
+<tr>
+<td>1996</td>
+<td>Arrivée des trithérapies contre le VIH</td>
+<td><a href="https://www.letemps.ch/suisse/jour-geneve-desobei-sauver-malades-sida" target="_blank" rel="noopener">Le Temps</a></td>
+</tr>
+<tr>
+<td>Janv. 1997</td>
+<td>Pic du chômage : 5,7 % en Suisse, 8,3 % dans le canton de Vaud</td>
+<td><a href="https://www.vd.ch/actualites/communiques-de-presse-de-letat-de-vaud/detail/communique/un-quart-des-vaudois-a-vecu-une-periode-de-chomage-961779250" target="_blank" rel="noopener">État de Vaud</a></td>
+</tr>
+<tr>
+<td>28 sept. 1997</td>
+<td>« Jeunesse sans drogue » rejetée : 1 314 060 non contre 545 713 oui, par tous les cantons</td>
+<td><a href="https://entscheidsuche.ch/docs/CH_VB/CH_VB_001_du-28-septembre-1997_1997-11-25.pdf" target="_blank" rel="noopener">Feuille fédérale</a></td>
+</tr>
+<tr>
+<td>Nov. 1997</td>
+<td>Rapport d'Interpol sur la domination kosovare du marché de l'héroïne</td>
+<td>Cité par <a href="https://fr.wikipedia.org/wiki/Mafia_albanaise" target="_blank" rel="noopener">Wikipédia</a></td>
+</tr>
+<tr>
+<td>1998-1999</td>
+<td>Guerre du Kosovo ; la Suisse accueille 53 000 personnes</td>
+<td><a href="https://www.sem.admin.ch/fr/tradition-humanitaire" target="_blank" rel="noopener">SEM</a></td>
+</tr>
+<tr>
+<td>29 nov. 1998</td>
+<td>Initiative Droleg (dépénalisation) rejetée : 1 290 070 non contre 453 451 oui</td>
+<td><a href="https://entscheidsuche.ch/docs/CH_VB/CH_VB_001_du-29-novembre-1998_1999-02-23.pdf" target="_blank" rel="noopener">Feuille fédérale</a></td>
+</tr>
+</tbody>
+</table></div></div><nav class="pn"><a href="#genese">‹ Genèse</a><a href="#contexte">Contexte ›</a></nav></section>
+<section class="view sec" id="v-contexte" data-slug="contexte" hidden><div class="bar"><a class="back" href="#sommaire">‹ Sommaire</a><span class="where">03 / 08</span></div><h1><span class="num">03</span>Contexte</h1><div class="content"><p>En 1994-1995, le marché suisse de l'héroïne est déjà tenu par des réseaux albanophones, surtout kosovars. La guerre du Kosovo (1998-1999) vient après ; son lien avec le trafic est allégué dans la presse de l'époque, mais débattu.</p>
+<h2>La route des Balkans (pas la route de la soie)</h2>
+<ul>
+<li>L'héroïne vient d'Afghanistan. Selon le Département fédéral de justice et police (2000), celle consommée en Suisse arrive de Turquie par la terre, via les routes des Balkans (cité par <a href="https://www.agoravox.fr/actualites/international/article/quand-l-occident-etablit-un-etat-42369" target="_blank" rel="noopener">AgoraVox</a>, rapport original à retrouver).</li>
+<li>La marge : un kilo vaut environ 400 fr. en Afghanistan et 20 000 fr. à l'arrivée en Suisse (chiffres récents, <a href="https://www.bilan.ch/economie/la-drogue-devient-elle-trop-accessible" target="_blank" rel="noopener">Bilan</a>).</li>
+</ul>
+<h2>Comment les réseaux kosovars prennent le marché</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Quand</th>
+<th>Ce qui se passe</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avant 1990 (date à préciser)</td>
+<td>Les autorités yougoslaves poussent de nombreux Albanais du Kosovo à émigrer, notamment vers la Suisse et l'Allemagne</td>
+<td><a href="https://journals.openedition.org/cemoti/692" target="_blank" rel="noopener">Cemoti (revue académique)</a></td>
+</tr>
+<tr>
+<td>Fin des années 80</td>
+<td>Arrivée des Kosovars sur le marché suisse ; repli des Turcs, défaite des Libanais, « méthodes radicales »</td>
+<td><a href="https://www.letemps.ch/societe/kosovars-avaient-prisle-controle-marche-suisse-lheroine" target="_blank" rel="noopener">Le Temps</a></td>
+</tr>
+<tr>
+<td>—</td>
+<td>Partage des rôles : les Turcs gardent le marché de gros, les Kosovars prennent l'acheminement vers l'Ouest</td>
+<td><a href="https://fr.wikipedia.org/wiki/Mafia_albanaise" target="_blank" rel="noopener">Wikipédia</a>, à remonter</td>
+</tr>
+<tr>
+<td>Octobre 1990</td>
+<td>La Confédération lance l'opération « Benjamin » contre un trafic d'héroïne organisé par des Albanais du Kosovo</td>
+<td><a href="https://journals.openedition.org/cemoti/692" target="_blank" rel="noopener">Cemoti</a></td>
+</tr>
+<tr>
+<td>Début des années 90</td>
+<td>Musa Rifat Salmani introduit 239 kg d'héroïne, la plus grosse quantité jamais reprochée à un trafiquant en Suisse (procès à Lausanne)</td>
+<td><a href="https://www.letemps.ch/societe/kosovars-avaient-prisle-controle-marche-suisse-lheroine" target="_blank" rel="noopener">Le Temps</a></td>
+</tr>
+<tr>
+<td>Novembre 1997</td>
+<td>Rapport d'Interpol : les Albanais du Kosovo détiennent la plus grande part du marché en Suisse et dans huit autres pays européens</td>
+<td>Cité par <a href="https://fr.wikipedia.org/wiki/Mafia_albanaise" target="_blank" rel="noopener">Wikipédia</a>, à remonter</td>
+</tr>
+<tr>
+<td>Décembre 1998</td>
+<td><em>The Independent</em> : 70 % ou 80 % du marché suisse (les reprises divergent)</td>
+<td>Original à retrouver</td>
+</tr>
+</tbody>
+</table></div>
+<h2>La guerre du Kosovo a-t-elle accéléré le trafic ?</h2>
+<ul>
+<li>En 1998, le rapport de la protection de l'État décrit la Suisse comme base logistique et financière de l'UCK. Il n'exclut pas que l'argent de la drogue finance en partie des groupes extrémistes (cité par <a href="https://www.cnj.it/home/sr-yu/informisanje/jugoinfo/6963-6999-die-unantastbaren-vom-kosovo.html" target="_blank" rel="noopener">un site engagé</a> : rapport original à retrouver).</li>
+<li>En 1999, plusieurs journaux européens accusent l'UCK de se financer par l'héroïne. Une analyse allemande de 1999 note que l'UCK avait largement réussi à corriger cette image (<a href="https://www.bpb.de/shop/zeitschriften/apuz/archiv/539009/die-uck-anmerkungen-zu-geschichte-struktur-und-zielen/" target="_blank" rel="noopener">bpb</a>).</li>
+<li>Verdict provisoire : ton intuition d'une accélération est plausible, mais les sources trouvées sont souvent partisanes. À traiter avec prudence.</li>
+</ul>
+<h2>Pour le film</h2>
+<p>En 1994-1995, le marché est déjà kosovar, la guerre du Kosovo pas encore là. Attention au cliché : la diaspora albanaise de Suisse compte aujourd'hui 300 000 à 400 000 personnes (<a href="https://en.wikipedia.org/wiki/Albanians_in_Switzerland" target="_blank" rel="noopener">Wikipedia</a>), les trafiquants en sont une infime partie. Et en 1998-1999, ce sont aussi 53 000 réfugiés accueillis.</p>
+<p>Le reste du contexte 1995 (chômage, Letten, Bosnie) est dans Vérifications, à resserrer ici au fur et à mesure.</p></div><nav class="pn"><a href="#chronologie">‹ Chronologie et faits historiques</a><a href="#generations">Génération X vs Génération Z ›</a></nav></section>
+<section class="view sec" id="v-generations" data-slug="generations" hidden><div class="bar"><a class="back" href="#sommaire">‹ Sommaire</a><span class="where">04 / 08</span></div><h1><span class="num">04</span>Génération X vs Génération Z</h1><div class="content"><p>La Gen X, ce sont les gens nés entre les années 60 et 80, qui ne se reconnaissaient ni dans les utopies hippies ni dans l'ambition des yuppies (<a href="https://www.livreshebdo.fr/article/api-days" target="_blank" rel="noopener">Livres Hebdo</a>). Une génération désenchantée, un peu partout dans le monde. La Gen Z, c'est la jeunesse d'aujourd'hui. Ton intuition : les deux se ressemblent.</p>
+<h2>Ni hippies, ni yuppies</h2>
+<ul>
+<li><strong>Les hippies</strong> : la contre-culture des années 60, ses utopies de liberté et de vie en communauté (à sourcer). Une idée répandue veut que cette génération ait ensuite « vendu son âme » en vieillissant (<a href="https://www.insidehook.com/feature/the-yuppie-revisited" target="_blank" rel="noopener">InsideHook</a>).</li>
+<li><strong>Les yuppies</strong> : de <em>young urban professional</em>. Le mot apparaît en mai 1980 dans <em>Chicago Magazine</em> ; <em>Newsweek</em> proclame 1984 « l'année du yuppie » (<a href="https://cavac.at/cavacopedia/Yuppie" target="_blank" rel="noopener">Wikipedia</a>). L'image : jeunes cadres urbains, diplômés et aisés. Neutre au départ, le terme devient péjoratif au milieu des années 80 (même source).</li>
+<li><strong>La Gen X entre les deux</strong> : trop tard pour les utopies, pas envie de l'ambition. Coupland écrit pour dire ce que pensent les gens nés après 1960 : fatigués des étiquettes et d'être relégués dans des boulots minables (<a href="https://ipfs.ssi.eecc.de/ipns/en.wikipedia-on-ipfs.org/wiki/Generation_X%3A_Tales_for_an_Accelerated_Culture" target="_blank" rel="noopener">Wikipedia</a>).</li>
+</ul>
+<h2>Le McJob</h2>
+<ul>
+<li>Chez Coupland, un McJob est un boulot mal payé, sans prestige, sans dignité, sans avantages et sans avenir, dans le secteur des services. Avec une pique : « souvent considéré comme un choix de carrière satisfaisant par ceux qui n'en ont jamais occupé » (<a href="https://en.wikipedia.org/wiki/McJob" target="_blank" rel="noopener">Wikipedia</a>).</li>
+<li>Le mot existait dès 1986 selon l'Oxford English Dictionary ; c'est le roman de 1991 qui le popularise (même source).</li>
+<li>Dans le roman, Andy, Dag et Claire choisissent les McJobs plutôt que les fausses promesses de statut et d'argent. Une universitaire y voit la « lente annulation du futur » décrite par le philosophe Franco Berardi : on n'attend plus que l'avenir tienne ses promesses (<a href="https://asapjournal.com/thirty-years-of-generation-x-mcjobs-and-veal-fattening-pens-work-and-futurity-in-generation-x-diletta-de-cristofaro/" target="_blank" rel="noopener">ASAP Journal</a>).</li>
+<li>Pour le film : c'est l'horizon de l'apprenti, et la phrase du prof (« vous ne trouverez jamais de travail »).</li>
+</ul>
+<h2>Le livre qui lui donne son nom</h2>
+<ul>
+<li><em>Generation X</em> de Douglas Coupland paraît le 15 mars 1991. Il popularise le terme et celui de « McJob » (<a href="https://en.wikipedia.org/wiki/Generation_X:_Tales_for_an_Accelerated_Culture" target="_blank" rel="noopener">Wikipedia</a>). Traduction française chez Robert Laffont deux ans plus tard (<a href="https://www.livreshebdo.fr/article/api-days" target="_blank" rel="noopener">Livres Hebdo</a>).</li>
+<li>À la même époque : le film <em>Slacker</em> de Richard Linklater, puis Nirvana, Pearl Jam, le grunge (<a href="https://www.history.com/news/1990s-the-good-decade" target="_blank" rel="noopener">Coupland, History.com</a>).</li>
+<li>Dès 1995, Coupland estime que l'étiquette a été récupérée par le marketing et déclare la Gen X « finie » (<a href="https://thelondonmagazine.org/article/what-happened-to-generation-x/" target="_blank" rel="noopener">The London Magazine</a>).</li>
+</ul>
+<h2>Kurt Cobain</h2>
+<ul>
+<li>Leader de Nirvana, considéré au début des années 90 comme le porte-parole de la jeunesse, malgré lui (<a href="https://www.universalis.fr/encyclopedie/kurt-cobain/" target="_blank" rel="noopener">Universalis</a>).</li>
+<li>Il se suicide le 5 avril 1994 à Seattle, à 27 ans. Il luttait contre une dépendance à l'héroïne (<a href="https://history.com/this-day-in-history/kurt-cobain-commits-suicide" target="_blank" rel="noopener">History.com</a>).</li>
+<li>Pour le film : la nouvelle tombe au skatepark ou au bistrot. C'est aussi un rappel que l'héroïne n'est pas qu'une affaire de Letten.</li>
+</ul>
+<h2>Après le mur : l'espoir, puis le vide ?</h2>
+<ul>
+<li>Ta piste : la chute du mur promettait beaucoup, et rien n'a suivi.</li>
+<li>Coupland lui-même décrit le début des années 90 comme une page blanche : Fukuyama annonce la « fin de l'histoire » et tout le monde y croit (<a href="https://www.history.com/articles/1990s-the-good-decade" target="_blank" rel="noopener">History.com</a>).</li>
+<li>Piste de lecture : <em>Une histoire (critique) des années 1990</em>, ouvrage collectif dirigé par François Cusset, sur le désenchantement de la décennie (<a href="https://www.slate.fr/story/193545/histoire-critique-annees-1990-francois-cusset-societe-economie-culture-idees" target="_blank" rel="noopener">Slate</a>). Titre exact à vérifier.</li>
+</ul>
+<h2>Et la Gen Z ?</h2>
+<p>L'intuition d'une parenté Gen X / Gen Z circule beaucoup, mais surtout dans le marketing ; un vrai travail académique reste à trouver.</p>
+<p><strong>Ce qui va dans ton sens</strong></p>
+<ul>
+<li>Plusieurs chercheurs notent que la Gen Z ressemble davantage à la Gen X qu'aux milléniaux, pourtant plus proches en âge (<a href="https://www.campaignasia.com/article/two-generations-same-spotify-playlist-why-marketers-need-to-know-gen-x-to-reach/495576" target="_blank" rel="noopener">Campaign Asia</a>, point de vue d'agence).</li>
+<li>La chercheuse Corey Seemiller estime que les parents Gen X élèvent leurs enfants à leur image : autonomes, cyniques, débrouillards (citée par <a href="https://etchedinstone.org/27334/news/national/okay-zoomer/" target="_blank" rel="noopener">un journal étudiant</a>, source à remonter).</li>
+</ul>
+<p><strong>Ce que vit la Gen Z suisse aujourd'hui</strong></p>
+<ul>
+<li>Étude Unicef 2025 (14-25 ans, plus de 5 600 jeunes) : un malaise constant face aux conflits géopolitiques, y compris en Suisse (<a href="https://www.letemps.ch/societe/ca-me-fait-tres-peur-je-ne-sais-pas-ce-que-ca-va-engendrer-si-on-va-finir-en-guerre-mondiale-comment-les-conflits-geopolitiques-angoissent-la-gen-z-suisse" target="_blank" rel="noopener">Le Temps</a>).</li>
+<li>Étude Pro Juventute : inquiétude croissante pour l'avenir professionnel et les crises mondiales ; un jeune sur dix se confie à une IA (<a href="https://www.letemps.ch/societe/enfants-education/un-jeune-sur-dix-se-tourne-vers-l-ia-en-cas-de-preoccupation" target="_blank" rel="noopener">Le Temps</a>).</li>
+<li>Étude santé CSS 2025 : les jeunes se sentent plus seuls (<a href="https://www.css.ch/content/dam/css/fr/documents/ueber-css/publikationen/css-gesundheitsstudie-2025-f.pdf" target="_blank" rel="noopener">CSS</a>).</li>
+</ul>
+<p><strong>Le mot « boomer ».</strong> « OK boomer » décolle en 2019 chez les milléniaux et la Gen Z, contre des gens plus âgés mis dans le même sac que les baby-boomers (<a href="https://www.milwaukeeindependent.com/?p=112518" target="_blank" rel="noopener">Milwaukee Independent</a>). Le mème viral part d'un remix posté sur TikTok en octobre 2019 ; il sert à la Gen Z pour répondre quand on la traite de génération « fragile » (<a href="https://www.thenewdaily.com.au/entertainment/people-entertainment/2021/08/20/ok-boomer-gen-z-politics" target="_blank" rel="noopener">The New Daily</a>). Ta lecture de tout ça est dans Genèse, section « Mon questionnement ».</p>
+<p><strong>La prudence.</strong> Le Pew Research Center rappelle que les générations ne sont pas des catégories scientifiques, seulement des repères (<a href="https://www.itechguides.com/gen-x-vs-gen-z-making-sense-of-a-clash-of-worlds/" target="_blank" rel="noopener">itechguides, citant Pew</a>). Pour le film, c'est plutôt une force : on parle de situations communes, pas d'étiquettes.</p>
+<p><strong>Les parallèles possibles 1995 / aujourd'hui</strong></p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>1995</th>
+<th>Aujourd'hui</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bosnie, à deux heures d'avion</td>
+<td>Ukraine, Gaza</td>
+</tr>
+<tr>
+<td>Peur du sida</td>
+<td>? (Covid, crise climatique : à discuter)</td>
+</tr>
+<tr>
+<td>Crise immobilière, chômage</td>
+<td>Logement inabordable, avenir professionnel incertain (à sourcer)</td>
+</tr>
+<tr>
+<td>Ecstasy puis héroïne bon marché</td>
+<td>? (substances actuelles à documenter, par ex. avec le GREA)</td>
+</tr>
+<tr>
+<td>Le bistrot du samedi soir</td>
+<td>?</td>
+</tr>
+</tbody>
+</table></div>
+<h2>À chercher</h2>
+<ul>
+<li>Des travaux sérieux sur la Gen Z et sur la comparaison Gen X / Gen Z (Jean Twenge, <em>Generations</em>, 2023 ; Corey Seemiller).</li>
+<li>Des travaux sur la Gen X en Suisse romande (sociologues, enquêtes jeunesse des années 90).</li>
+<li>La musique de la bande : grunge, techno, rap français ? Ce que vous écoutiez.</li>
+</ul></div><nav class="pn"><a href="#contexte">‹ Contexte</a><a href="#personnages">Personnages ›</a></nav></section>
+<section class="view sec" id="v-personnages" data-slug="personnages" hidden><div class="bar"><a class="back" href="#sommaire">‹ Sommaire</a><span class="where">05 / 08</span></div><h1><span class="num">05</span>Personnages</h1><div class="content"><p>Une ligne par personnage, avec un prénom inventé dès le départ pour protéger les vrais. La colonne « Inspiré de » est pour toi : à vider avant de partager le carnet.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Personnage</th>
+<th>En 1995 (âge, études, boulot)</th>
+<th>Ce qui lui arrive</th>
+<th>Inspiré de</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L'étudiant (prénom à inventer)</td>
+<td>À l'uni ou au gymnase</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>L'apprenti</td>
+<td>En apprentissage, peur du chômage à la sortie</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Celui qui est en rupture</td>
+<td>Sans formation, sans boulot</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Celui qui est en couple</td>
+<td>Avec une copine hors de la bande ?</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>La fille de la bande</td>
+<td>Traîne avec les skateurs, skate peu ou pas</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Celui qui reste</td>
+<td>Ne part pas à Berne le vendredi</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Celui qui se cache</td>
+<td>Gay, n'en dit rien à la bande</td>
+<td>Le dira des années plus tard, de loin</td>
+<td>Le batteur de ton groupe</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Quatre trajectoires, quatre désillusions</h2>
+<p>Ton idée : quatre personnages principaux, chacun porte une peur ou une désillusion, et leurs trajectoires avancent en parallèle jusqu'à se fracasser, comme dans <em>Requiem for a Dream</em>. Pas tous la drogue. Voici mes propositions de départ, à casser si elles sonnent cliché.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Personnage</th>
+<th>Sa peur, sa désillusion</th>
+<th>Comment elle se traduit</th>
+<th>La fracture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L'apprenti</td>
+<td>Le chômage, « vous ne trouverez jamais de travail »</td>
+<td>Pas de place à la fin de l'apprentissage, des McJobs</td>
+<td>À écrire</td>
+</tr>
+<tr>
+<td>Celui qui part à Berne</td>
+<td>La fête comme seule échappée</td>
+<td>Ecstasy le week-end, héroïne le dimanche</td>
+<td>À écrire</td>
+</tr>
+<tr>
+<td>L'étudiant</td>
+<td>L'espoir d'après le mur qui retombe ; la Bosnie à la télé</td>
+<td>Décrochage, échec scolaire ?</td>
+<td>À écrire</td>
+</tr>
+<tr>
+<td>La fille de la bande</td>
+<td>La place qu'on lui laisse ; la peur du sida ?</td>
+<td>À écrire</td>
+<td>À écrire</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>À garder en tête</strong> : celui qui reste (il ne part pas à Berne) peut être le témoin, sans voix off.</p>
+<h2>Questions à poser à chaque personnage</h2>
+<ul>
+<li>Qu'est-ce qu'il veut ? De quoi a-t-il peur ?</li>
+<li>Quel rapport à la fête, aux produits, au groupe ?</li>
+<li>Que fait-il le samedi soir, le dimanche, le lundi matin ?</li>
+<li>Où en est-il trente ans plus tard, s'il est encore là ?</li>
+</ul></div><nav class="pn"><a href="#generations">‹ Génération X vs Génération Z</a><a href="#musique">Musique ›</a></nav></section>
+<section class="view sec" id="v-musique" data-slug="musique" hidden><div class="bar"><a class="back" href="#sommaire">‹ Sommaire</a><span class="where">06 / 08</span></div><h1><span class="num">06</span>Musique</h1><div class="content"><p>La musique originale, c'est toi et ton pote beatmaker. Les morceaux d'époque, c'est un rêve à garder, en sachant ce que coûtent les droits.</p>
+<h2>La musique originale</h2>
+<ul>
+<li>Composée par toi et ton ami beatmaker.</li>
+<li>Une piste : composer des morceaux « dans l'esprit » de l'époque (grunge, techno, hip-hop), plutôt que de payer des tubes.</li>
+</ul>
+<h2>Les morceaux d'époque (liste de rêve)</h2>
+<p>À remplir au fil des idées : ce que vous écoutiez au skatepark, en soirée, dans le train pour Berne.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Morceau</th>
+<th>Artiste</th>
+<th>Année</th>
+<th>Pour quelle scène ?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>À choisir</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h2>Ce qu'ont fait les films de référence</h2>
+<ul>
+<li><strong><em>Kids</em></strong> : la bande originale réunit surtout The Folk Implosion et d'autres projets de Lou Barlow, plus Daniel Johnston et Slint (<a href="https://www.avclub.com/sex-drugs-and-an-unlikely-top-40-hit-kids-is-20-1798282300" target="_blank" rel="noopener">AV Club</a>). Un indie peu connu à l'époque, donc probablement moins cher que des tubes (ma déduction).</li>
+<li><strong><em>Rusty James</em></strong> : une bande-son à base de percussions, qui renforce le sentiment du temps qui file pendant que la vie de Rusty James semble immobile (<a href="https://www.rogerebert.com/?p=15295" target="_blank" rel="noopener">RogerEbert.com</a>). Composée par Stewart Copeland, le batteur de The Police (source à ajouter).</li>
+</ul>
+<h2>Les droits, en bref</h2>
+<p>Pour mettre un morceau existant dans un film, il faut deux autorisations, négociées une par une :</p>
+<ol>
+<li><strong>La licence de synchronisation</strong>, pour la composition (paroles et musique) : elle se négocie avec l'éditeur de la chanson (<a href="https://www.cmrra.ca/fr/?p=6248" target="_blank" rel="noopener">CMRRA</a>). En Suisse, SUISA ne peut pas l'accorder : il faut contacter l'éditeur pour chaque œuvre (<a href="https://www.suisa.ch/dam/jcr:079b0a2c-e128-45ab-a915-d93b243726a4/Merkblatt_verschiedene_Rechte_FR-2025.pdf" target="_blank" rel="noopener">SUISA</a>).</li>
+<li><strong>La licence « master »</strong>, pour l'enregistrement lui-même : elle se négocie avec le producteur ou la maison de disques (même source).</li>
+</ol>
+<p>Souvent, une chanson a plusieurs auteurs, chacun avec son propre éditeur (<a href="https://www.wipo.int/web-publications/rights-clearance-a-guide-for-independent-filmmakers/fr/3-rights-assessed-during-clearance.html" target="_blank" rel="noopener">OMPI, guide pour cinéastes indépendants</a>). D'où l'intérêt de la musique originale, et de garder les morceaux d'époque pour une ou deux scènes clés.</p></div><nav class="pn"><a href="#personnages">‹ Personnages</a><a href="#archives">Archives ›</a></nav></section>
+<section class="view sec" id="v-archives" data-slug="archives" hidden><div class="bar"><a class="back" href="#sommaire">‹ Sommaire</a><span class="where">07 / 08</span></div><h1><span class="num">07</span>Archives</h1><div class="content"><p>La meilleure piste est à Martigny même : la Médiathèque Valais conserve le patrimoine audiovisuel valaisan. Les lignes « à vérifier » sont des pistes que je connais sans les avoir vérifiées ici.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Où</th>
+<th>Ce qu'on peut y trouver</th>
+<th>Statut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.isil.nb.admin.ch/fr/institutions/mediatheqe-valais-martigny-ch-000996-8" target="_blank" rel="noopener">Médiathèque Valais – Martigny</a>, av. de la Gare 15</td>
+<td>3,5 millions de photos, 38 000 films et vidéos, 23 000 enregistrements sonores. Catalogue en ligne : <a href="https://www.vallesiana.ch/data/documents/6_MmoireaudiovisuelleValais.pdf" target="_blank" rel="noopener">archives.memovs.ch</a></td>
+<td>Vérifié</td>
+</tr>
+<tr>
+<td>Play RTS, <em>Mise au point</em></td>
+<td>Reportage « Alerte à l'héroïne : le prix du gramme a chuté ! » (<a href="https://www.rts.ch/play/tv/mise-au-point/video/alerte-a-lherone-le-prix-du-gramme-a-chute-?id=3188559" target="_blank" rel="noopener">lien</a>). Date de diffusion à vérifier</td>
+<td>Trouvé</td>
+</tr>
+<tr>
+<td>swissinfo</td>
+<td>Galerie de photos du Platzspitz par Olivia Heussler, 1989-1994 (<a href="https://www.swissinfo.ch/eng/swiss-politics/zurich-s-infamous-needle-park/37756262" target="_blank" rel="noopener">lien</a>)</td>
+<td>Trouvé</td>
+</tr>
+<tr>
+<td>Musée national suisse, Zurich</td>
+<td>Une exposition sur l'histoire de la techno en Suisse, avec photos des raves de Roggwil et de l'Üetliberg (<a href="https://www.srf.ch/kultur/musik/techno-im-landesmuseum-wie-die-schweiz-den-rave-entdeckte" target="_blank" rel="noopener">SRF</a>). Dates et catalogue à vérifier</td>
+<td>Trouvé</td>
+</tr>
+<tr>
+<td>FORS, enquêtes Voxit</td>
+<td>Sondages après les votations de 1997 et 1998 sur la drogue (<a href="https://devisu.forscenter.ch/index.php/catalog/290/data-dictionary" target="_blank" rel="noopener">lien</a>)</td>
+<td>Trouvé</td>
+</tr>
+<tr>
+<td>Archives de la RTS (rts.ch/archives)</td>
+<td>Journaux télévisés et radio de 1994-1995 : la télé du flash info</td>
+<td>À vérifier</td>
+</tr>
+<tr>
+<td>notreHistoire.ch, Memobase</td>
+<td>Archives participatives et audiovisuelles suisses</td>
+<td>À vérifier</td>
+</tr>
+<tr>
+<td>Archives de presse (<em>24 heures</em>, <em>Le Nouvelliste</em>, <em>Le Temps</em>, <em>Journal de Genève</em>)</td>
+<td>Faits divers, overdoses, raves, skate à Lausanne</td>
+<td>À vérifier</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Les archives de la bande</h2>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span>Photos, flyers de soirées, cassettes, billets de train, vidéos de skate</li>
+<li class="task"><span class="box" aria-hidden="true"></span>Témoignages : qui parmi tes potes accepterait de raconter ?</li>
+<li class="task"><span class="box" aria-hidden="true"></span>Un professionnel de l'époque (éducateur, médecin, policier) pour recouper</li>
+</ul>
+<h2>Les films de référence : quoi lire, où les voir</h2>
+<p>Aucun découpage plan par plan trouvé en ligne pour ces trois films. En faire un toi-même en revoyant les films serait un bon exercice.</p>
+<p><strong><em>Kids</em></strong></p>
+<ul>
+<li><strong>Le scénario est publié</strong> : le livre <em>Kids</em> (Grove Press, 1995, 160 pages) contient le scénario original, des photos du film et du tournage. Le générique du film lui-même l'annonce (<a href="https://IMDb.de/title/tt0113540/" target="_blank" rel="noopener">IMDb</a>). ISBN 9780802134387 (<a href="https://books.org/books/kids-the-screenplay/larry-clark/9780802134387/" target="_blank" rel="noopener">Books.org</a>) : à chercher en bibliothèque ou d'occasion.</li>
+<li><strong>Analyses (en anglais)</strong> : l'histoire orale du film par <em>Rolling Stone</em> (<a href="https://www.rollingstone.com/feature/kids-the-oral-history-of-the-most-controversial-film-of-the-nineties-105069/" target="_blank" rel="noopener">lien</a>) ; Larry Clark y explique que Korine a condensé en 24 heures des histoires vraies vécues sur trois ou quatre ans.</li>
+<li><strong>À retenir pour toi</strong> : le film est tourné en style quasi documentaire, mais toutes les scènes sont écrites ; et une critique résume son parti pris : pas de grande leçon de morale, seulement un regard détaché (<a href="https://Www.wikipedia.org/wiki/Kids_(film)" target="_blank" rel="noopener">Wikipedia</a>).</li>
+</ul>
+<p><strong><em>Rusty James</em> (<em>Rumble Fish</em>)</strong></p>
+<ul>
+<li><strong>Analyse (en anglais)</strong> : l'essai « Lose Yourself » de la Criterion Collection (<a href="https://www.criterion.com/current/posts/4517-rumble-fish-lose-yourself" target="_blank" rel="noopener">lien</a>).</li>
+<li><strong>Documentaire</strong> : <em>Locations: Looking for Rusty James</em> (Alberto Fuguet, 2013), sur l'influence du film, en bonus de l'édition Criterion (<a href="https://www.criterion.com/films/28993-rumble-fish" target="_blank" rel="noopener">Criterion</a>).</li>
+</ul>
+<p><strong><em>The Outsiders</em></strong></p>
+<ul>
+<li><strong>Analyse (en français)</strong> : la critique d'AVCésar, qui traite <em>The Outsiders</em> et <em>Rusty James</em> comme un diptyque et cite Coppola en entretien avec Serge Daney en 1982 (<a href="https://www.avcesar.com/critique/the-outsiders-2892" target="_blank" rel="noopener">AVCésar</a>). Coppola : « un film sur le coucher de soleil ».</li>
+<li><strong>Histoire de la production (en anglais)</strong> : la fiche de l'AFI (<a href="https://catalog.afi.com/Catalog/moviedetails/67060" target="_blank" rel="noopener">lien</a>).</li>
+<li><strong>À chercher</strong> : l'entretien de Coppola avec Serge Daney (<em>Cahiers du cinéma</em>, 1982).</li>
+</ul>
+<p><strong>Où les voir légalement</strong> : vérifier sur JustWatch Suisse (plateformes de streaming et de location), à la Cinémathèque suisse, ou dans les bibliothèques de Lausanne (DVD et Blu-ray). À vérifier pour chaque film.</p></div><nav class="pn"><a href="#musique">‹ Musique</a><a href="#verifications">Vérifications ›</a></nav></section>
+<section class="view sec" id="v-verifications" data-slug="verifications" hidden><div class="bar"><a class="back" href="#sommaire">‹ Sommaire</a><span class="where">08 / 08</span></div><h1><span class="num">08</span>Vérifications</h1><div class="content"><p>Le premier document de travail (18 novembre 2026) : tes souvenirs de départ, confrontés aux sources. L'histoire se passait alors à Martigny ; elle est depuis déplacée à Lausanne (voir Genèse).</p>
+<h2>Vérification de tes souvenirs</h2>
+<p>L'essentiel tient, avec trois corrections : le chômage national n'a jamais atteint 10 %, la chute de l'héroïne précède la guerre du Kosovo, et en 1995 la guerre des Balkans, c'est la Bosnie.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Ce que tu as dit</th>
+<th>Ce que disent les sources</th>
+<th>Statut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chômage jusqu'à 10 % en Suisse</td>
+<td>Moyenne nationale 5,2 % en 1997 (188 000 chômeurs inscrits), contre 1,1 % en 1991 (<a href="https://people.unil.ch/danieloesch/files/2014/05/Article_le_Temps_DOesch_Avril2009.pdf" target="_blank" rel="noopener">D. Oesch, Le Temps 2009</a>). Pic mensuel : 5,7 % en janvier 1997 (206 000). Vaud : 8,3 % (<a href="https://www.vd.ch/actualites/communiques-de-presse-de-letat-de-vaud/detail/communique/un-quart-des-vaudois-a-vecu-une-periode-de-chomage-961779250" target="_blank" rel="noopener">État de Vaud</a>)</td>
+<td>À corriger</td>
+</tr>
+<tr>
+<td>Jamais vu en Suisse</td>
+<td>Vrai pour le taux : avant, moins de 1 %. Mais la crise de 1973-76 a détruit plus d'emplois ; la Suisse avait alors « exporté » son chômage en renvoyant 247 000 immigrés (<a href="https://www.letemps.ch/economie/quatre-grandes-crises-lemploi" target="_blank" rel="noopener">Le Temps</a>)</td>
+<td>À nuancer</td>
+</tr>
+<tr>
+<td>Crise de la bulle immobilière</td>
+<td>Prix du logement doublés entre 1980 et 1990 (<a href="https://www.cash.ch/news/top-news/so-konnte-sich-die-immobilienkrise-der-90er-wiederholen-398477" target="_blank" rel="noopener">cash.ch</a>). Faillite de la Spar- und Leihkasse Thun, fermée le 3 octobre 1991 (<a href="https://www.bilanz.ch/invest/wie-eine-thuner-regionalbank-zum-symbol-der-krise-wurde/wx1sm12" target="_blank" rel="noopener">Bilanz</a>)</td>
+<td>Confirmé</td>
+</tr>
+<tr>
+<td>Héroïne à 400 fr. le gramme dans les années 80</td>
+<td>Entre 300 et 600 fr. le gramme selon le <a href="https://grea.ch/article-revue/4-les-variables-du-marche-des-stupefiants-lexemple-de-lheroine/" target="_blank" rel="noopener">GREA</a> ; 300 à 500 fr. selon Frank Zobel, Addiction Suisse (<a href="https://www.letemps.ch/suisse/vaud/lheroine-desormais-partie-drogues-populaires" target="_blank" rel="noopener">Le Temps</a>)</td>
+<td>Confirmé</td>
+</tr>
+<tr>
+<td>Chute à 60 fr. vers 1995</td>
+<td>Ordre de grandeur juste : fin des années 90, le gramme vaut « dix fois moins » qu'une décennie plus tôt, où il était à 500 fr. (<a href="https://www.letemps.ch/societe/kosovars-avaient-prisle-controle-marche-suisse-lheroine" target="_blank" rel="noopener">Le Temps, fin des années 90</a>). Année exacte du palier à 60 fr. : non trouvée</td>
+<td>À préciser</td>
+</tr>
+<tr>
+<td>La guerre du Kosovo a fait baisser le prix</td>
+<td>Les réseaux kosovars arrivent fin des années 80 et prennent 80 à 90 % du marché suisse au début des années 90 (même source). La guerre du Kosovo, elle, date de 1998-1999</td>
+<td>À corriger</td>
+</tr>
+<tr>
+<td>Arrivée de l'ecstasy, scène techno</td>
+<td>Premières grandes raves au Casino de Montreux en 1991, première Street Parade en 1992, raves de Roggwil (BE) dès 1994 (<a href="https://www.srf.ch/kultur/musik/geschichte-der-clubkultur-beat-bass-und-strobo-wie-sich-die-schweiz-freitanzte" target="_blank" rel="noopener">SRF</a>)</td>
+<td>Confirmé (date d'arrivée de l'ecstasy à sourcer)</td>
+</tr>
+<tr>
+<td>Clubs à Berne : « Marque Thalais », Guayas</td>
+<td>Le Guayas, près de la gare de Berne, connu pour ses afterhours (<a href="https://eventfrog.ch/en/p/party/electro/guayas-revival-7102818837154709489.html" target="_blank" rel="noopener">Eventfrog</a>). « Marque Thalais » = très probablement la Markthalle Bern, citée parmi les clubs de l'époque (<a href="https://www.stellwerk.be/events/guayas-261010" target="_blank" rel="noopener">Stellwerk</a>)</td>
+<td>Confirmé (dates d'activité à vérifier)</td>
+</tr>
+<tr>
+<td>« Schizophrénie blanche » liée aux drogues</td>
+<td>Terme non trouvé dans les sources médicales. Il existe une « psychose blanche », concept psychanalytique débattu (<a href="https://pepite-depot.univ-lille.fr/LIBRE/Th_Medecine/2019/2019LILUM305.pdf" target="_blank" rel="noopener">thèse, Univ. Lille 2019</a>)</td>
+<td>Non confirmé</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Drogues : ecstasy, héroïne et réponse publique</h2>
+<p><strong>La scène techno</strong></p>
+<ul>
+<li>1991 : premières grandes raves au Casino de Montreux (<a href="https://www.srf.ch/kultur/musik/geschichte-der-clubkultur-beat-bass-und-strobo-wie-sich-die-schweiz-freitanzte" target="_blank" rel="noopener">SRF</a>).</li>
+<li>5 septembre 1992 : première Street Parade à Zurich, quelques milliers de personnes au plus (<a href="https://www.swissinfo.ch/eng/culture/raving-in-zurich-_up-to-million-prepare-to-party-at-street-parade/44308978" target="_blank" rel="noopener">swissinfo</a>).</li>
+<li>Mai 1995 : « Cubik ’95 » à Roggwil (BE), 20 000 personnes, 80 DJ, douze trains spéciaux (<a href="https://www.blick.ch/gesellschaft/europaeischer-techno-hotspot-in-roggwil-be-das-praegte-die-schweizer-clubszene-id20703743.html" target="_blank" rel="noopener">Blick</a>).</li>
+<li>Berne : le Guayas, club d'afterhours près de la gare, et la Markthalle.</li>
+</ul>
+<p><strong>L'héroïne</strong></p>
+<ul>
+<li>Années 80 : 300 à 600 fr. le gramme. Fin des années 90 : environ dix fois moins. Aujourd'hui : 20 à 30 fr. (<a href="https://www.letemps.ch/suisse/vaud/lheroine-desormais-partie-drogues-populaires" target="_blank" rel="noopener">Le Temps</a>).</li>
+<li>Cause principale documentée : la prise du marché par des réseaux kosovars (voir Contexte).</li>
+</ul>
+<p><strong>La réponse publique</strong></p>
+<ul>
+<li>1987-1992 : Platzspitz, le « Needle Park », jusqu'à 2 500 personnes par jour en 1991. Fermé le 5 février 1992 (<a href="https://www.swissinfo.ch/eng/drug-addiction_zurich-s-infamous-needle-park/37756262" target="_blank" rel="noopener">swissinfo</a>).</li>
+<li>La scène se déplace au Letten, fermé le 14 février 1995 (<a href="https://www.srf.ch/news/zuerich-schaffhausen-wir-konnten-das-problem-nicht-alleine-loesen" target="_blank" rel="noopener">SRF</a>). À Berne, déplacement de la Kleine Schanze au Kocherpark.</li>
+<li>1994 : début de la prescription médicale d'héroïne, très controversée à l'époque (<a href="https://www.swissinfo.ch/eng/demographics/ten-years-on-from-needle-park/2517882" target="_blank" rel="noopener">swissinfo</a>). Naissance de la politique des piliers (répression, prévention, réduction des risques).</li>
+</ul>
+<p><strong>Le mécanisme de tes potes</strong> (ecstasy le week-end, héroïne pour la descente) : aucune source trouvée pour l'instant. Ton témoignage et celui de tes amis en sont la base ; un professionnel de l'époque pourrait le confirmer.</p>
+<h2>Encore à vérifier</h2>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span>Convertir 400 fr. des années 80 en francs d'aujourd'hui avec le <a href="https://www.bfs.admin.ch/bfs/fr/home/statistiques/prix/indice-prix-consommation.html" target="_blank" rel="noopener">calculateur de renchérissement de l'OFS</a> (choisir l'année : 1985 ? 1988 ?)</li>
+<li class="task"><span class="box" aria-hidden="true"></span>L'année où le gramme passe autour de 60 fr. (rapports de l'Office fédéral de la police, Addiction Suisse, Frank Zobel)</li>
+<li class="task"><span class="box" aria-hidden="true"></span>Le chômage des jeunes sortant d'apprentissage entre 1993 et 1997, en Valais et dans le canton de Vaud</li>
+<li class="task"><span class="box" aria-hidden="true"></span>L'arrivée de l'ecstasy en Suisse : premières saisies, premiers décès, premières campagnes de prévention</li>
+<li class="task"><span class="box" aria-hidden="true"></span>Les dates d'ouverture et de fermeture du Guayas et de la Markthalle à Berne</li>
+<li class="task"><span class="box" aria-hidden="true"></span>Le lien ecstasy le week-end / héroïne pour la descente : existe-t-il des études ou des témoignages publiés ?</li>
+<li class="task"><span class="box" aria-hidden="true"></span>« Schizophrénie blanche » : demander à un psychiatre ou au GREA ce que le terme désignait. Le terme médical actuel est « trouble psychotique induit par une substance » (à confirmer)</li>
+<li class="task"><span class="box" aria-hidden="true"></span>Lausanne en 1994-1995 : scène skate, scène de la drogue, lieux de l'époque</li>
+<li class="task"><span class="box" aria-hidden="true"></span>Le délai d'attente d'un résultat de test VIH en 1994</li>
+<li class="task"><span class="box" aria-hidden="true"></span>Ajouter des sources pour la fin de la guerre froide, Srebrenica, le Rwanda et le vote sur l'EEE</li>
+</ul>
+<h2>Sources</h2>
+<p>Toutes les sources sont liées dans les sections. Consultées le 18 novembre 2026, surtout à partir d'extraits de résultats de recherche : à ouvrir avant d'utiliser un chiffre.</p></div><nav class="pn"><a href="#archives">‹ Archives</a><span></span></nav></section>
+
+</div>
+<script>
+(function(){
+  var views = document.querySelectorAll('.view');
+  function show(target){
+    if(!document.getElementById('v-' + target)) target = 'sommaire';
+    views.forEach(function(v){ v.hidden = (v.id !== 'v-' + target); });
+    window.scrollTo(0,0);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    e.preventDefault();
+    var t = a.getAttribute('href').slice(1);
+    show(t);
+    try { history.replaceState(null, '', '#' + t); } catch(err) {}
+  });
+  window.addEventListener('hashchange', function(){ show((location.hash||'').slice(1)); });
+  show((location.hash||'').slice(1));
+})();
+</script>
+<script>if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
+</body>
+</html>

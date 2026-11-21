@@ -29,3 +29,16 @@ Cette adresse ne doit plus changer une fois que des personnes ont installé le c
 - `manifest.webmanifest`, `sw.js`, `icons/` : ce qui en fait une application installable et hors ligne
 - `vendor/` : outils pour lire et créer les PDF, et pour le QR code
 - `ressources/`, `annexes/` : documents PDF du carnet
+
+## Autres carnets (dossier `carnets/`)
+
+Chaque sous-dossier est un carnet installable à part, avec son icône et son nom :
+`https://philippevaudan.github.io/carnet-retablissement/carnets/NOM/`
+
+- `davinci/` : Formation DaVinci Resolve
+- `suivi/` : Carnet de suivi
+- `addictions/` : Formation addictions en entreprise
+- `grea/` : Formation GREA
+- `1995/` : 1995 — carnet de film
+
+Pour installer : ouvrir l'adresse dans Safari → Partager → « Sur l'écran d'accueil ».

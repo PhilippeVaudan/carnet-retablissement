@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="DVR Formation">
+<meta name="theme-color" content="#14161A">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Formation DaVinci Resolve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#EEF0F2; --sheet:#FFFFFF; --ink:#1A1E26; --muted:#5B6270; --line:#D3D7DE; --soft:#E3E6EB;
+  --accent:#D3302A; --accent-bg:#FBE7E5; --go:#2C7A4B; --me:#B97C06; --me-bg:#FBF1D9;
+  --font-display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --font-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --paper:#14161A; --sheet:#1D2026; --ink:#E7E9EE; --muted:#9BA2AE; --line:#30343C; --soft:#272B32;
+  --accent:#FF5A50; --accent-bg:#3A1D1B; --go:#58BE84; --me:#E3AE3C; --me-bg:#33280F; color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55;
+  padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(56px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.02em;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(34px,8vw,52px);font-weight:700}
+h2{font-size:clamp(28px,5.5vw,36px);font-weight:700}
+h3{font-size:22px;font-weight:600}
+p{margin:0;max-width:68ch}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.head{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;gap:14px;align-items:center}
+.head svg{flex:none;width:56px;height:56px}
+.head .t{display:flex;flex-direction:column;gap:4px;min-width:0}
+.lead{color:var(--muted);font-size:16px}
+
+/* Sommaire en liste */
+.som{display:flex;flex-direction:column;background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:4px 0}
+.rub{display:grid;grid-template-columns:2.2em 1fr auto;align-items:center;gap:2px 10px;padding:11px 14px;border-top:1px solid var(--soft);border-left:3px solid transparent;text-decoration:none;color:var(--ink)}
+.rub:first-child{border-top:0}
+.rub:hover{border-left-color:var(--accent)}
+.rub .n{font-family:var(--font-mono);font-size:13px;color:var(--muted);grid-row:1/span 2}
+.rub b{font-family:var(--font-display);font-size:21px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;line-height:1.1}
+.rub span.d{grid-column:2;color:var(--muted);font-size:14px;line-height:1.35}
+.rub::after{content:"›";grid-column:3;grid-row:1/span 2;font-size:26px;line-height:1;color:var(--accent)}
+.rub.perso .n{color:var(--me)}
+.pill{display:inline-block;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:3px;background:var(--me-bg);color:var(--me);border:1px solid var(--me)}
+.count{font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-left:6px;vertical-align:3px}
+
+/* Panneaux */
+.panel{display:flex;flex-direction:column;gap:14px}
+.back{align-self:flex-start;font-family:var(--font-mono);font-size:13px;color:var(--muted);text-decoration:none;border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:6px 14px}
+.back:hover{color:var(--ink);border-color:var(--muted)}
+.phead{display:flex;flex-direction:column;gap:6px;padding:4px 2px}
+.phead .lead{max-width:68ch}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card.mine{border-style:dashed}
+.card.empty{color:var(--muted);font-style:italic;text-align:center;padding:22px 18px}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.ch h3{flex:1;min-width:0}
+.acts{display:flex;gap:6px;flex:none}
+.free{white-space:pre-wrap;overflow-wrap:anywhere;max-width:72ch}
+.meta{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+.mini{border:1px solid var(--line);background:var(--sheet);border-radius:6px;padding:5px 10px;font-size:13px;color:var(--muted)}
+.mini:hover{border-color:var(--muted);color:var(--ink)}
+.mini.danger{color:var(--accent);border-color:var(--accent)}
+.add{border:1.5px dashed var(--line);border-radius:10px;background:transparent;min-height:56px;font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;justify-content:center;gap:8px}
+.add:hover{border-color:var(--muted);color:var(--ink)}
+.add .plus{font-size:26px;line-height:1;color:var(--accent)}
+form.editor{background:var(--sheet);border:1.5px solid var(--ink);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:10px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+label.f input,label.f textarea{padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--sheet);color:var(--ink);font-size:16px;width:100%}
+label.f textarea{min-height:160px;resize:vertical;line-height:1.5}
+.frow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--line);background:var(--sheet);border-radius:6px;padding:8px 14px;font-size:15px}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* Notes perso : liste à cocher */
+.todo{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.todo li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--soft)}
+.todo li:first-child{border-top:0;padding-top:0}
+.todo input[type=checkbox]{width:20px;height:20px;margin-top:2px;accent-color:var(--go)}
+.todo li.done span{color:var(--muted);text-decoration:line-through}
+.todo .x{border:0;background:transparent;color:var(--muted);font-size:18px;line-height:1;padding:2px 6px}
+.todo .x:hover{color:var(--accent)}
+.todoadd{display:flex;gap:8px}
+.todoadd input{flex:1;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--sheet);font-size:16px}
+.persobar{background:var(--me-bg);border-left:3px solid var(--me);padding:10px 14px;font-size:15px;max-width:72ch}
+
+/* Fiches intégrées (contenu de formation) */
+.card.fix{gap:12px}
+.fix .body{display:flex;flex-direction:column;gap:10px;max-width:72ch}
+.fix h4{font-family:var(--font-display);font-size:18px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin:6px 0 0}
+.fix ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.fix .rule{background:var(--accent-bg);border-left:3px solid var(--accent);padding:10px 14px}
+.fix table{border-collapse:collapse;width:100%;font-size:15px;table-layout:fixed}
+.fix th,.fix td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.fix th{background:var(--soft);font-weight:600}
+
+.tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.foot{font-size:13px;color:var(--muted);text-align:center}
+.tosom{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:6;background:var(--ink);color:var(--paper);border:0;border-radius:999px;padding:8px 14px;font-size:14px;text-decoration:none}
+
+@media screen{.panel:not(.on){display:none}.home:not(.on){display:none}}
+@media (max-width:480px){.card{padding:14px}}
+@media print{
+  @page{size:A4;margin:16mm}
+  body{background:#fff;color:#000;padding:0;font-size:11.5pt}
+  .home,.back,.mini,.add,form.editor,.tosom,.tools,.todoadd,.todo .x,.noprint{display:none!important}
+  .panel{display:flex!important;break-before:page}
+  .panel.perso{display:none!important}
+  .card{border:0;padding:0 0 10px}
+  .card.empty{display:none}
+  .card{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== SOMMAIRE ===== -->
+  <section class="home on" id="home">
+    <div class="head">
+      <!-- icône originale : écran de montage avec timeline -->
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="14" fill="#1F2633"/>
+        <rect x="10" y="12" width="44" height="22" rx="3" fill="#2B3446" stroke="#5B6B86" stroke-width="1.5"/>
+        <path d="M27 18 L39 23 L27 28 Z" fill="#E8ECF2"/>
+        <rect x="10" y="40" width="20" height="5" rx="1.5" fill="#3FA7E0"/>
+        <rect x="32" y="40" width="22" height="5" rx="1.5" fill="#E2483F"/>
+        <rect x="10" y="48" width="30" height="5" rx="1.5" fill="#9BCB3C"/>
+        <rect x="42" y="48" width="12" height="5" rx="1.5" fill="#3FA7E0"/>
+        <rect x="35" y="37" width="2" height="19" fill="#F4C542"/>
+      </svg>
+      <div class="t">
+        <span class="eyebrow">Carnet de formation</span>
+        <h1>Formation DaVinci Resolve</h1>
+      </div>
+    </div>
+    <nav class="som" id="som" aria-label="Sommaire"></nav>
+    <div class="tools noprint">
+      <button class="mini" id="exp">Copier mes fiches (sauvegarde)</button>
+      <button class="mini" id="imp">Restaurer depuis un fichier</button>
+      <input type="file" id="impf" accept=".json,.txt,application/json,text/plain" hidden>
+    </div>
+    <p class="foot">Les fiches ajoutées et les notes sont enregistrées sur cet appareil seulement.</p>
+  </section>
+
+  <div id="panels"></div>
+</div>
+<a class="tosom noprint" href="#" id="tosom" hidden>‹ Sommaire</a>
+
+<script>
+const SECTIONS = [
+  {id:"notes", t:"Notes", d:"Mes notes de préparation", perso:true},
+  {id:"repertoire", t:"Répertoire de travail", d:"Organisation des dossiers et des fichiers"},
+  {id:"projet", t:"Paramétrer un projet", d:"Créer et régler un projet"},
+  {id:"media", t:"Page Média", d:"Importer et organiser les rushs"},
+  {id:"montage", t:"Page Montage", d:"Monter sur la timeline"},
+  {id:"couleur", t:"Page Couleur", d:"Corriger et étalonner l'image"},
+  {id:"export", t:"Page Export", d:"Exporter le film"},
+  {id:"raccourcis", t:"Raccourcis clavier", d:"Les raccourcis utiles"},
+  {id:"tips", t:"Tips and tricks", d:"Astuces"}
+];
+const BUILTIN = {
+  couleur: [
+    {title: "Corrections linéaires et non linéaires", html: `
+      <p>En étalonnage, il y a deux grandes familles de corrections. Les distinguer explique pourquoi l'ordre des nœuds compte parfois, et parfois pas du tout.</p>
+      <h4>Les corrections linéaires</h4>
+      <p>Elles appliquent la même opération simple à toutes les valeurs de l'image : <b>multiplier</b> par un nombre (un gain) ou <b>ajouter</b> un nombre (un offset). Elles ne déforment pas la courbe de l'image : elles la déplacent ou l'étirent uniformément.</p>
+      <ul>
+        <li><b>En lumière linéaire</b>, ce sont des multiplications. L'exposition : +1 diaph, c'est tout multiplier par 2. La balance des blancs : un gain différent par canal (un peu plus de rouge, un peu moins de bleu).</li>
+        <li><b>En log</b> (DaVinci Intermediate, S-Log3…), ce sont des additions : l'offset. Monter l'offset en log revient à changer l'exposition.</li>
+      </ul>
+      <p><b>Conséquence : l'ordre ne compte pas.</b> Multiplier par 2 puis par 3 donne le même résultat que multiplier par 3 puis par 2. On peut donc régler l'exposition avant ou après la balance des blancs : le résultat est identique, tant qu'aucune correction non linéaire ne se glisse entre les deux.</p>
+      <h4>Les corrections non linéaires</h4>
+      <p>Elles traitent les valeurs <b>différemment selon leur niveau</b> : elles déforment la courbe de l'image.</p>
+      <ul>
+        <li>Le contraste (on écarte les valeurs autour d'un point pivot), les courbes, le gamma, les roues Lift / Gamma / Gain.</li>
+        <li>L'écrêtage : tout ce qui dépasse le blanc (ou passe sous le noir) est coupé, et l'information est perdue.</li>
+        <li>Une LUT de look, une émulation de pellicule, une conversion de sortie avec tone mapping.</li>
+      </ul>
+      <p><b>Conséquence : l'ordre compte.</b> Monter l'exposition puis appliquer un contraste ne donne pas le même résultat que l'inverse, car le contraste pivote autour d'un point fixe et l'image n'arrive pas au même endroit par rapport à ce pivot. Et un écrêtage est définitif : ce qui a été coupé ne revient pas plus loin dans l'arbre.</p>
+      <table>
+        <tr><th></th><th>Linéaire</th><th>Non linéaire</th></tr>
+        <tr><td>Opération</td><td>Multiplier (gain) ou ajouter (offset), pareil pour toutes les valeurs</td><td>Agit différemment selon le niveau de la valeur</td></tr>
+        <tr><td>Exemples</td><td>Exposition, balance des blancs, offset en log</td><td>Contraste, courbes, gamma, Lift / Gamma / Gain, LUT, écrêtage</td></tr>
+        <tr><td>Ordre des nœuds</td><td>Indifférent entre elles</td><td>Change le résultat</td></tr>
+      </table>
+      <div class="rule"><b>La règle pratique :</b> d'abord les corrections linéaires (balance des blancs, exposition), pour mettre l'image « à plat » et poser le gris 18 % au bon endroit. Ensuite seulement les corrections non linéaires : contraste, courbes, look, émulation de pellicule, conversion de sortie.</div>
+    `},
+    {title: "Pourquoi étalonner dans un grand espace colorimétrique", html: `
+      <p>On filme souvent en log, on étalonne dans un grand espace (DaVinci Wide Gamut), et on revient à la fin en Rec.709, l'espace des télés et du web. Pourquoi ne pas convertir tout de suite en Rec.709, puisqu'on y arrive de toute façon ?</p>
+      <h4>L'idée centrale : ce qui est coupé est perdu</h4>
+      <p>Une caméra en log enregistre plus que ce que le Rec.709 peut afficher : des hautes lumières bien au-dessus du blanc et des couleurs plus saturées. Convertir tout de suite en Rec.709, c'est couper tout ce qui dépasse, définitivement. Dans un grand espace, cette information reste disponible pendant tout l'étalonnage. On ne la « range » dans le Rec.709 qu'à la toute fin, une fois les choix faits.</p>
+      <h4>L'image du pot de sel</h4>
+      <p>La recette dit « deux pincées de sel ». On prend deux pincées… et on jette le pot. À la fin, on goûte : il en manque un tout petit peu. Trop tard, il n'y a plus de sel. Convertir directement en Rec.709, c'est jeter le pot. Travailler dans un grand espace, c'est garder le paquet de sel sur le plan de travail jusqu'au dressage, au cas où.</p>
+      <h4>D'autres images</h4>
+      <ul>
+        <li><b>La cuisine</b> : on ne prépare pas le repas dans l'assiette. On travaille sur un grand plan de travail, et on dresse dans l'assiette à la fin. L'assiette, c'est le Rec.709.</li>
+        <li><b>La photo RAW et la photo JPEG</b> : on rattrape un ciel trop clair sur un RAW, pas sur un JPEG. C'est le même principe en vidéo.</li>
+        <li><b>Le son</b> : on mixe avec de la marge pour qu'un pic ne sature pas, et on ne cale le niveau final qu'au mastering.</li>
+      </ul>
+      <h4>La démonstration</h4>
+      <p>Un plan filmé en log avec une fenêtre ou un ciel très clairs :</p>
+      <ul>
+        <li>Converti directement en Rec.709, puis exposition baissée : le ciel devient un gris plat, il n'y a plus rien dedans.</li>
+        <li>Même réglage dans un grand espace : en baissant l'exposition, les nuages et les détails réapparaissent.</li>
+      </ul>
+      <p>Même chose avec une couleur très saturée (néon, vêtement rouge vif) : en Rec.709 direct elle devient une tache uniforme, en grand espace elle garde ses nuances.</p>
+      <h4>Les autres avantages</h4>
+      <ul>
+        <li><b>Les outils réagissent mieux</b> : exposition, balance des blancs et contraste se comportent de façon plus proche de la lumière réelle.</li>
+        <li><b>Toutes les caméras parlent la même langue</b> : un Sony, un téléphone et une GoPro passent dans le même espace, et les mêmes réglages ont le même effet.</li>
+        <li><b>La sortie est plus douce</b> : la conversion finale comprime les hautes lumières en douceur au lieu de les couper net.</li>
+        <li><b>On garde le choix de la diffusion</b> : le même étalonnage peut ressortir en Rec.709 ou, plus tard, en HDR.</li>
+      </ul>
+      <div class="rule"><b>La nuance :</b> si les images ont été filmées directement en Rec.709 (téléphone en mode normal, caméra sans log), il n'y a rien au-delà du Rec.709 à préserver. Le grand espace apporte alors beaucoup moins. Le bénéfice est réel surtout avec des images log ou RAW.</div>
+    `},
+    {title: "Le log ne cache rien : il range", html: `
+      <p>On entend souvent que le log « contient des données cachées » qu'on « récupère » à l'étalonnage. C'est trompeur : rien n'est caché. Le log <b>range</b> l'information autrement, alors que le Rec.709 en <b>coupe</b> une partie.</p>
+      <h4>Le problème à résoudre</h4>
+      <p>Un fichier vidéo stocke chaque pixel sur une échelle qui va de 0 (noir) à 1 (le maximum). Une scène réelle, elle, peut aller d'ombres très profondes à des reflets des dizaines de fois plus lumineux qu'un mur blanc. Toute la question est : comment faire entrer cette scène dans l'échelle de 0 à 1 ?</p>
+      <h4>Deux façons de remplir la même échelle</h4>
+      <ul>
+        <li><b>Le Rec.709</b> donne beaucoup de place aux tons moyens et aux ombres, pour une image directement belle à l'écran. Mais il atteint le maximum (1) environ 2,5 diaphs au-dessus du gris 18 %. Tout ce qui est plus lumineux reçoit <b>la même valeur 1</b> : un ciel, un nuage et le soleil deviennent identiques. C'est ça, « couper ».</li>
+        <li><b>Le log</b> resserre chaque diaph un peu plus, et place le blanc plus bas sur l'échelle. Il lui reste ainsi de la place au-dessus pour les hautes lumières. En S-Log3 (Sony), le maximum n'est atteint qu'environ 7,7 diaphs au-dessus du gris. Un ciel, un nuage et un reflet gardent <b>des valeurs différentes</b>.</li>
+      </ul>
+      <p>Valeurs stockées dans le fichier pour un même gris éclairé de plus en plus fort (calculées avec les formules publiées du Rec.709 et du S-Log3) :</p>
+      <table>
+        <tr><th>Luminosité dans la scène</th><th>Rec.709</th><th>S-Log3</th></tr>
+        <tr><td>Gris 18 %</td><td>0,41</td><td>0,41</td></tr>
+        <tr><td>+1 diaph</td><td>0,60</td><td>0,49</td></tr>
+        <tr><td>+2 diaphs</td><td>0,85</td><td>0,56</td></tr>
+        <tr><td>+3 diaphs</td><td>1,00 (coupé)</td><td>0,64</td></tr>
+        <tr><td>+4 diaphs</td><td>1,00 (coupé)</td><td>0,71</td></tr>
+        <tr><td>+5 diaphs</td><td>1,00 (coupé)</td><td>0,79</td></tr>
+        <tr><td>+6 diaphs</td><td>1,00 (coupé)</td><td>0,87</td></tr>
+      </table>
+      <p>Au-delà de 2,5 diaphs, le Rec.709 écrit partout 1,00 : on ne peut plus distinguer +3 de +6, l'information n'existe plus dans le fichier. Le S-Log3 écrit des valeurs toutes différentes : l'information est là, simplement rangée plus bas. À l'étalonnage, on ne « récupère » rien de caché : on <b>dérange</b> ces valeurs pour les replacer où on veut.</p>
+      <h4>Pourquoi le log paraît gris et plat</h4>
+      <p>Parce qu'on le regarde comme s'il était du Rec.709. Le blanc, rangé vers 0,6, s'affiche en gris clair au lieu de blanc, et les noirs, rangés plus haut, s'affichent en gris foncé. L'image n'est pas « mauvaise » : elle est simplement lue avec la mauvaise règle. La conversion (CST, LUT de conversion) applique la bonne règle.</p>
+      <h4>L'image de la valise</h4>
+      <p>Pour faire entrer ses habits dans une valise trop petite, on peut couper les manches qui dépassent : c'est le Rec.709. Ou on peut tout plier serré, dans des sacs sous vide : c'est le log. La valise a l'air pleine d'un bloc informe, mais en arrivant, on déplie et tout est là, manches comprises.</p>
+      <div class="rule"><b>À retenir :</b> le log ne cache pas de données, il les range pour ne pas en couper. Le Rec.709 coupe tout ce qui dépasse le blanc, et ce qui est coupé n'existe plus. Limite réelle : le capteur de la caméra sature lui-même à un certain niveau, qui dépend du modèle. Le log ne peut pas ranger ce que le capteur n'a pas capté.</div>
+    `},
+    {title: "Nœud normal et nœud en linéaire", html: `
+      <p>Dans un projet en DaVinci Wide Gamut / Intermediate, un nœud « normal » travaille sur une image en log. On peut aussi faire travailler un nœud en lumière linéaire : l'image y est convertie en linéaire, les outils s'appliquent, puis elle est reconvertie en log à la sortie du nœud. Les mêmes outils ne se comportent alors pas de la même façon.</p>
+      <h4>Ce qui change : la façon de compter la lumière</h4>
+      <ul>
+        <li><b>En log (nœud normal)</b>, chaque diaph occupe à peu près la même place sur l'échelle des valeurs. C'est proche de notre perception : on voit autant de différence entre les ombres et les tons moyens qu'entre les tons moyens et les hautes lumières.</li>
+        <li><b>En linéaire</b>, les valeurs sont proportionnelles à la quantité réelle de lumière. Deux fois plus de lumière, c'est une valeur deux fois plus grande. Les ombres sont donc tassées près de zéro, et les hautes lumières très étalées (elles peuvent dépasser 1).</li>
+      </ul>
+      <h4>Le nœud en linéaire est fait pour…</h4>
+      <ul>
+        <li><b>L'exposition</b> : le Gain multiplie la lumière, exactement comme ouvrir le diaphragme ou retirer un filtre ND.</li>
+        <li><b>La balance des blancs</b> : un gain par canal, comme si on changeait la couleur de la lumière sur le plateau. La correction reste cohérente des ombres aux hautes lumières.</li>
+        <li><b>Tout ce qui mélange de la lumière</b> : flou, halo, diffusion, incrustation. En linéaire, deux lumières s'additionnent comme dans la réalité, et les hautes lumières « bavent » de façon naturelle.</li>
+      </ul>
+      <h4>Le nœud normal (log) est fait pour…</h4>
+      <ul>
+        <li><b>Le contraste et les courbes</b> : les valeurs étant réparties comme notre perception, une courbe agit de façon équilibrée sur toute l'image.</li>
+        <li><b>Les qualifications et les masques de couleur</b> : la clé est plus facile à régler et plus stable, car les ombres ne sont pas écrasées près de zéro.</li>
+        <li><b>La saturation, les roues, les retouches de teinte</b>.</li>
+        <li><b>L'exposition aussi, avec l'Offset</b> : en log, décaler toute l'image (Offset) revient à changer l'exposition.</li>
+      </ul>
+      <table>
+        <tr><th></th><th>Nœud normal (log)</th><th>Nœud en linéaire</th></tr>
+        <tr><td>Les valeurs suivent…</td><td>Notre perception (un diaph = une place)</td><td>La quantité réelle de lumière</td></tr>
+        <tr><td>Exposition</td><td>Offset</td><td>Gain</td></tr>
+        <tr><td>Idéal pour</td><td>Contraste, courbes, qualifications, saturation</td><td>Exposition, balance des blancs, flou, halo, diffusion</td></tr>
+        <tr><td>À éviter</td><td>Mélanges de lumière réalistes</td><td>Qualifications, courbes de contraste, Lift</td></tr>
+      </table>
+      <h4>Comment faire un nœud en linéaire</h4>
+      <ul>
+        <li><b>Clic droit sur le nœud</b>, puis <b>Gamma</b>, puis <b>Linéaire</b>. C'est tout : Resolve convertit l'image en linéaire à l'entrée du nœud, applique les réglages, puis la reconvertit à la sortie.</li>
+        <li>Astuce : nommer ce nœud (par exemple « Linear ») et l'enregistrer dans la galerie, pour l'avoir prêt à chaque projet.</li>
+      </ul>
+      <p>Autre méthode, plus rare : trois nœuds à la suite, une conversion d'espace (CST) de DaVinci Intermediate vers Linéaire, le nœud de correction, puis la conversion inverse. Utile seulement pour contrôler chaque conversion à la main.</p>
+      <div class="rule"><b>À retenir :</b> le linéaire pour ce qui imite la physique de la lumière (exposition, couleur de la lumière, mélanges, flous) ; le log pour ce qui suit notre perception (contraste, courbes, sélections de couleur).</div>
+    `},
+    {title: "Contraste en RVB ou en luminance seule", html: `
+      <p>Un contraste peut s'appliquer de deux façons : sur chacun des trois canaux (rouge, vert, bleu), ou seulement sur la luminosité. Le gris ne change pas dans les deux cas, mais les couleurs, si.</p>
+      <h4>En RVB (les trois canaux)</h4>
+      <p>La même courbe est appliquée séparément au rouge, au vert et au bleu. Dans une couleur, les trois canaux n'ont pas la même valeur. La courbe les écarte donc encore plus les uns des autres : <b>la couleur devient plus saturée</b> en même temps que l'image devient plus contrastée.</p>
+      <ul>
+        <li>Rendu plus dense et plus « punchy », proche de la pellicule, où contraste et saturation montent ensemble.</li>
+        <li>Les couleurs très claires et très saturées peuvent aussi changer légèrement de teinte, quand un canal arrive au maximum avant les autres.</li>
+      </ul>
+      <h4>En luminance seule</h4>
+      <p>On calcule la luminosité de chaque pixel, on lui applique la courbe, puis on éclaircit ou on assombrit les trois canaux <b>dans la même proportion</b>. Les rapports entre rouge, vert et bleu restent les mêmes : <b>la teinte ne bouge pas, et la saturation reste pratiquement la même</b>.</p>
+      <ul>
+        <li>Seule la luminosité change : utile quand les couleurs sont déjà réglées (peau, équilibre général) et qu'on veut juste plus ou moins de contraste.</li>
+        <li>Rendu plus sobre, adapté au documentaire.</li>
+      </ul>
+      <h4>Un exemple chiffré</h4>
+      <p>Une peau dans l'ombre, contraste multiplié par 1,5 autour du gris 18 % (calcul fait en DaVinci Intermediate, lecture en Rec.709) :</p>
+      <table>
+        <tr><th></th><th>Teinte</th><th>Saturation</th></tr>
+        <tr><td>Image d'origine</td><td>19°</td><td>0,42</td></tr>
+        <tr><td>Contraste en RVB</td><td>19°</td><td>0,58 (nettement plus saturée)</td></tr>
+        <tr><td>Contraste en luminance</td><td>19°</td><td>0,43 (presque inchangée)</td></tr>
+      </table>
+      <h4>Dans Resolve</h4>
+      <p>Dans les courbes personnalisées, les courbes rouge, verte et bleue liées travaillent en RVB ; la courbe Y travaille sur la luminance. Il vaut la peine d'essayer les deux sur le même plan pour sentir la différence.</p>
+      <div class="rule"><b>À retenir :</b> en RVB, le contraste apporte aussi de la saturation (rendu dense, « film »). En luminance seule, il ne touche qu'à la luminosité et laisse les couleurs telles quelles (rendu sobre, couleurs préservées).</div>
+    `},
+    {title: "Sortie en Gamma 2.4 ou en Gamma 2.2", html: `
+      <p>Dans Resolve, passer la conversion de sortie de Gamma 2.4 à Gamma 2.2 <b>assombrit</b> l'image dans le viewer. Pourtant, on recommande le 2.2 pour le web et les téléphones, qu'on regarde souvent dans des lieux éclairés. Ça paraît contradictoire. Ça ne l'est pas : il faut séparer <b>le fichier</b> et <b>l'écran</b>.</p>
+      <h4>Le gamma est un aller-retour</h4>
+      <ul>
+        <li><b>À l'export</b>, la conversion de sortie écrit l'image dans le fichier avec une courbe (l'encodage).</li>
+        <li><b>À l'affichage</b>, l'écran applique la courbe inverse pour retrouver la bonne luminosité (le décodage).</li>
+      </ul>
+      <p>Le gamma choisi dans la conversion de sortie, c'est <b>l'écran pour lequel on prépare le fichier</b>. On prépare le fichier pour que l'aller-retour tombe juste sur cet écran-là.</p>
+      <h4>Pourquoi le 2.2 paraît plus sombre dans Resolve</h4>
+      <p>Un écran en Gamma 2.2 décode de façon moins appuyée qu'un écran en 2.4 : à valeur égale, il montre les tons moyens et les ombres <b>plus clairs</b>. Pour compenser, un fichier préparé pour un écran 2.2 contient des valeurs <b>un peu plus basses</b>. Si on regarde ces valeurs sur un écran (ou un viewer) réglé pour autre chose, elles paraissent plus sombres. Sur l'écran visé, elles reviennent au bon niveau.</p>
+      <p>Le gris 18 %, calculé avec les courbes de gamma pures :</p>
+      <table>
+        <tr><th></th><th>Valeur dans le fichier</th><th>Vu sur un écran 2.2</th><th>Vu sur un écran 2.4</th></tr>
+        <tr><td>Fichier préparé en 2.4</td><td>0,49</td><td>Trop clair (environ +0,2 diaph)</td><td>Juste</td></tr>
+        <tr><td>Fichier préparé en 2.2</td><td>0,46</td><td>Juste</td><td>Trop sombre (environ −0,2 diaph)</td></tr>
+      </table>
+      <h4>Et l'intuition « plus clair en plein jour » ?</h4>
+      <p>Elle est juste, et c'est exactement ce que fait le Gamma 2.2 : <b>c'est l'écran 2.2 qui éclaircit</b>, pas le fichier. Les normes suivent cette logique : le 2.4 est prévu pour un écran de télévision ou d'étalonnage dans une pièce peu éclairée, le 2.2 pour un écran d'ordinateur ou de téléphone dans un environnement plus lumineux. En préparant le fichier en 2.2, on s'assure qu'il ne paraîtra ni délavé ni trop clair sur ces écrans.</p>
+      <h4>Ce qu'il ne faut pas faire</h4>
+      <p>Remonter l'exposition pour « compenser » l'assombrissement vu dans le viewer après le passage en 2.2. On fausserait le résultat : sur un téléphone, l'image paraîtrait trop claire. Le réglage de l'image se fait avant la sortie, en jugeant sur un écran bien réglé, puis on choisit la sortie selon la diffusion.</p>
+      <div class="rule"><b>À retenir :</b> le gamma de sortie ne rend pas l'image plus claire ou plus sombre pour le spectateur : il l'adapte à son écran. 2.4 pour la télé et le cinéma dans le noir, 2.2 pour le web et les téléphones. Ce qu'on voit dans le viewer de Resolve dépend aussi des réglages du viewer et de l'écran de l'ordinateur : il ne faut pas se fier à la seule comparaison avant / après dans le viewer.</div>
+    `},
+    {title: "Exporter pour le web depuis un Mac : la chaîne complète", html: `
+      <p>Objectif : que la vidéo vue sur un téléphone ressemble à ce qu'on a étalonné. Il y a trois maillons : l'écran sur lequel on étalonne, le fichier qu'on exporte, et la façon dont l'appareil du spectateur lit ce fichier.</p>
+      <h4>Le piège propre au Mac</h4>
+      <ul>
+        <li>Les applications de macOS (QuickTime, Safari, Final Cut…) lisent les étiquettes de couleur inscrites dans le fichier vidéo et convertissent l'image en conséquence.</li>
+        <li>Un fichier étiqueté « Rec.709 » classique (code 1-1-1) est affiché par le Mac avec un gamma d'environ <b>1,96</b> au lieu de 2.2 ou 2.4 : il apparaît <b>plus clair</b> que sur une télé de référence. C'est le fameux « gamma shift » de QuickTime.</li>
+        <li>Historique : Blackmagic avait ajouté dans Resolve 16.2.2 l'option <b>Rec.709-A</b>, pour que le viewer de Resolve corresponde à QuickTime pour ces fichiers 1-1-1. <b>Dans Resolve 21, cette option n'apparaît plus</b> dans la liste : c'est <b>Rec.709 (Scene)</b> qu'on choisit comme espace de destination du projet sur Mac, avec la préférence « Utiliser les profils couleur de l'écran Mac pour les viewers » activée.</li>
+      </ul>
+      <p>Codes d'étiquette relevés par un utilisateur sur le forum Blackmagic (fichiers exportés par Resolve, non vérifié ici) :</p>
+      <table>
+        <tr><th>Espace choisi dans Resolve</th><th>Étiquette dans le fichier</th></tr>
+        <tr><td>Rec.709 (Scene)</td><td>1-1-1</td></tr>
+        <tr><td>Rec.709 Gamma 2.4</td><td>1-2-1</td></tr>
+        <tr><td>Rec.709 Gamma 2.2</td><td>1-4-1</td></tr>
+        <tr><td>sRGB</td><td>1-13-1</td></tr>
+      </table>
+      <h4>Le réglage validé chez moi (Mac, écran externe Dell U3223QE)</h4>
+      <table>
+        <tr><th>Maillon</th><th>Réglage</th></tr>
+        <tr><td>Écran externe</td><td>Calibré D65, gamma 2.2, <b>120 cd/m²</b> (le défaut du logiciel, 80 cd/m², était trop sombre pour une pièce éclairée). Type de rétroéclairage : PFS phosphore.</td></tr>
+        <tr><td>Projet</td><td>DaVinci YRGB, timeline en DaVinci WG / Intermediate, espace de destination Rec.709 (Scene)</td></tr>
+        <tr><td>Conversion de sortie</td><td>Rec.709, gamma de destination <b>Gamma 2.2</b> pour le web (2.4 pour la télé)</td></tr>
+        <tr><td>Export</td><td>Étiquettes identiques au projet (dans mes tests, changer l'étiquette n'a rien changé dans QuickTime)</td></tr>
+        <tr><td>Exposition</td><td>Placée avec les fausses couleurs (Vaudan Monitor), pas à l'œil seul</td></tr>
+        <tr><td>Vérification</td><td>QuickTime sur le Mac, puis le téléphone (luminosité auto et True Tone coupés). Chez moi, l'iPhone montre la même chose que QuickTime.</td></tr>
+      </table>
+      <p>Ce que mes tests ont montré : une livraison exportée en Gamma 2.4 paraissait trop sombre sur téléphone ; réexportée en Gamma 2.2, elle est environ un demi-diaph plus claire et correspond à ce que je voulais.</p>
+      <h4>Sur PC</h4>
+      <p>Le décalage propre aux applications Apple ne concerne pas la lecture sur Windows. On choisit directement le gamma de sortie selon la diffusion : 2.4 pour la télé, 2.2 pour le web. <i>Pas encore testé chez moi.</i></p>
+      <div class="rule"><b>À retenir :</b> le gamma de la conversion de sortie fabrique le fichier (2.2 pour le web) ; l'écran doit être calibré à une luminosité adaptée à la pièce ; l'exposition se vérifie aux fausses couleurs ; et le dernier mot revient au téléphone. ⚠ Point d'attention : ce réglage est validé sur ma machine et mon écran. Les comportements d'Apple, d'Instagram et de Resolve changent selon les versions : refaire un export test après une mise à jour importante.</div>
+    `}
+  ]
+};
+const DEFAULT_TODO = ["Créer une mini banque de sons","Créer une mini banque d'images","Préparer les rushs"];
+const KEY = "vaudan-davinci-carnet-v1";
+
+let state = {cards:{}, todo:null};
+try{ const s = JSON.parse(localStorage.getItem(KEY)||"null"); if(s) state = Object.assign(state,s); }catch(e){}
+if(!state.todo) state.todo = DEFAULT_TODO.map(t=>({t,done:false}));
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
+function renderSom(){
+  document.getElementById("som").innerHTML = SECTIONS.map((s,i)=>{
+    const n = s.perso ? state.todo.filter(x=>!x.done).length : (state.cards[s.id]||[]).length + (BUILTIN[s.id]||[]).length;
+    const c = s.perso ? (n? `<span class="count">${n} à faire</span>`:"") : (n? `<span class="count">${n} fiche${n>1?"s":""}</span>`:"");
+    return `<a class="rub${s.perso?" perso":""}" href="#${s.id}"><span class="n">${String(i).padStart(2,"0")}</span><b>${esc(s.t)}${s.perso?'<span class="pill">perso</span>':""}${c}</b><span class="d">${esc(s.d)}</span></a>`;
+  }).join("");
+}
+
+function cardsHTML(id){
+  const list = state.cards[id]||[];
+  const fixed = (BUILTIN[id]||[]).map(c=>`<article class="card fix"><h3>${esc(c.title)}</h3><div class="body">${c.html}</div></article>`).join("");
+  if(!list.length && !fixed) return `<div class="card empty">À compléter</div>`;
+  return fixed + list.map(c=>`<article class="card mine" data-c="${c.id}">
+    <div class="ch"><h3>${esc(c.title)}</h3><div class="acts">
+      <button class="mini" data-act="edit">Modifier</button>
+      <button class="mini danger" data-act="del">Supprimer</button></div></div>
+    <div class="free">${esc(c.body)}</div></article>`).join("");
+}
+
+function renderPanel(s){
+  let inner = "";
+  if(s.perso){
+    inner = `<div class="persobar">Onglet pour moi : il n'apparaît pas à l'impression.</div>
+    <div class="card"><h3>À préparer</h3>
+      <ul class="todo">${state.todo.map((x,i)=>`<li class="${x.done?"done":""}"><input type="checkbox" data-i="${i}" ${x.done?"checked":""} aria-label="Fait"><span>${esc(x.t)}</span><button class="x" data-del="${i}" aria-label="Retirer">×</button></li>`).join("")}</ul>
+      <form class="todoadd"><input placeholder="Ajouter une tâche" aria-label="Nouvelle tâche"><button class="btn">Ajouter</button></form>
+    </div>`;
+  }
+  return `<section class="panel${s.perso?" perso":""}" id="p-${s.id}" data-id="${s.id}">
+    <a class="back" href="#">‹ Sommaire</a>
+    <div class="phead"><h2>${esc(s.t)}</h2><p class="lead">${esc(s.d)}</p></div>
+    ${inner}
+    <div class="cards">${cardsHTML(s.id)}</div>
+    <button class="add" data-add><span class="plus">+</span> Ajouter une fiche</button>
+  </section>`;
+}
+
+function renderAll(){
+  document.getElementById("panels").innerHTML = SECTIONS.map(renderPanel).join("");
+  renderSom(); route();
+}
+
+function editor(panel, card){
+  panel.querySelector("form.editor")?.remove();
+  const f = document.createElement("form"); f.className="editor";
+  f.innerHTML = `<label class="f">Titre<input name="t" required value="${card?esc(card.title):""}"></label>
+    <label class="f">Contenu<textarea name="b">${card?esc(card.body):""}</textarea></label>
+    <div class="frow"><button class="btn primary">Enregistrer</button><button type="button" class="btn" data-cancel>Annuler</button></div>`;
+  panel.querySelector("[data-add]").before(f);
+  f.querySelector("input").focus();
+  f.onsubmit = e=>{
+    e.preventDefault();
+    const id = panel.dataset.id, list = state.cards[id] = state.cards[id]||[];
+    const t = f.t.value.trim(), b = f.b.value;
+    if(!t) return;
+    if(card){ card.title=t; card.body=b; } else list.push({id:uid(), title:t, body:b});
+    save(); refresh(panel);
+  };
+  f.querySelector("[data-cancel]").onclick = ()=>f.remove();
+}
+
+function refresh(panel){
+  const s = SECTIONS.find(x=>x.id===panel.dataset.id);
+  const tmp = document.createElement("div"); tmp.innerHTML = renderPanel(s);
+  const np = tmp.firstElementChild; np.classList.add("on");
+  panel.replaceWith(np); renderSom();
+}
+
+document.addEventListener("click", e=>{
+  const panel = e.target.closest(".panel"); if(!panel) return;
+  if(e.target.closest("[data-add]")) return editor(panel);
+  const a = e.target.closest("[data-act]");
+  if(a){
+    const cid = a.closest("[data-c]").dataset.c, list = state.cards[panel.dataset.id];
+    const card = list.find(c=>c.id===cid);
+    if(a.dataset.act==="edit") editor(panel, card);
+    if(a.dataset.act==="del" && confirmDel(a)){ list.splice(list.indexOf(card),1); save(); refresh(panel); }
+  }
+  const x = e.target.closest("[data-del]");
+  if(x){ state.todo.splice(+x.dataset.del,1); save(); refresh(panel); }
+});
+// suppression en deux temps (pas de boîte de dialogue)
+function confirmDel(btn){
+  if(btn.dataset.arm){ return true; }
+  btn.dataset.arm="1"; btn.textContent="Confirmer ?";
+  setTimeout(()=>{ if(btn.isConnected){ delete btn.dataset.arm; btn.textContent="Supprimer"; } },3000);
+  return false;
+}
+document.addEventListener("change", e=>{
+  if(e.target.matches(".todo input[type=checkbox]")){
+    state.todo[+e.target.dataset.i].done = e.target.checked; save(); refresh(e.target.closest(".panel"));
+  }
+});
+document.addEventListener("submit", e=>{
+  if(e.target.matches(".todoadd")){
+    e.preventDefault(); const v = e.target.querySelector("input").value.trim();
+    if(v){ state.todo.push({t:v,done:false}); save(); refresh(e.target.closest(".panel")); }
+  }
+});
+
+function route(){
+  const id = location.hash.slice(1);
+  const p = id && document.getElementById("p-"+id);
+  document.getElementById("home").classList.toggle("on", !p);
+  document.querySelectorAll(".panel").forEach(x=>x.classList.toggle("on", x===p));
+  document.getElementById("tosom").hidden = !p;
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+
+document.getElementById("exp").onclick = ()=>{
+  const b = document.getElementById("exp");
+  navigator.clipboard.writeText(JSON.stringify(state,null,2))
+    .then(()=>{ b.textContent="Copié ✓ — colle-le dans un fichier texte"; })
+    .catch(()=>{ b.textContent="Copie refusée par l'appareil"; })
+    .finally(()=>setTimeout(()=>b.textContent="Copier mes fiches (sauvegarde)",4000));
+};
+document.getElementById("imp").onclick = ()=>document.getElementById("impf").click();
+document.getElementById("impf").onchange = e=>{
+  const f = e.target.files[0]; if(!f) return;
+  f.text().then(t=>{ try{ const s = JSON.parse(t); if(s && s.cards){ state = s; if(!state.todo) state.todo=[]; save(); renderAll(); } }catch(err){} });
+};
+
+renderAll();
+</script>
+<script>if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
+</body>
+</html>

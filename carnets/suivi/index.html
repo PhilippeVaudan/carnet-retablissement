@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr-CH">
+<head>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Carnet suivi">
+<meta name="theme-color" content="#1b4650">
+<meta charset="utf-8">
+<title>Carnet de suivi</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<style>
+:root{color-scheme:light dark;--bg:#f4f6f6;--card:#fff;--ink:#1a2529;--muted:#566569;--line:#cfdadb;--soft:#e6eded;--accent:#1b4650;--on:#fff;--tint:#e4eeee;--warn:#a5281f;--warnbg:#fbe9e6}
+@media (prefers-color-scheme:dark){:root{--bg:#131819;--card:#1c2325;--ink:#e6ebec;--muted:#9fadb0;--line:#35403f;--soft:#2a3334;--accent:#7cc0c9;--on:#10282c;--tint:#20302f;--warn:#ff8a7c;--warnbg:#3a201c}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:calc(14px + env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(40px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+main{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+h1{font:700 30px/1.15 Georgia,"Times New Roman",serif;color:var(--accent);margin:4px 0 0}
+h2{font:700 25px/1.2 Georgia,"Times New Roman",serif;color:var(--accent);margin:0}
+h3{font-size:18px;margin:0;line-height:1.3}
+p{margin:0}
+.muted{color:var(--muted);font-size:15px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px;display:flex;flex-direction:column;gap:9px}
+ul,ol{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:4px}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.list{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.row{display:flex;flex-direction:column;gap:1px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--soft);padding:13px 15px}
+.row:first-child{border-top:0}
+.row b{font-size:18px}
+.row span{color:var(--muted);font-size:15px}
+.back{align-self:flex-start;background:none;border:0;padding:4px 0;color:var(--accent);font-weight:600}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:10px 14px}
+.btn.p{background:var(--accent);border-color:var(--accent);color:var(--on);font-weight:600}
+.btn.d{color:var(--warn);border-color:var(--warn)}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+input[type=text],input[type=date],textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:17px}
+textarea{min-height:76px;resize:vertical;line-height:1.45}
+label{display:flex;flex-direction:column;gap:4px;font-size:15px;color:var(--muted)}
+details summary{cursor:pointer;color:var(--accent);font-size:15px}
+details ul{color:var(--muted);font-size:15px;margin-top:6px}
+.note{background:var(--tint);border-radius:8px;padding:10px 12px;font-size:15px}
+.warn{background:var(--warnbg);border-left:3px solid var(--warn);padding:10px 12px;font-size:15px}
+.src{font-size:13px;color:var(--muted);border-top:1px solid var(--soft);padding-top:7px}
+.status{position:sticky;bottom:calc(8px + env(safe-area-inset-bottom));align-self:center;background:var(--accent);color:var(--on);border-radius:999px;padding:4px 12px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+.status.on{opacity:1}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+(function(){
+const KEY='carnet-pair-v1',app=document.getElementById('app');
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const today=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
+const fdate=s=>{if(!s)return'';const p=s.split('-');return p[2]+'.'+p[1]+'.'+p[0]};
+const TRAME=()=>[
+ ['cadre','Le cadre',"Avant d'entrer dans le sujet.",["Voilà le temps qu'on a devant nous.","Ce qu'on se dit reste entre nous, sauf si quelqu'un est en danger.","Je ne suis ni médecin ni thérapeute : je parle depuis ce que j'ai traversé et ce que j'ai appris.","Est-ce que ça te va comme ça ?"]],
+ ['lien','Le lien',"Écouter avant de chercher des solutions.",["Qu'est-ce qui t'amène aujourd'hui ?","Comment ça s'est passé pour venir jusqu'ici ?","Par où tu aimerais commencer ?"]],
+ ['regard','Son regard',"Comprendre comment la personne voit les choses, sans corriger.",["Comment tu comprends ce qui se passe ?","Qu'est-ce que tu t'es dit quand c'est arrivé ?","Qu'est-ce que tes proches en disent ? Et toi, tu en penses quoi ?"]],
+ ['situation','Où il en est',"Ce qui aide, ce qui pèse, ce qui balance. L'ambivalence est normale.",["Qu'est-ce que la consommation t'apporte ? Qu'est-ce qu'elle te coûte ?","Qui compte pour toi en ce moment ? (lien)","Qu'est-ce qui te donne de l'espoir ? (espoir)","Qui es-tu, en dehors de ça ? (identité)","Qu'est-ce qui a du sens pour toi ? (sens)","Sur quoi tu as prise ? (pouvoir d'agir)"]],
+ ['securite','La sécurité',"À ne jamais sauter. Si danger immédiat : orientation urgente.",["Est-ce qu'il y a un danger immédiat, pour toi ou quelqu'un d'autre ?","Est-ce qu'il t'arrive de penser à te faire du mal ou à ne plus vouloir vivre ?","Y a-t-il des risques liés à ta consommation en ce moment (sevrage, mélanges, conduite) ?","Qui peut être là pour toi si ça ne va pas ?"]],
+ ['vers','Vers quoi aller',"Aller vers ce qui est souhaité, pas seulement fuir ce qui fait mal.",["Qu'est-ce que tu aimerais de différent ?","Si ça allait mieux, à quoi tu le verrais ?","Qu'est-ce qui serait déjà un petit pas ?"]],
+ ['suite','La suite',"Résumer, vérifier, décider ensemble.",["Si je résume, tu me dis… Est-ce que c'est juste ?","Qu'est-ce que tu retiens de ce moment ?","Est-ce que tu aimerais parler avec quelqu'un d'autre aussi ?","On se revoit ?"]],
+ ['moi','Après, pour moi seul',"Ne se remplit pas devant la personne.",["Qu'est-ce que ça a réveillé en moi ?","Est-ce que j'ai voulu sauver, conseiller, convaincre ?","Qu'est-ce que j'amène en supervision ?"]]
+].map(a=>({id:a[0],t:a[1],h:a[2],q:a[3].join('\n')}));
+const blank=()=>({v:1,trame:TRAME(),gens:[],memo:''});
+let S;try{S=JSON.parse(localStorage.getItem(KEY))||blank()}catch(e){S=blank()}
+let timer,status;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));flash('Enregistré sur cet appareil')}catch(e){flash('Enregistrement impossible')}}
+function flash(t){if(!status)return;status.textContent=t;status.classList.add('on');clearTimeout(timer);timer=setTimeout(()=>status.classList.remove('on'),1200)}
+function el(tag,attrs,...kids){const n=document.createElement(tag);for(const k in attrs||{}){if(k==='on')for(const e in attrs.on)n.addEventListener(e,attrs.on[e]);else if(k==='html')n.innerHTML=attrs.html;else if(k in n&&k!=='list')n[k]=attrs[k];else n.setAttribute(k,attrs[k])}kids.flat().forEach(c=>{if(c!=null)n.append(c)});return n}
+const grow=t=>{t.style.height='auto';t.style.height=(t.scrollHeight+2)+'px'};
+function area(val,fn,ph){const t=el('textarea',{value:val||'',placeholder:ph||'',on:{input(){fn(t.value);save();grow(t)}}});setTimeout(()=>grow(t));return t}
+function render(...k){app.textContent='';status=el('div',{className:'status'});app.append(...k.flat(),status);window.scrollTo(0,0)}
+const back=(l,f)=>el('button',{className:'back',type:'button',textContent:'← '+l,on:{click:f}});
+const home=()=>back('Sommaire',viewHome);
+function rowBtn(a,b,f){return el('button',{className:'row',type:'button',on:{click:f}},el('b',{textContent:a}),b?el('span',{textContent:b}):null)}
+function confirmBtn(label,f){let armed=false,tm;const b=el('button',{className:'btn d',type:'button',textContent:label,on:{click(){if(!armed){armed=true;b.textContent='Toucher encore pour confirmer';tm=setTimeout(()=>{armed=false;b.textContent=label},3500);return}clearTimeout(tm);f()}}});return b}
+
+function viewHome(){render(
+ el('h1',{textContent:'Carnet de suivi'}),
+ el('p',{className:'muted',textContent:"Tout ce qui est écrit reste sur cet appareil. Rien n'est envoyé sur internet."}),
+ el('div',{className:'list'},
+  rowBtn('Mémo','Urgences, limites, orientation, confidentialité',viewMemo),
+  rowBtn('Théorie','CHIME, soutien par les pairs, entretien motivationnel',viewTheo),
+  rowBtn('Trame d\'entretien','Les étapes et les questions',viewTrame),
+  rowBtn('Répertoire',S.gens.length?S.gens.length+' fiche'+(S.gens.length>1?'s':''):'Aucune fiche pour le moment',viewGens),
+  rowBtn('Sauvegarde','Exporter ou restaurer une copie',viewSave),
+  rowBtn('Sources','D\'où vient le contenu',viewSources)))}
+
+const CARD=(title,...k)=>el('section',{className:'card'},el('h3',{textContent:title}),k.flat());
+const UL=a=>el('ul',{},a.map(x=>el('li',{textContent:x})));
+const SRC=t=>el('p',{className:'src',textContent:t});
+function viewMemo(){render(home(),el('h2',{textContent:'Mémo'}),
+ el('section',{className:'card'},el('h3',{textContent:'En cas de danger immédiat'}),el('div',{className:'warn',html:'<b>144</b> urgences médicales · <b>117</b> police · <b>143</b> La Main Tendue, écoute 24 h/24'}),el('p',{className:'muted',textContent:'Rester avec la personne si possible, et ne pas gérer seul. Relais locaux à compléter dans mes notes.'})),
+ CARD('Ce que je ne fais pas',UL(['Je ne suis ni médecin ni thérapeute.','Je ne pose pas de diagnostic et je ne prescris pas.','Une addiction ne se soigne pas en quelques séances : une première rencontre oriente, elle ne traite pas.','Je ne décide pas à la place de la personne.'])),
+ CARD('Orienter',el('p',{textContent:'Selon la situation : un service d\'urgence si elle est préoccupante, un centre spécialisé, une association, un groupe de parole ou un thérapeute.'})),
+ CARD('Confidentialité',UL(['Un code par personne (P-01), jamais de nom ni de téléphone ici.','La correspondance code ↔ nom reste hors de ce carnet.','Éviter les détails qui identifient : employeur, lieu, prénoms de proches.','Ce que je dois noter ou non : à vérifier auprès de ma supervision et de Re-pairs.'])),
+ CARD('Mes notes',area(S.memo,v=>S.memo=v,'Relais locaux, phrases qui marchent, points à retenir…')))}
+
+function viewTheo(){render(home(),el('h2',{textContent:'Théorie'}),
+ el('p',{className:'muted',textContent:'À relire de temps en temps. Résumés personnels, à vérifier dans les textes d\'origine avant de les enseigner.'}),
+ CARD('CHIME : ce qui aide à se rétablir',
+  el('p',{textContent:'Cinq processus du rétablissement personnel, issus d\'une revue de 97 articles venant de 13 pays. Ce n\'est ni une méthode ni un questionnaire : c\'est une description de ce que les personnes disent avoir aidé.'}),
+  el('p',{html:'<b>C · Connectedness, le lien.</b> Soutien des autres, relations, pairs, groupes, communauté.'}),
+  el('p',{html:'<b>H · Hope, l\'espoir.</b> Croire au rétablissement, motivation à changer, relations qui donnent de l\'espoir, rêves et aspirations.'}),
+  el('p',{html:'<b>I · Identity, l\'identité.</b> Reconstruire une image positive de soi, dépasser le stigmate.'}),
+  el('p',{html:'<b>M · Meaning, le sens.</b> Sens donné à ce qu\'on a vécu, vie qui compte, rôles et buts sociaux.'}),
+  el('p',{html:'<b>E · Empowerment, le pouvoir d\'agir.</b> Responsabilité personnelle, contrôle sur sa vie, appui sur ses forces.'}),
+  el('div',{className:'note',textContent:'En entretien : écouter quelle dimension est vivante et laquelle manque. Jamais de note, jamais de grille à cocher.'}),
+  el('div',{className:'warn',textContent:'Limite : ce cadre vient de la recherche sur le rétablissement en santé mentale, pas spécifiquement sur les addictions. Ses auteurs et d\'autres invitent à l\'adapter, et il parle peu des difficultés du parcours.'}),
+  SRC('Leamy, Bird, Le Boutillier, Williams, Slade, British Journal of Psychiatry, 2011.')),
+ CARD('Soutien par les pairs : Intentional Peer Support',
+  el('p',{className:'muted',textContent:'Shery Mead. Trois déplacements et quatre tâches.'}),
+  el('h4',{textContent:'Trois déplacements',style:'margin:0'}),
+  UL(['D\'aider à apprendre ensemble.','De l\'individu à la relation.','De la peur à l\'espoir et au possible.']),
+  el('h4',{textContent:'Quatre tâches',style:'margin:0'}),
+  UL(['Créer le lien : et remarquer quand il se perd.','Comprendre comment l\'autre voit le monde, et comment on en est venu à voir les choses ainsi.','Créer la mutualité : la relation doit fonctionner pour les deux.','Aller vers ce qu\'on veut, plutôt que fuir ce qu\'on ne veut pas.']),
+  SRC('Copeland Center, Introduction to Intentional Peer Support. La méthode demande une formation propre.')),
+ CARD('Entretien motivationnel',
+  el('p',{className:'muted',textContent:'Miller et Rollnick. Méthode clinique : ici, on en garde l\'esprit.'}),
+  el('p',{textContent:'Centré sur la personne, il vise à résoudre l\'ambivalence et à renforcer sa propre motivation. L\'ambivalence est une étape normale vers le changement.'}),
+  el('h4',{textContent:'Quatre processus, qui se superposent',style:'margin:0'}),
+  UL(['Engagement dans la relation.','Focalisation : sur quoi on travaille.','Évocation : faire émerger les raisons de la personne.','Planification : le prochain pas raisonnable.']),
+  el('h4',{textContent:'OuVER',style:'margin:0'}),
+  UL(['Questions Ouvertes : laisser raconter.','Valorisation : reconnaître ce que la personne fait déjà.','Écoute réflective : redire ce que j\'ai compris.','Résumés : rassembler et vérifier.']),
+  el('p',{textContent:'À surveiller : le réflexe de corriger, de conseiller, de faire à la place.'}),
+  SRC('Haute Autorité de Santé, fiche Entretien motivationnel.')))}
+
+function viewTrame(){render(home(),el('h2',{textContent:'Trame d\'entretien'}),
+ el('p',{className:'muted',textContent:'Une ossature, pas un questionnaire. Les étapes se suivent ou se croisent selon la personne.'}),
+ S.trame.map(s=>el('section',{className:'card'},el('h3',{textContent:s.t}),s.h?el('p',{className:'muted',textContent:s.h}):null,UL(s.q.split('\n').filter(Boolean)))),
+ el('div',{className:'acts'},el('button',{className:'btn p',type:'button',textContent:'Modifier la trame',on:{click:viewTrameEdit}})),
+ SRC('Questions rédigées pour ce carnet, à ajuster avec l\'expérience et la supervision. Inspirées des repères listés dans Sources.'))}
+function viewTrameEdit(){render(back('Trame',viewTrame),el('h2',{textContent:'Modifier la trame'}),
+ S.trame.map((s,i)=>el('section',{className:'card'},
+  el('label',{},'Titre',el('input',{type:'text',value:s.t,on:{input(e){s.t=e.target.value;save()}}})),
+  el('label',{},'Rappel',el('input',{type:'text',value:s.h||'',on:{input(e){s.h=e.target.value;save()}}})),
+  el('label',{},'Questions (une par ligne)',area(s.q,v=>s.q=v)),
+  el('div',{className:'acts'},
+   el('button',{className:'btn',type:'button',textContent:'↑',disabled:i===0,on:{click(){S.trame.splice(i-1,0,S.trame.splice(i,1)[0]);save();viewTrameEdit()}}}),
+   el('button',{className:'btn',type:'button',textContent:'↓',disabled:i===S.trame.length-1,on:{click(){S.trame.splice(i+1,0,S.trame.splice(i,1)[0]);save();viewTrameEdit()}}}),
+   confirmBtn('Supprimer',()=>{S.trame.splice(i,1);save();viewTrameEdit()})))),
+ el('div',{className:'acts'},el('button',{className:'btn p',type:'button',textContent:'Ajouter une étape',on:{click(){S.trame.push({id:uid(),t:'Nouvelle étape',h:'',q:''});save();viewTrameEdit()}}}),
+ confirmBtn('Revenir à la trame d\'origine',()=>{S.trame=TRAME();save();viewTrameEdit()})))}
+
+function nextCode(){let n=0;S.gens.forEach(p=>{const m=/(\d+)/.exec(p.code);if(m)n=Math.max(n,+m[1])});return 'P-'+String(n+1).padStart(2,'0')}
+function viewGens(){const sorted=[...S.gens].sort((a,b)=>(lastDate(b)||'').localeCompare(lastDate(a)||''));
+ render(home(),el('h2',{textContent:'Répertoire'}),
+ el('div',{className:'acts'},el('button',{className:'btn p',type:'button',textContent:'Nouvelle personne',on:{click:viewNew}})),
+ sorted.length?el('div',{className:'list'},sorted.map(p=>rowBtn(p.code,p.ren.length?p.ren.length+' rencontre'+(p.ren.length>1?'s':'')+' · dernière le '+fdate(lastDate(p)):'Pas encore de rencontre',()=>viewP(p)))):el('p',{className:'muted',textContent:'Aucune fiche pour le moment.'}))}
+function lastDate(p){return p.ren.map(r=>r.date).sort().pop()}
+function viewNew(){const i=el('input',{type:'text',value:nextCode(),autocomplete:'off'});
+ render(back('Répertoire',viewGens),el('h2',{textContent:'Nouvelle personne'}),
+ el('section',{className:'card'},el('label',{},'Code',i),el('div',{className:'note',textContent:'Un code ou une initiale. Pas de nom complet, de téléphone ni d\'employeur.'}),
+ el('div',{className:'acts'},el('button',{className:'btn p',type:'button',textContent:'Créer la fiche',on:{click(){const c=i.value.trim();if(!c){i.focus();return}const p={id:uid(),code:c,ren:[],notes:''};S.gens.push(p);save();viewP(p)}}}))))}
+function viewP(p){const r=[...p.ren].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+ const code=el('input',{type:'text',value:p.code,on:{input(e){p.code=e.target.value;save()}}});
+ render(back('Répertoire',viewGens),el('h2',{textContent:p.code}),
+ el('div',{className:'acts'},el('button',{className:'btn p',type:'button',textContent:'Nouvelle rencontre',on:{click(){const x={id:uid(),date:today(),notes:{},pas:''};p.ren.push(x);save();viewR(p,x)}}})),
+ r.length?el('div',{className:'list'},r.map(x=>rowBtn(fdate(x.date),x.pas?'Prochain pas : '+x.pas:'',()=>viewR(p,x)))):el('p',{className:'muted',textContent:'Pas encore de rencontre.'}),
+ el('section',{className:'card'},el('h3',{textContent:'Fil général'}),area(p.notes,v=>p.notes=v,'Ce qui revient, ce qui compte, les relais en cours…')),
+ el('section',{className:'card'},el('label',{},'Code de la fiche',code),confirmBtn('Supprimer cette fiche',()=>{S.gens=S.gens.filter(q=>q!==p);save();viewGens()})))}
+function viewR(p,x){const known=new Set(S.trame.map(s=>s.id));
+ const orphans=Object.keys(x.notes).filter(k=>!known.has(k)&&x.notes[k]);
+ render(back(p.code,()=>viewP(p)),el('h2',{textContent:p.code+' · rencontre'}),
+ el('section',{className:'card'},el('label',{},'Date',el('input',{type:'date',value:x.date,on:{input(e){x.date=e.target.value;save()}}}))),
+ S.trame.map(s=>el('section',{className:'card'},el('h3',{textContent:s.t}),s.h?el('p',{className:'muted',textContent:s.h}):null,
+  s.q?el('details',{},el('summary',{textContent:'Questions'}),UL(s.q.split('\n').filter(Boolean))):null,
+  area(x.notes[s.id],v=>x.notes[s.id]=v,'Notes'))),
+ orphans.map(k=>el('section',{className:'card'},el('h3',{textContent:'Étape retirée de la trame'}),area(x.notes[k],v=>x.notes[k]=v))),
+ el('section',{className:'card'},el('h3',{textContent:'Prochain pas'}),area(x.pas,v=>x.pas=v,'Ce qui a été convenu ensemble')),
+ el('section',{className:'card'},confirmBtn('Supprimer cette rencontre',()=>{p.ren=p.ren.filter(q=>q!==x);save();viewP(p)})))}
+
+function viewSave(){
+ const msg=el('p',{className:'muted'});
+ const file=el('input',{type:'file',accept:'application/json,.json',hidden:true,on:{change(e){const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const d=JSON.parse(rd.result);if(!d||!Array.isArray(d.gens)||!Array.isArray(d.trame))throw 0;pending=d;msg.textContent='Copie lue : '+d.gens.length+' fiche(s). Elle remplacera tout le contenu actuel.';rep.hidden=false}catch(_){msg.textContent='Ce fichier n\'est pas une sauvegarde de ce carnet.'}};rd.readAsText(f)}}});
+ let pending=null;
+ const rep=confirmBtn('Remplacer par cette copie',()=>{S=pending;save();viewHome()});rep.hidden=true;
+ render(home(),el('h2',{textContent:'Sauvegarde'}),
+ el('section',{className:'card'},el('p',{textContent:'Si ce téléphone est perdu, effacé, ou si l\'application est supprimée, le contenu disparaît. Une copie régulière évite ça.'}),
+ el('div',{className:'warn',textContent:'Le fichier exporté n\'est pas chiffré. À garder dans un endroit à toi, pas dans une messagerie ni un dossier partagé.'}),
+ el('div',{className:'acts'},el('button',{className:'btn p',type:'button',textContent:'Exporter une copie',on:{click:()=>exportAll(msg)}}),el('button',{className:'btn',type:'button',textContent:'Restaurer une copie',on:{click:()=>file.click()}}),rep),file,msg))}
+async function exportAll(msg){const name='carnet-pair-'+today()+'.json',blob=new Blob([JSON.stringify(S,null,1)],{type:'application/json'});
+ try{const f=new File([blob],name,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});msg.textContent='Copie transmise.';return}}catch(e){if(e&&e.name==='AbortError'){msg.textContent='Annulé.';return}}
+ const a=el('a',{href:URL.createObjectURL(blob),download:name});document.body.append(a);a.click();a.remove();msg.textContent='Copie téléchargée.'}
+
+function viewSources(){const L=(t,u)=>el('li',{},el('a',{href:u,target:'_blank',rel:'noopener',textContent:t}));
+ render(home(),el('h2',{textContent:'Sources'}),el('section',{className:'card'},el('ul',{},
+ L('Intentional Peer Support : introduction (Copeland Center)','https://copelandcenter.com/resources/introduction-intentional-peer-support'),
+ L('HAS : Entretien motivationnel','https://www.has-sante.fr/jcms/p_3501842/fr/entretien-motivationnel'),
+ L('Leamy et al. (2011) : CHIME','https://www.cambridge.org/core/product/9B3B8D6EF823A1064E9683C43D70F577'),
+ L('Re-pairs, association romande','https://www.re-pairs.ch')),
+ el('p',{className:'muted',textContent:'Les questions de la trame sont des propositions écrites pour ce carnet : elles ne viennent pas d\'une méthode validée.'})))}
+
+viewHome();
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+if('serviceWorker' in navigator&&location.protocol!=='file:')addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+})();
+</script>
+</body>
+</html>

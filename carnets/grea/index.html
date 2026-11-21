@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GREA">
+<meta name="theme-color" content="#F3E7CF">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formation GREA</title>
+<style>
+:root{--teal:#3f8a80;--teal-d:#2f6e66;--ink:#1f2a2e;--muted:#5d6b70;--line:#dfe6e5;--paper:#fbfbf8;--side:#f1f4f2;--hl:#fff7e0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Avenir Next","Avenir","Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.45}
+.layout{display:grid;grid-template-columns:300px 1fr;min-height:100vh}
+aside{position:sticky;top:0;height:100vh;overflow:auto;background:var(--side);border-right:1px solid var(--line);padding:22px 18px 40px}
+aside .brand{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-weight:700}
+aside h1{font-size:21px;margin:4px 0 2px;line-height:1.2}
+aside .sub{font-size:13px;color:var(--muted);margin:0 0 16px}
+nav ol{list-style:none;margin:0;padding:0}
+nav .nm{margin:0 0 10px}
+nav .mlink{display:block;font-weight:700;font-size:13.5px;color:var(--ink);text-decoration:none;padding:5px 8px;border-radius:6px}
+nav .mlink:hover,nav li li a:hover{background:#e3ebe9}
+nav li li a{display:flex;gap:8px;font-size:13px;color:var(--muted);text-decoration:none;padding:3px 8px 3px 14px;border-radius:6px;line-height:1.3}
+nav .nn{flex:0 0 auto;min-width:34px;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:600}
+nav a.on{background:#dde9e6;color:var(--ink)}
+.tools{margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.tools button{font:inherit;font-size:12.5px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:6px 10px;cursor:pointer;margin:0 6px 6px 0}
+.tools button:hover{border-color:var(--teal)}
+main{padding:28px clamp(16px,4vw,56px) 80px;max-width:1120px}
+.intro{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin-bottom:28px}
+.intro h2{margin:0 0 6px;font-size:20px}
+.intro p{margin:6px 0;font-size:14.5px;color:#34434a}
+.module{margin:0 0 44px}
+.mh{border-left:4px solid var(--teal);padding:2px 0 2px 14px;margin:0 0 16px}
+.mh h2{margin:0;font-size:22px;line-height:1.25}
+.mh .ms{margin:4px 0 0;color:var(--muted);font-size:14px}
+.mh .mc{margin:4px 0 0;color:var(--muted);font-size:12.5px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px 16px;margin:0 0 22px;scroll-margin-top:16px}
+.ch{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:10px}
+.ch h3{margin:0;font-size:16px;flex:1 1 300px}
+.badge{font-size:11.5px;font-weight:700;letter-spacing:.04em;color:#fff;background:var(--teal);border-radius:99px;padding:3px 10px;white-space:nowrap}
+.steps{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
+.sb{font:inherit;font-size:13px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 10px;cursor:pointer}
+.sb:hover{border-color:var(--teal)}
+.sl{min-width:92px;text-align:center}
+details.orig{margin-top:10px;font-size:13px}
+details.orig summary{cursor:pointer;color:var(--teal-d)}
+.th{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.th figure{margin:0;width:178px}
+.th img{width:100%;border:1px solid var(--line);border-radius:4px;display:block}
+.th figcaption{font-size:11px;color:var(--muted);text-align:center}
+.rem{margin-top:10px;background:var(--hl);border:1px solid #f0e2b4;border-radius:8px;padding:8px 12px}
+.rem h4{margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#8a6d1d}
+.rem ul{margin:0;padding-left:18px;font-size:13.5px}
+.notes{display:block;margin-top:10px}
+.notes span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px}
+.notes textarea{width:100%;font:inherit;font-size:14px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;resize:vertical;background:#fcfdfd}
+.notes textarea:focus{outline:2px solid #bcd9d4;border-color:var(--teal)}
+.printonly{display:none}
+
+/* ---------- la diapositive (espace 960 × 540) ---------- */
+.slide{position:relative;width:100%;aspect-ratio:16/9;container-type:inline-size;background:#f9fafc;border:1px solid #e6eaee;border-radius:6px;overflow:hidden}
+.s-in{position:absolute;inset:0;--u:calc(100cqw / 960)}
+.s-in > *{position:absolute}
+.st{color:var(--teal);font-weight:700;font-size:calc(var(--u)*25);line-height:1.15;white-space:nowrap}
+.st.big{font-size:calc(var(--u)*30)}
+.sect{color:var(--teal);font-weight:700;font-size:calc(var(--u)*34);text-align:center}
+.ttl1{color:var(--teal);font-weight:800;font-size:calc(var(--u)*42);text-align:center;letter-spacing:.01em}
+.ttl2{font-weight:700;font-size:calc(var(--u)*22);text-align:center}
+.ttl3{font-size:calc(var(--u)*13);text-align:center;color:#33424a}
+.rule{height:calc(var(--u)*3);background:var(--teal)}
+.somm{list-style:none;margin:0;padding:0}
+.somm li{font-size:calc(var(--u)*17);padding:calc(var(--u)*8) 0 calc(var(--u)*8) calc(var(--u)*24);position:relative}
+.somm li::before{content:"›";position:absolute;left:0;color:var(--teal);font-weight:700}
+.im{display:block;object-fit:contain}
+.im.cover{object-fit:cover;border-radius:calc(var(--u)*2)}
+.vid{background:#000;object-fit:contain}
+.src{font-size:calc(var(--u)*9.5);font-weight:700;font-style:italic;color:#3b4a52}
+.src.r{text-align:right}
+.body{font-size:calc(var(--u)*17);line-height:1.5}
+.body.sm{font-size:calc(var(--u)*15)}
+.body a{color:var(--teal-d)}
+.teal{color:var(--teal);font-weight:700}
+.quote{font-size:calc(var(--u)*21);text-align:center;line-height:1.45}
+.q{color:var(--teal);font-weight:800;font-size:calc(var(--u)*70);line-height:1;font-family:Georgia,serif}
+/* tableaux */
+table{border-collapse:collapse;table-layout:fixed}
+table.fam{font-size:calc(var(--u)*14.5)}
+table.fam th,table.fam td{padding:calc(var(--u)*5) calc(var(--u)*8);text-align:left;vertical-align:top;border:calc(var(--u)*1.5) solid #fff}
+table.fam thead th{background:#4472c4;color:#fff}
+table.fam tbody tr:nth-child(odd) th,table.fam tbody tr:nth-child(odd) td{background:#cfd5ea}
+table.fam tbody tr:nth-child(even) th,table.fam tbody tr:nth-child(even) td{background:#e9ebf5}
+table.niv{font-size:calc(var(--u)*11);line-height:1.25}
+table.niv th,table.niv td{padding:calc(var(--u)*4) calc(var(--u)*7);text-align:left;vertical-align:top;border:calc(var(--u)*1) solid #c9cfd6}
+table.niv thead th{background:#2d4a6e;color:#fff}
+table.niv tbody th{width:18%}
+table.niv tr.n1>*{background:#dfe9f5}table.niv tr.n2>*{background:#e2f0dc}table.niv tr.n3>*{background:#fdf3d1}table.niv tr.n4>*{background:#f8e1d6}table.niv tr.n5>*{background:#f1cfd2}
+.note-bas{font-size:calc(var(--u)*11);color:#33424a}
+.ress{display:flex;gap:calc(var(--u)*7)}
+.rcol{flex:1;border-radius:calc(var(--u)*7);overflow:hidden;font-size:calc(var(--u)*12);line-height:1.3}
+.rh{font-weight:700;text-align:center;padding:calc(var(--u)*8) calc(var(--u)*4);min-height:calc(var(--u)*46);display:flex;align-items:center;justify-content:center;color:#24384a;font-size:calc(var(--u)*12.5)}
+.rcol ul{margin:0;padding:calc(var(--u)*8) calc(var(--u)*6) calc(var(--u)*8) calc(var(--u)*18);height:100%}
+.rcol li{margin:0 0 calc(var(--u)*6)}
+.c1 .rh{background:#a9cbb9}.c1 ul{background:#eaf3ee}
+.c2 .rh{background:#f4d58e}.c2 ul{background:#fdf5e1}
+.c3 .rh{background:#f1aa97}.c3 ul{background:#fbe7e2}
+.c4 .rh{background:#a9cbea}.c4 ul{background:#e6f1fb}
+.c5 .rh{background:#c8b8e6}.c5 ul{background:#f0ebf9}
+.c6 .rh{background:#9fcfd6}.c6 ul{background:#e4f2f3}
+.c7 .rh{background:#a9b9cb}.c7 ul{background:#e8edf2}
+.obj .ob{display:flex;align-items:center;gap:calc(var(--u)*14);border:calc(var(--u)*1) solid #dfe4e8;background:#fff;border-radius:calc(var(--u)*6);padding:calc(var(--u)*10) calc(var(--u)*14);margin-bottom:calc(var(--u)*10)}
+.obj .obn{flex:0 0 auto;width:calc(var(--u)*26);height:calc(var(--u)*26);border-radius:50%;background:var(--teal);color:#fff;font-weight:700;font-size:calc(var(--u)*13);display:flex;align-items:center;justify-content:center}
+.obj p{margin:0;font-size:calc(var(--u)*14)}
+.dcard{background:#fff;border:calc(var(--u)*1) solid #dfe4e8;border-radius:calc(var(--u)*8);padding:calc(var(--u)*16) calc(var(--u)*22)}
+.dcard h4{margin:0 0 calc(var(--u)*6);color:var(--teal);font-size:calc(var(--u)*17);border-bottom:calc(var(--u)*1.5) solid var(--teal);padding-bottom:calc(var(--u)*6)}
+.dsub{font-weight:700;font-size:calc(var(--u)*12.5);margin-bottom:calc(var(--u)*8)}
+.dcard p{margin:0 0 calc(var(--u)*10);font-size:calc(var(--u)*13.5)}
+.anoter{font-size:calc(var(--u)*12.5);border-left:calc(var(--u)*3) solid var(--teal);background:#eef4f3;padding:calc(var(--u)*8) calc(var(--u)*12)}
+.modslide{background:#fff}
+.modt{color:var(--teal);font-weight:800;font-size:calc(var(--u)*36);line-height:1.15}
+.mods{font-size:calc(var(--u)*17);color:#45545a}
+/* progression */
+.seq .step{transition:opacity .25s}
+.seq .step.hidden{opacity:0;visibility:hidden}
+
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr}
+  aside{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  aside nav{max-height:46vh;overflow:auto}
+}
+
+/* ---------- export PDF : une diapo par page, 16:9 paysage ---------- */
+@page{size:297mm 167.06mm;margin:0}
+@media print{
+  html,body{background:#fff}
+  aside,.intro,.mh,.ch,details.orig,.rem,.notes{display:none!important}
+  .layout{display:block}
+  main{padding:0;max-width:none}
+  .module,.card{margin:0;padding:0;border:0;border-radius:0;background:none}
+  .printonly{display:block}
+  .slide{width:297mm;height:167.06mm;aspect-ratio:auto;border:0;border-radius:0;break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .seq .step.hidden{opacity:1;visibility:visible}
+  video{display:none!important}
+  .vidprint{display:flex!important}
+}
+.vidprint{display:none}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <div class="brand">GREA · Recovery College</div>
+  <h1>Formation GREA</h1>
+  <p class="sub">« Ma consommation ? T’inquiète je gère... » — carnet de travail, version de base (Keynote V2)</p>
+  <nav aria-label="Sommaire"><ol><li class="nm"><a href="#ouverture" class="mlink">Ouverture</a><ol><li><a href="#d1"><span class="nn">1</span>Titre</a></li><li><a href="#d2"><span class="nn">2</span>Présentation / Sommaire</a></li><li><a href="#d29"><span class="nn">29</span>Objectifs pédagogiques</a></li></ol></li><li class="nm"><a href="#m1" class="mlink">Module 1 — Types, fonctions et modalités de consommations</a><ol><li><a href="#d3"><span class="nn">3</span>Les différentes fonctions et modalités de consommation</a></li><li><a href="#d4"><span class="nn">4</span>Pourquoi consomme-t’on ?</a></li></ol></li><li class="nm"><a href="#m2" class="mlink">Module 2 — Photo langage</a><ol><li><a href="#d5"><span class="nn">5</span>Photo-language</a></li><li><a href="#d6"><span class="nn">6</span>Comportements à risque (schéma)</a></li></ol></li><li class="nm"><a href="#m3" class="mlink">Module 3 — Témoignage de Philippe</a><ol><li><a href="#d7"><span class="nn">7</span>Témoignage</a></li><li><a href="#d8"><span class="nn">8</span>Les différentes fonctions et modalités de consommation (bis)</a></li></ol></li><li class="nm"><a href="#pause" class="mlink">Pause</a><ol><li><a href="#d9"><span class="nn">9</span>Pause</a></li></ol></li><li class="nm"><a href="#m4" class="mlink">Module 4 — Différents niveaux d’usage, dépendance et addiction</a><ol><li><a href="#d10"><span class="nn">10</span>Pouvoir identifier une consommation qui devient problématique (vidéo)</a></li><li><a href="#d11-15"><span class="nn">11–15</span>Pouvoir identifier une consommation qui devient problématique (tableau)</a></li><li><a href="#d30"><span class="nn">30</span>Dépendance Vs Addiction</a></li></ol></li><li class="nm"><a href="#m5" class="mlink">Module 5 — Drug, Set and Setting</a><ol><li><a href="#d16"><span class="nn">16</span>Drug, set & setting</a></li></ol></li><li class="nm"><a href="#ancrage" class="mlink">Temps d’ancrage</a><ol><li><a href="#d17"><span class="nn">17</span>Ancrage</a></li></ol></li><li class="nm"><a href="#m6" class="mlink">Module 6 — Gardes fous et ressources d’aide</a><ol><li><a href="#d18"><span class="nn">18</span>Limites et gardes fous</a></li><li><a href="#d19-26"><span class="nn">19–26</span>Identifier des ressources d’aide</a></li></ol></li><li class="nm"><a href="#cloture" class="mlink">Clôture</a><ol><li><a href="#d27"><span class="nn">27</span>Merci !</a></li></ol></li><li class="nm"><a href="#annexe" class="mlink">Annexe — Notes de travail</a><ol><li><a href="#d28"><span class="nn">28</span>Notes de travail (diapo de brouillon)</a></li></ol></li></ol></nav>
+  <div class="tools">
+    <button type="button" id="copyNotes">Copier toutes mes notes</button>
+    <div id="toolMsg" role="status"></div>
+  </div>
+</aside>
+<main>
+  <div class="intro">
+    <h2>Base de travail</h2>
+    <p>Les 30 diapos de la présentation Keynote (V2) sont reprises telles quelles et rangées dans les modules du sommaire. Rien n’est encore corrigé : les points repérés au passage sont signalés en jaune sous chaque diapo.</p>
+    <p>Chaque diapo garde son numéro d’origine. Trois ont été déplacées parce qu’elles se trouvaient après « Merci ! » : les objectifs (29) vont dans l’ouverture, « Dépendance Vs Addiction » (30) dans le module 4, et les notes (28) en annexe.</p>
+    <p>Les notes que tu écris sous les diapos restent dans ce navigateur seulement : le bouton « Copier toutes mes notes » permet de les récupérer.</p>
+  </div>
+<section class="module" id="ouverture"><header class="mh"><h2>Ouverture</h2><p class="ms">Accueil, sommaire et objectifs</p><p class="mc">3 éléments · diapo 1, diapo 2, diapo 29</p></header>
+<article class="card" id="d1">
+  <div class="ch"><span class="badge">Diapo 1</span><h3>Titre</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="ttl1" style="left:calc(var(--u)*80);top:calc(var(--u)*150);width:calc(var(--u)*800)">GREA - RECOVERY COLLEGE</div><div class="ttl2" style="left:calc(var(--u)*80);top:calc(var(--u)*232);width:calc(var(--u)*800)">Ma consommation ? T’inquiète je gère...</div><div class="rule" style="left:calc(var(--u)*435);top:calc(var(--u)*300);width:calc(var(--u)*90)"></div><div class="ttl3" style="left:calc(var(--u)*80);top:calc(var(--u)*330);width:calc(var(--u)*800)">18 Septembre 2026 &nbsp;|&nbsp; Philippe et David</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d01.jpg" alt="Vignette de la diapo d’origine 1"><figcaption>1</figcaption></figure></div></details>
+  
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-1" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+<article class="card" id="d2">
+  <div class="ch"><span class="badge">Diapo 2</span><h3>Présentation / Sommaire</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st" style="left:calc(var(--u)*45);top:calc(var(--u)*45)">Présentation / Sommaire</div><ul class="somm" style="left:calc(var(--u)*45);top:calc(var(--u)*140);width:calc(var(--u)*560)"><li>Types, fonctions et modalités de consommations</li><li>Photo langage</li><li>Témoignage de Philippe</li><li>Différents niveaux d’usage, dépendance et addiction</li><li>Drug, Set and Setting</li><li>Gardes fous et ressources d’aide</li></ul><img class="im cover" src="img/photo-1.png" alt="" style="left:calc(var(--u)*672);top:calc(var(--u)*82);width:calc(var(--u)*177);height:calc(var(--u)*112)"><img class="im cover" src="img/photo-2.png" alt="T-shirt « t’inquiète je gère la pression »" style="left:calc(var(--u)*672);top:calc(var(--u)*198);width:calc(var(--u)*177);height:calc(var(--u)*195)"><img class="im cover" src="img/photo-3.png" alt="" style="left:calc(var(--u)*672);top:calc(var(--u)*397);width:calc(var(--u)*177);height:calc(var(--u)*106)"></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d02.jpg" alt="Vignette de la diapo d’origine 2"><figcaption>2</figcaption></figure></div></details>
+  
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-2" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+<article class="card" id="d29">
+  <div class="ch"><span class="badge">Diapo 29</span><h3>Objectifs pédagogiques</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st" style="left:calc(var(--u)*45);top:calc(var(--u)*45)">Objectifs pédagogiques</div><div class="obj" style="left:calc(var(--u)*45);top:calc(var(--u)*130);width:calc(var(--u)*870)"><div class="ob"><span class="obn">1</span><p><b>Comprendre les différentes fonctions</b> que peut remplir une consommation de substance(s).</p></div><div class="ob"><span class="obn">2</span><p><b>Différencier</b> une consommation non problématique d’une consommation qui le devient, ainsi que les notions de dépendance et d’addiction.</p></div><div class="ob"><span class="obn">3</span><p><b>Repérer les premiers signes discrets</b> d’une consommation qui devient problématique.</p></div><div class="ob"><span class="obn">4</span><p><b>Réfléchir à ses stratégies de garde-fou</b> (phrases, comportements, contextes).</p></div><div class="ob"><span class="obn">5</span><p><b>Identifier des ressources d’aide</b> et de soutien adaptées.</p></div></div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d29.jpg" alt="Vignette de la diapo d’origine 29"><figcaption>29</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Placée à la fin du Keynote (n° 29, après « Merci ! ») : rangée ici dans l’ouverture.</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-29" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+<section class="module" id="m1"><header class="mh"><h2>Module 1 — Types, fonctions et modalités de consommations</h2><p class="mc">2 éléments · diapo 3, diapo 4</p></header>
+<div class="slide modslide printonly"><div class="s-in"><div class="modt" style="left:calc(var(--u)*60);top:calc(var(--u)*200);width:calc(var(--u)*840)">Module 1 — Types, fonctions et modalités de consommations</div></div></div>
+<article class="card" id="d3">
+  <div class="ch"><span class="badge">Diapo 3</span><h3>Les différentes fonctions et modalités de consommation</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st" style="left:calc(var(--u)*45);top:calc(var(--u)*45)">Les différentes fonctions et modalités de consommation</div><img class="im" src="img/fonctions-consommation.png" alt="Diagramme : consommation festive, thérapeutique et récréative" style="left:calc(var(--u)*283);top:calc(var(--u)*84);width:calc(var(--u)*394);height:calc(var(--u)*386)"><div class="src" style="left:calc(var(--u)*45);top:calc(var(--u)*500);width:calc(var(--u)*600)">* PAP (PSYCHOTHERAPIE ASSISTEE PAR LES PSYCHEDELIQUES</div><div class="src r" style="left:calc(var(--u)*615);top:calc(var(--u)*500);width:calc(var(--u)*300)">David Perrin 2025</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d03.jpg" alt="Vignette de la diapo d’origine 3"><figcaption>3</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Note de bas de page : la parenthèse de « * PAP (PSYCHOTHERAPIE ASSISTEE PAR LES PSYCHEDELIQUES » n’est pas fermée.</li><li>Dans l’image : « DESHINIBITION » et « REGULIöRE » (coquilles dans le schéma d’origine).</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-3" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+<article class="card" id="d4">
+  <div class="ch"><span class="badge">Diapo 4</span><h3>Pourquoi consomme-t’on ?</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st" style="left:calc(var(--u)*45);top:calc(var(--u)*45)">Pourquoi consomme-t’on ?</div><table class="fam" style="left:calc(var(--u)*247);top:calc(var(--u)*96);width:calc(var(--u)*508)"><thead><tr><th>Les sept familles</th><th>Intention</th><th>Relation</th></tr></thead><tbody><tr><th>Plaisir</th><td>Planer</td><td>Pour soi</td></tr><tr><th>Introspection</th><td>Voyager</td><td>En soi</td></tr><tr><th>Souffrance</th><td>Apaiser</td><td>Privé de soi</td></tr><tr><th>Performance</th><td>Gagner</td><td>Contre d’autres moi</td></tr><tr><th>Défonce</th><td>S’assommer</td><td>Sans les autres</td></tr><tr><th>Fusion</th><td>Se fondre</td><td>Dans les autres</td></tr><tr><th>Distinction</th><td>S’affirmer</td><td>Sortir de la masse</td></tr></tbody></table><div class="src" style="left:calc(var(--u)*45);top:calc(var(--u)*464);width:calc(var(--u)*870)">Illustration : Emmanuel Langlois, Le nouveau monde des drogues, Armand Collin, 2022.</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d04.jpg" alt="Vignette de la diapo d’origine 4"><figcaption>4</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Titre : « consomme-t’on » s’écrit en principe « consomme-t-on ».</li><li>Source : l’éditeur s’écrit « Armand Colin » (à vérifier sur l’ouvrage).</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-4" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+<section class="module" id="m2"><header class="mh"><h2>Module 2 — Photo langage</h2><p class="mc">2 éléments · diapo 5, diapo 6</p></header>
+<div class="slide modslide printonly"><div class="s-in"><div class="modt" style="left:calc(var(--u)*60);top:calc(var(--u)*200);width:calc(var(--u)*840)">Module 2 — Photo langage</div></div></div>
+<article class="card" id="d5">
+  <div class="ch"><span class="badge">Diapo 5</span><h3>Photo-language</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st" style="left:calc(var(--u)*45);top:calc(var(--u)*45)">Photo-language </div><table class="fam" style="left:calc(var(--u)*247);top:calc(var(--u)*96);width:calc(var(--u)*508)"><thead><tr><th>Les sept familles</th><th>Intention</th><th>Relation</th></tr></thead><tbody><tr><th>Plaisir</th><td>Planer</td><td>Pour soi</td></tr><tr><th>Introspection</th><td>Voyager</td><td>En soi</td></tr><tr><th>Souffrance</th><td>Apaiser</td><td>Privé de soi</td></tr><tr><th>Performance</th><td>Gagner</td><td>Contre d’autres moi</td></tr><tr><th>Défonce</th><td>S’assommer</td><td>Sans les autres</td></tr><tr><th>Fusion</th><td>Se fondre</td><td>Dans les autres</td></tr><tr><th>Distinction</th><td>S’affirmer</td><td>Sortir de la masse</td></tr></tbody></table><div class="src" style="left:calc(var(--u)*45);top:calc(var(--u)*464);width:calc(var(--u)*870)">Illustration : Emmanuel Langlois, Le nouveau monde des drogues, Armand Collin, 2022.</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d05.jpg" alt="Vignette de la diapo d’origine 5"><figcaption>5</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Cette diapo reprend exactement le tableau de la diapo 4 : le contenu du photo-langage reste à créer.</li><li>« Photo-language » : en français, « photo-langage ».</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-5" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+<article class="card" id="d6">
+  <div class="ch"><span class="badge">Diapo 6</span><h3>Comportements à risque (schéma)</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><img class="im" src="img/comportements-risque.png" alt="Schéma : comportement à faible risque, comportements à risque (excessif, chronique, inadapté à la situation), addictions" style="left:calc(var(--u)*274);top:calc(var(--u)*65);width:calc(var(--u)*397);height:calc(var(--u)*402)"></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d06.jpg" alt="Vignette de la diapo d’origine 6"><figcaption>6</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Diapo sans titre ni source dans l’original.</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-6" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+<section class="module" id="m3"><header class="mh"><h2>Module 3 — Témoignage de Philippe</h2><p class="mc">2 éléments · diapo 7, diapo 8</p></header>
+<div class="slide modslide printonly"><div class="s-in"><div class="modt" style="left:calc(var(--u)*60);top:calc(var(--u)*200);width:calc(var(--u)*840)">Module 3 — Témoignage de Philippe</div></div></div>
+<article class="card" id="d7">
+  <div class="ch"><span class="badge">Diapo 7</span><h3>Témoignage</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="sect" style="left:calc(var(--u)*23);top:calc(var(--u)*240);width:calc(var(--u)*914)">Témoignage </div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d07.jpg" alt="Vignette de la diapo d’origine 7"><figcaption>7</figcaption></figure></div></details>
+  
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-7" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+<article class="card" id="d8">
+  <div class="ch"><span class="badge">Diapo 8</span><h3>Les différentes fonctions et modalités de consommation (bis)</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st" style="left:calc(var(--u)*45);top:calc(var(--u)*45)">Les différentes fonctions et modalités de consommation</div><img class="im" src="img/fonctions-consommation.png" alt="Diagramme : consommation festive, thérapeutique et récréative" style="left:calc(var(--u)*283);top:calc(var(--u)*84);width:calc(var(--u)*394);height:calc(var(--u)*386)"><div class="src" style="left:calc(var(--u)*45);top:calc(var(--u)*500);width:calc(var(--u)*600)">* PAP (PSYCHOTHERAPIE ASSISTEE PAR LES PSYCHEDELIQUES</div><div class="src r" style="left:calc(var(--u)*615);top:calc(var(--u)*500);width:calc(var(--u)*300)">David Perrin 2025</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d08.jpg" alt="Vignette de la diapo d’origine 8"><figcaption>8</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Doublon exact de la diapo 3 (sans doute pour revenir au schéma pendant le témoignage).</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-8" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+<section class="module" id="pause"><header class="mh"><h2>Pause</h2><p class="mc">1 élément · diapo 9</p></header>
+<article class="card" id="d9">
+  <div class="ch"><span class="badge">Diapo 9</span><h3>Pause</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="sect" style="left:calc(var(--u)*23);top:calc(var(--u)*240);width:calc(var(--u)*914)">Pause </div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d09.jpg" alt="Vignette de la diapo d’origine 9"><figcaption>9</figcaption></figure></div></details>
+  
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-9" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+<section class="module" id="m4"><header class="mh"><h2>Module 4 — Différents niveaux d’usage, dépendance et addiction</h2><p class="mc">3 éléments · diapo 10, diapos 11 à 15, diapo 30</p></header>
+<div class="slide modslide printonly"><div class="s-in"><div class="modt" style="left:calc(var(--u)*60);top:calc(var(--u)*200);width:calc(var(--u)*840)">Module 4 — Différents niveaux d’usage, dépendance et addiction</div></div></div>
+<article class="card" id="d10">
+  <div class="ch"><span class="badge">Diapo 10</span><h3>Pouvoir identifier une consommation qui devient problématique (vidéo)</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st" style="left:calc(var(--u)*23);top:calc(var(--u)*45)">Pouvoir identifier une consommation qui devient problématique</div><video class="im vid" src="img/pub-alcool.mp4" poster="img/pub-alcool-poster.jpg" controls preload="none" playsinline style="left:calc(var(--u)*206);top:calc(var(--u)*132);width:calc(var(--u)*547);height:calc(var(--u)*338)"></video><div class="vidprint" style="left:calc(var(--u)*206);top:calc(var(--u)*132);width:calc(var(--u)*547);height:calc(var(--u)*338);background:#000 url(img/pub-alcool-poster.jpg) center/contain no-repeat;align-items:flex-end;justify-content:center;color:#fff;font-size:calc(var(--u)*12);padding-bottom:calc(var(--u)*8)">▶ Vidéo : Pub contre l’alcool (42 s)</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d10.jpg" alt="Vignette de la diapo d’origine 10"><figcaption>10</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Vidéo intégrée : « Pub contre lalcool » (42 s, 320×198 px, basse définition). Source de la vidéo non indiquée.</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-10" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+<article class="card" id="d11-15">
+  <div class="ch"><span class="badge">Diapos 11 à 15</span><h3>Pouvoir identifier une consommation qui devient problématique (tableau)</h3><div class="steps" data-max="5" data-min="1"><button type="button" class="sb prev" aria-label="Étape précédente">‹</button><span class="sl"></span><button type="button" class="sb next" aria-label="Étape suivante">›</button><button type="button" class="sb all">Tout afficher</button></div></div>
+  <div class="slide seq" data-step="5"><div class="s-in"><div class="st" style="left:calc(var(--u)*23);top:calc(var(--u)*45)">Pouvoir identifier une consommation qui devient problématique</div><table class="niv" style="left:calc(var(--u)*45);top:calc(var(--u)*86);width:calc(var(--u)*870)"><thead><tr><th>Niveau d’usage</th><th>Dimension physiologique</th><th>Dimension psychologique</th><th>Dimension sociale</th></tr></thead><tbody><tr class="n1 step" data-step="1"><th>Usage occasionnel</th><td>Effets toxiques spécifiques au produit et à la prise</td><td>Plaisir, détente, évasion, curiosité, soulagement…</td><td>En fonction du contexte (festif, convivial, médical, sportif…)</td></tr><tr class="n2 step" data-step="2"><th>Usage régulier</th><td>Tolérance, augmentation des doses<br>Le corps s’habitue</td><td>Pensées fréquentes autour du produit<br>Mise en place d’habitudes, de rituels et de stratégies…</td><td>Consommation qui prend de plus en plus de place dans la vie.</td></tr><tr class="n3 step" data-step="3"><th>Usage à risque</th><td>Polyconsommation, incidents, accidents, surdosages…</td><td>Difficulté à imaginer une journée ou une situation sans le produit… une béquille, en réponse au stress ou aux émotions</td><td>Entourage qui commence à s’inquiéter</td></tr><tr class="n4 step" data-step="4"><th>Usage problématique</th><td>Augmentation de la tolérance, fatigue, anxiété, troubles du sommeil,</td><td>Perte de contrôle, consommation compulsive</td><td>Conflits, difficultés professionnelles ou financières</td></tr><tr class="n5 step" data-step="5"><th>Dépendance et/ou Addiction</th><td>Symptômes de sevrage, négligence ou dégradation de la santé<br><br>Poursuite de la consommation malgré les dommages physiologiques</td><td>Perte de contrôle, culpabilité, honte<br><br>Craving, poursuite malgré les dommages sur la santé mentale.<br><br>Difficulté à arrêter malgré la volonté</td><td>Isolement, désinvestissement dans les relations ou les activités<br><br>Poursuite malgré les conséquences négatives au niveau familiales, sociales ou professionnelles, juridiques…</td></tr></tbody></table><div class="note-bas" style="left:calc(var(--u)*45);top:calc(var(--u)*490);width:calc(var(--u)*870)"><b>À retenir</b> : les dimensions physiologique, psychologique et sociale ne progressent pas forcément au même rythme. Une consommation peut devenir problématique dans une dimension avant d'impacter les autres.</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d11.jpg" alt="Vignette de la diapo d’origine 11"><figcaption>11</figcaption></figure><figure><img loading="lazy" src="vignettes/d12.jpg" alt="Vignette de la diapo d’origine 12"><figcaption>12</figcaption></figure><figure><img loading="lazy" src="vignettes/d13.jpg" alt="Vignette de la diapo d’origine 13"><figcaption>13</figcaption></figure><figure><img loading="lazy" src="vignettes/d14.jpg" alt="Vignette de la diapo d’origine 14"><figcaption>14</figcaption></figure><figure><img loading="lazy" src="vignettes/d15.jpg" alt="Vignette de la diapo d’origine 15"><figcaption>15</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Dans l’original, le tableau apparaît ligne par ligne sur 5 diapos (11 à 15) : les boutons ‹ › en haut de la fiche rejouent la progression.</li><li>Le tableau était une capture d’écran : il est ici retranscrit en texte, mot pour mot.</li><li>Petite différence : la capture d’origine se termine par « …avant que des difficultés importantes n’apparaissent dans les autres », la zone de texte de la diapo par « …avant d'impacter les autres ». C’est la version de la diapo qui est reprise.</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-11-15" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+<article class="card" id="d30">
+  <div class="ch"><span class="badge">Diapo 30</span><h3>Dépendance Vs Addiction</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st" style="left:calc(var(--u)*45);top:calc(var(--u)*28)">Dépendance Vs Addiction</div><div class="dcard" style="left:calc(var(--u)*45);top:calc(var(--u)*82);width:calc(var(--u)*420);height:calc(var(--u)*358)"><h4>La Dépendance</h4><div class="dsub">Phénomène physiologique et psychologique</div><p><b>Syndrome de sevrage :</b> Un ensemble de symptômes physiques et psychologiques (nausées, tremblements, anxiété, irritabilité) se manifestant à l'arrêt de la substance.</p><p><b>Tolérance :</b> Besoin d'augmenter la dose de la substance pour obtenir le même effet.</p><p><b>Mécanisme biologique :</b> Le corps s'adapte à la présence de la substance et la nécessite pour maintenir son équilibre.</p></div><div class="dcard" style="left:calc(var(--u)*495);top:calc(var(--u)*82);width:calc(var(--u)*420);height:calc(var(--u)*358)"><h4>L'Addiction</h4><div class="dsub">Trouble comportemental</div><p><b>Perte de contrôle :</b> Sur sa consommation ou son comportement global.</p><p><b>Recherche compulsive :</b> Malgré les conséquences néfastes évidentes.</p><p><b>Effets sur la santé :</b> Dommages physiques et sur la santé mentale.</p><p><b>Périmètre :</b> Peut concerner des substances (drogues, alcool) ou des activités (jeux, sexe, travail).</p></div><div class="anoter" style="left:calc(var(--u)*45);top:calc(var(--u)*455);width:calc(var(--u)*870)"><b>À noter :</b> Une personne peut développer une dépendance physique (comme avec la morphine) sans nécessairement tomber dans une addiction, mais l'addiction implique souvent une dépendance, qu'elle soit physique ou psychologique.</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d30.jpg" alt="Vignette de la diapo d’origine 30"><figcaption>30</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Placée à la fin du Keynote (n° 30, après « Merci ! ») : rangée ici dans le module sur les niveaux d’usage.</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-30" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+<section class="module" id="m5"><header class="mh"><h2>Module 5 — Drug, Set and Setting</h2><p class="mc">1 élément · diapo 16</p></header>
+<div class="slide modslide printonly"><div class="s-in"><div class="modt" style="left:calc(var(--u)*60);top:calc(var(--u)*200);width:calc(var(--u)*840)">Module 5 — Drug, Set and Setting</div></div></div>
+<article class="card" id="d16">
+  <div class="ch"><span class="badge">Diapo 16</span><h3>Drug, set & setting</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st" style="left:calc(var(--u)*45);top:calc(var(--u)*45)">Drug, set &amp; setting</div><img class="im" src="img/drug-set-setting.png" alt="Diagramme Drug, Set, Setting" style="left:calc(var(--u)*280);top:calc(var(--u)*84);width:calc(var(--u)*400);height:calc(var(--u)*388)"><div class="src r" style="left:calc(var(--u)*615);top:calc(var(--u)*500);width:calc(var(--u)*300)">David Perrin 2025</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d16.jpg" alt="Vignette de la diapo d’origine 16"><figcaption>16</figcaption></figure></div></details>
+  
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-16" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+<section class="module" id="ancrage"><header class="mh"><h2>Temps d’ancrage</h2><p class="ms">Placé ici dans l’original, entre Drug, Set and Setting et les gardes-fous</p><p class="mc">1 élément · diapo 17</p></header>
+<article class="card" id="d17">
+  <div class="ch"><span class="badge">Diapo 17</span><h3>Ancrage</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st big" style="left:calc(var(--u)*45);top:calc(var(--u)*150)">Ancrage</div><div class="body" style="left:calc(var(--u)*45);top:calc(var(--u)*240);width:calc(var(--u)*556)">Prenez un temps pour penser à quelque chose, qui, pendant cette formation, a particulièrement raisonné en vous.</div><div class="body teal" style="left:calc(var(--u)*45);top:calc(var(--u)*345);width:calc(var(--u)*556)">Inscrivez-le et emmenez-le avec vous.</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d17.jpg" alt="Vignette de la diapo d’origine 17"><figcaption>17</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>« raisonné en vous » : au sens de « faire écho », on écrit « résonné ».</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-17" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+<section class="module" id="m6"><header class="mh"><h2>Module 6 — Gardes fous et ressources d’aide</h2><p class="mc">2 éléments · diapo 18, diapos 19 à 26</p></header>
+<div class="slide modslide printonly"><div class="s-in"><div class="modt" style="left:calc(var(--u)*60);top:calc(var(--u)*200);width:calc(var(--u)*840)">Module 6 — Gardes fous et ressources d’aide</div></div></div>
+<article class="card" id="d18">
+  <div class="ch"><span class="badge">Diapo 18</span><h3>Limites et gardes fous</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="st" style="left:calc(var(--u)*45);top:calc(var(--u)*45)">Limites et gardes fous</div><div class="q q1" style="left:calc(var(--u)*90);top:calc(var(--u)*175)">“</div><div class="quote" style="left:calc(var(--u)*140);top:calc(var(--u)*200);width:calc(var(--u)*680)">Est-ce que je me suis mis des règles de consommation&nbsp;? Des limites&nbsp;? Des stratégies&nbsp;? Est-ce que je me rappelle des phrases que je me disais au début de ma consommation&nbsp;?</div><div class="q q2" style="left:calc(var(--u)*820);top:calc(var(--u)*330)">”</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d18.jpg" alt="Vignette de la diapo d’origine 18"><figcaption>18</figcaption></figure></div></details>
+  
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-18" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+<article class="card" id="d19-26">
+  <div class="ch"><span class="badge">Diapos 19 à 26</span><h3>Identifier des ressources d’aide</h3><div class="steps" data-max="7" data-min="0"><button type="button" class="sb prev" aria-label="Étape précédente">‹</button><span class="sl"></span><button type="button" class="sb next" aria-label="Étape suivante">›</button><button type="button" class="sb all">Tout afficher</button></div></div>
+  <div class="slide seq" data-step="7"><div class="s-in"><div class="st" style="left:calc(var(--u)*45);top:calc(var(--u)*45)">Identifier des ressources d’aide</div><div class="ress" style="left:calc(var(--u)*30);top:calc(var(--u)*100);width:calc(var(--u)*900);height:calc(var(--u)*400)"><div class="rcol c1 step" data-step="1"><div class="rh">Moi-même<br>et mes ressources</div><ul><li>Se connaître et reconnaître ses besoins</li><li>Ses forces et ses compétences</li><li>Ses valeurs et ses objectifs</li><li>Les outils qui fonctionnent pour soi (activités, routines, ressources personnelles)</li></ul></div><div class="rcol c2 step" data-step="2"><div class="rh">Entourage</div><ul><li>Amis</li><li>Famille</li><li>Conjoint·e / partenaire</li><li>Collègues</li><li>Personnes de confiance</li><li>Personnes ayant vécu une expérience similaire</li></ul></div><div class="rcol c3 step" data-step="3"><div class="rh">Pairs</div><ul><li>Groupes de parole anonymes</li><li>Groupes d’entraide entre pairs</li><li>Associations d’anciens consommateurs</li></ul></div><div class="rcol c4 step" data-step="4"><div class="rh">Professionnels généralistes</div><ul><li>Médecin généraliste</li><li>Antennes médicales / centres de santé</li><li>Infirmiers et infirmières</li><li>Travailleurs sociaux</li><li>Psychologues</li><li>Psychiatres</li></ul></div><div class="rcol c5 step" data-step="5"><div class="rh">Services spécialisés</div><ul><li>Services d’addictologie</li><li>Consultations ambulatoires</li><li>Centres spécialisés</li><li>Sevrage ambulatoire ou hospitalier</li><li>Hôpital / clinique</li><li>Suivi thérapeutique</li></ul></div><div class="rcol c6 step" data-step="6"><div class="rh">Aide sociale</div><ul><li>Associations de réduction des risques (RDR)</li><li>Accueil bas seuil</li><li>Équipes de rue ou mobiles</li></ul></div><div class="rcol c7 step" data-step="7"><div class="rh">Urgence</div><ul><li>Urgences médicales</li><li>Services psychiatriques d’urgence</li><li>Dispositifs d’intervention en cas de danger immédiat</li></ul></div></div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d19.jpg" alt="Vignette de la diapo d’origine 19"><figcaption>19</figcaption></figure><figure><img loading="lazy" src="vignettes/d20.jpg" alt="Vignette de la diapo d’origine 20"><figcaption>20</figcaption></figure><figure><img loading="lazy" src="vignettes/d21.jpg" alt="Vignette de la diapo d’origine 21"><figcaption>21</figcaption></figure><figure><img loading="lazy" src="vignettes/d22.jpg" alt="Vignette de la diapo d’origine 22"><figcaption>22</figcaption></figure><figure><img loading="lazy" src="vignettes/d23.jpg" alt="Vignette de la diapo d’origine 23"><figcaption>23</figcaption></figure><figure><img loading="lazy" src="vignettes/d24.jpg" alt="Vignette de la diapo d’origine 24"><figcaption>24</figcaption></figure><figure><img loading="lazy" src="vignettes/d25.jpg" alt="Vignette de la diapo d’origine 25"><figcaption>25</figcaption></figure><figure><img loading="lazy" src="vignettes/d26.jpg" alt="Vignette de la diapo d’origine 26"><figcaption>26</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Dans l’original : diapo 19 avec le titre seul, puis une colonne de plus à chaque diapo (20 à 26). Les boutons rejouent cette progression.</li><li>Le tableau était une capture d’écran : retranscrit en texte, mot pour mot.</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-19-26" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+<section class="module" id="cloture"><header class="mh"><h2>Clôture</h2><p class="mc">1 élément · diapo 27</p></header>
+<article class="card" id="d27">
+  <div class="ch"><span class="badge">Diapo 27</span><h3>Merci !</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="sect" style="left:calc(var(--u)*23);top:calc(var(--u)*240);width:calc(var(--u)*914)">Merci ! </div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d27.jpg" alt="Vignette de la diapo d’origine 27"><figcaption>27</figcaption></figure></div></details>
+  
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-27" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+<section class="module" id="annexe"><header class="mh"><h2>Annexe — Notes de travail</h2><p class="mc">1 élément · diapo 28</p></header>
+<article class="card" id="d28">
+  <div class="ch"><span class="badge">Diapo 28</span><h3>Notes de travail (diapo de brouillon)</h3></div>
+  <div class="slide" data-step="0"><div class="s-in"><div class="body sm" style="left:calc(var(--u)*98);top:calc(var(--u)*90);width:calc(var(--u)*760)"><a href="https://www.maad-digital.fr/" target="_blank" rel="noopener">https://www.maad-digital.fr/</a></div><div class="body sm" style="left:calc(var(--u)*100);top:calc(var(--u)*170);width:calc(var(--u)*760)">Créer des espaces de réflexions partagées<br>Histoire des lettres à envoyer plus tard</div></div></div>
+  <details class="orig"><summary>Voir la vignette d’origine (Keynote)</summary><div class="th"><figure><img loading="lazy" src="vignettes/d28.jpg" alt="Vignette de la diapo d’origine 28"><figcaption>28</figcaption></figure></div></details>
+  <div class="rem"><h4>Repéré à la remise en page</h4><ul><li>Placée après « Merci ! » dans l’original : ce sont des notes, pas une diapo à projeter.</li></ul></div>
+  <label class="notes"><span>Mes notes — à changer, à garder, idées</span><textarea data-k="grea-note-28" rows="3" placeholder="Écris ici…"></textarea></label>
+</article>
+</section>
+</main>
+</div>
+<script>
+(function(){
+  // progression des diapos à révélation
+  document.querySelectorAll('.card').forEach(function(card){
+    var ctl=card.querySelector('.steps'); if(!ctl) return;
+    var slide=card.querySelector('.slide'); var max=+ctl.dataset.max, min=+ctl.dataset.min;
+    var items=slide.querySelectorAll('.step'); var lab=ctl.querySelector('.sl');
+    var first=card.id==='d11-15'?11:19, cur=max;
+    function show(){items.forEach(function(el){el.classList.toggle('hidden',+el.dataset.step>cur)});
+      lab.textContent='Diapo '+(first+cur-min)+' ('+(cur-min+1)+'/'+(max-min+1)+')';}
+    ctl.querySelector('.prev').onclick=function(){if(cur>min){cur--;show();}};
+    ctl.querySelector('.next').onclick=function(){if(cur<max){cur++;show();}};
+    ctl.querySelector('.all').onclick=function(){cur=max;show();};
+    show();
+  });
+  // notes locales
+  var store=null; try{store=window.localStorage; store.getItem('x');}catch(e){store=null;}
+  document.querySelectorAll('textarea[data-k]').forEach(function(t){
+    try{ if(store){t.value=store.getItem(t.dataset.k)||'';} }catch(e){}
+    t.addEventListener('input',function(){try{store&&store.setItem(t.dataset.k,t.value);}catch(e){}});
+  });
+  document.getElementById('copyNotes').onclick=function(){
+    var out=[]; document.querySelectorAll('.card').forEach(function(c){
+      var t=c.querySelector('textarea'); if(t&&t.value.trim()){out.push(c.querySelector('.badge').textContent+' — '+c.querySelector('h3').textContent+'\n'+t.value.trim());}
+    });
+    var msg=document.getElementById('toolMsg');
+    if(!out.length){msg.textContent='Aucune note pour l’instant.';return;}
+    var txt='Formation GREA — mes notes\n\n'+out.join('\n\n');
+    try{navigator.clipboard.writeText(txt).then(function(){msg.textContent='Notes copiées.';},function(){msg.textContent='Copie refusée par le navigateur.';});}catch(e){msg.textContent='Copie impossible ici.';}
+  };
+  // sommaire : élément actif
+  var links={}; document.querySelectorAll('nav a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a;});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&links[e.target.id]){document.querySelectorAll('nav a.on').forEach(function(x){x.classList.remove('on')});links[e.target.id].classList.add('on');}})},{rootMargin:'-20% 0px -70% 0px'});
+    document.querySelectorAll('.card').forEach(function(c){io.observe(c)});
+  }
+})();
+</script>
+<script>if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
+</body>
+</html>

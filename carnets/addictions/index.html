@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Addictions">
+<meta name="theme-color" content="#2C4A6E">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Formation addictions en entreprise</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--paper:#EEF0F2;--sheet:#FFFFFF;--ink:#1A1E26;--muted:#5B6270;--line:#D3D7DE;--soft:#E3E6EB;--tally:#D3302A;--tally-bg:#FBE7E5;--go:#2C7A4B;--go-bg:#E2F2E8;--shoot:#8F5F00;--tip-bg:#FBF1D9;--tech:#2F6CD8;--tech-bg:#E4EDFB;
+--font-display:"Barlow Condensed","Arial Narrow",sans-serif;--font-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;--font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#14161A;--sheet:#1D2026;--ink:#E7E9EE;--muted:#9BA2AE;--line:#30343C;--soft:#272B32;--tally:#FF5A50;--tally-bg:#3A1D1B;--go:#58BE84;--go-bg:#16301F;--shoot:#E3AE3C;--tip-bg:#33280F;--tech:#6E9EFF;--tech-bg:#1B2740;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#14161A;--sheet:#1D2026;--ink:#E7E9EE;--muted:#9BA2AE;--line:#30343C;--soft:#272B32;--tally:#FF5A50;--tally-bg:#3A1D1B;--go:#58BE84;--go-bg:#16301F;--shoot:#E3AE3C;--tip-bg:#33280F;--tech:#6E9EFF;--tech-bg:#1B2740;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55;padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(48px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--tally);outline-offset:2px}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.02em;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(36px,8vw,54px);font-weight:700}
+h2{font-size:clamp(28px,5.5vw,36px);font-weight:700}
+h3{font-size:22px;font-weight:600}
+h4{margin:0;font-size:16px;font-weight:600}
+p{margin:0;max-width:68ch}
+a{color:inherit}
+.head{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.brand{display:flex;align-items:center;gap:8px}
+.lead{color:var(--muted);font-size:17px}
+nav.tabs{background:var(--sheet);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;padding:4px 0;overflow:hidden}
+.tab{font-family:var(--font-display);font-size:21px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);padding:9px 14px;border-left:3px solid transparent;border-top:1px solid var(--soft);text-decoration:none}
+.tab:first-child{border-top:0}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-left-color:var(--tally)}
+.panel{scroll-margin-top:calc(8px + env(safe-area-inset-top,0px))}
+.tosom{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:6;background:var(--ink);color:var(--paper);border:0;border-radius:999px;padding:8px 14px;font-size:14px}
+@media print{.tosom{display:none!important}}
+.panel{display:flex;flex-direction:column;gap:14px}
+.panel[hidden]{display:none}
+.phead{display:flex;flex-direction:column;gap:6px;padding:4px 2px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.ch .t{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.mini{border:1px solid var(--line);background:var(--sheet);border-radius:6px;padding:5px 10px;font-size:13px;color:var(--muted);flex:none}
+.mini:hover{border-color:var(--muted);color:var(--ink)}
+.mini.ok{color:var(--go);border-color:var(--go)}
+ol,ul{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+li::marker{color:var(--muted);font-family:var(--font-mono);font-size:.85em}
+.tag{display:inline-block;font-family:var(--font-mono);font-size:11px;font-weight:500;padding:1px 7px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase;align-self:flex-start}
+.tag.s{background:var(--go-bg);color:var(--go)}
+.tag.p{background:var(--tech-bg);color:var(--tech)}
+.tag.d{background:var(--tally-bg);color:var(--tally)}
+.note{background:var(--tally-bg);border-left:3px solid var(--tally);padding:10px 14px;font-size:15px;max-width:72ch}
+.note b{color:var(--tally)}
+.tip{background:var(--tip-bg);border:1px solid var(--shoot);border-radius:8px;padding:12px 14px;max-width:72ch;font-size:15px}
+.tip .k{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--shoot);margin-bottom:2px}
+.src{font-size:13px;color:var(--muted);border-top:1px solid var(--soft);padding-top:8px;max-width:none}
+.steps{display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:3.4em 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--soft)}
+.step:first-child{border-top:0;padding-top:0}
+.step .n{font-family:var(--font-display);font-weight:700;font-size:20px;line-height:1.2;color:var(--tally);font-variant-numeric:tabular-nums}
+.step .b{display:flex;flex-direction:column;gap:3px;min-width:0}
+.step .name{font-weight:600}
+.step .ex{font-size:15px;color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.box{border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.box ul{font-size:15px;gap:4px}
+.box h4.good{color:var(--go)}
+.box h4.bad{color:var(--tally)}
+.scale{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.scale div{display:grid;grid-template-columns:minmax(120px,42%) 1fr;gap:10px;padding:8px 12px;border-top:1px solid var(--soft);font-size:15px}
+.scale div:first-child{border-top:0}
+.scale b{font-weight:600}
+.scale span{color:var(--muted)}
+.say{border-left:3px solid var(--tally);padding:2px 0 2px 12px;font-style:italic;max-width:62ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;color:var(--muted)}
+.foot{font-size:13px;color:var(--muted);text-align:center}
+.acts{display:flex;gap:6px;flex:none;flex-wrap:wrap;justify-content:flex-end}
+.allpdf{display:flex;flex-wrap:wrap;gap:6px}
+.mini:disabled{opacity:.6}
+@media (max-width:640px){.ch{flex-wrap:wrap}.ch .t{flex:1 1 100%;order:2}.ch .acts{order:1;margin-left:auto}}
+@media print{.acts,.allpdf{display:none!important}}
+@media (max-width:480px){.card{padding:14px}.scale div{grid-template-columns:1fr;gap:0}}
+@media print{body{background:#fff;color:#000;padding:0;font-size:11.5pt}nav.tabs,.mini{display:none!important}.panel[hidden]{display:flex!important}.panel{break-before:page}.card{border:0;padding:0 0 10px}.step,.box,.scale{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="head">
+  <div class="brand"><span class="eyebrow">Formation en entreprise · Philippe Vaudan · Premier jet</span><button type="button" class="mini" id="theme" style="margin-left:auto">Mode sombre</button></div>
+  <h1>Addictions au travail</h1>
+  <p class="lead">Réagir sans surveiller : 3 heures pour managers et RH.</p>
+  <div class="legend"><span class="tag s">Sourcé</span>vient d'une source citée <span class="tag p">Proposition</span>idée à tester, sans source <span class="tag d">À décider</span>reste ouvert</div>
+</header>
+
+<nav class="tabs" id="sommaire" role="tablist" aria-label="Sommaire">
+  <a class="tab" role="tab" href="#deroule">Déroulé</a>
+  <a class="tab" role="tab" href="#comprendre">Comprendre</a>
+  <a class="tab" role="tab" href="#reperer">Repérer</a>
+  <a class="tab" role="tab" href="#cadre">Cadre</a>
+  <a class="tab" role="tab" href="#conversation">Conversation</a>
+  <a class="tab" role="tab" href="#orienter">Orienter</a>
+  <a class="tab" role="tab" href="#exercices">Exercices</a>
+  <a class="tab" role="tab" href="#ouvert">Questions ouvertes</a>
+  <a class="tab" role="tab" href="#biblio">Sources</a>
+</nav>
+
+<!-- DÉROULÉ -->
+<section class="panel" id="deroule" role="tabpanel">
+  <div class="phead"><span class="eyebrow">Entrée 1</span><h2>Déroulé</h2><p class="lead">Ce que les participants sauront faire, et comment on remplit les 3 heures.</p></div>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Objectifs</span><h3>Objectifs pédagogiques</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag p">Proposition</span>
+    <p><b>Objectif général :</b> à l'issue de la formation, les managers et RH savent réagir à une situation préoccupante liée à une consommation, en partant des faits observés au travail, sans diagnostiquer ni surveiller.</p>
+    <ol>
+      <li><b>Situer</b> une consommation sur un continuum, de l'usage à la dépendance, en tenant compte des facteurs liés au travail.</li>
+      <li><b>Distinguer</b> un fait observable au travail d'une interprétation ou d'une rumeur.</li>
+      <li><b>Identifier</b> ce qu'on peut faire, ce qu'on doit faire et ce qu'on n'a pas le droit de faire.</li>
+      <li><b>Mener</b> une première conversation : nommer les faits, dire ce qui doit changer, proposer de l'aide, fixer un suivi.</li>
+      <li><b>Repérer</b> ses propres pièges : couvrir, banaliser, attendre, faire la morale, jouer au thérapeute.</li>
+      <li><b>Orienter</b> la personne vers les bons relais et savoir à qui passer la main.</li>
+    </ol>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">3 heures</span><h3>Déroulé de la séance</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag p">Proposition</span>
+    <div class="steps">
+      <div class="step"><div class="n">0:00</div><div class="b"><span class="name">Le souper de boîte (15 min)</span><span class="ex">Une situation banale, un débat : « il est rigolo », et vous, vous faites quoi ?</span></div></div>
+      <div class="step"><div class="n">0:15</div><div class="b"><span class="name">Comprendre (25 min)</span><span class="ex">Du comportement sans risque à l'addiction, et ce que le travail y fait.</span></div></div>
+      <div class="step"><div class="n">0:40</div><div class="b"><span class="name">Repérer sans surveiller (30 min)</span><span class="ex">Exercice de tri entre faits et interprétations.</span></div></div>
+      <div class="step"><div class="n">1:10</div><div class="b"><span class="name">Pause (20 min)</span></div></div>
+      <div class="step"><div class="n">1:30</div><div class="b"><span class="name">Le cadre suisse (20 min)</span><span class="ex">Ce qu'on peut, ce qu'on doit, ce qu'on ne peut pas.</span></div></div>
+      <div class="step"><div class="n">1:50</div><div class="b"><span class="name">La première conversation (55 min)</span><span class="ex">Le cœur de la séance : démonstration, puis jeux de rôle.</span></div></div>
+      <div class="step"><div class="n">2:45</div><div class="b"><span class="name">Orienter et s'engager (15 min)</span><span class="ex">Qui appeler, et ce que chacun fera en rentrant.</span></div></div>
+    </div>
+    <div class="tip"><span class="k">Module de 2 h</span>On garde le repérage, le cadre et l'orientation. On réduit la partie Comprendre à quelques minutes. La conversation se prépare par écrit au lieu d'être jouée : en 2 h on sensibilise, en 3 h on commence à s'exercer.</div>
+  </article>
+</section>
+
+<!-- COMPRENDRE -->
+<section class="panel" id="comprendre" role="tabpanel" hidden>
+  <div class="phead"><span class="eyebrow">Entrée 2</span><h2>Comprendre</h2><p class="lead">Le minimum utile à un manager, qui n'a pas à reconnaître les produits.</p></div>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Notion de base</span><h3>Pas deux camps, un continuum</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <p>On ne se divise pas entre « normaux » et « addicts ». Les spécialistes distinguent généralement trois niveaux, et la dépendance met en jeu des processus à la fois biologiques, psychologiques et sociaux.</p>
+    <div class="scale">
+      <div><b>Comportement sans risque</b><span>Pas de conséquence problématique.</span></div>
+      <div><b>Comportement à risque</b><span>Le moment où l'intervention précoce a le plus de sens.</span></div>
+      <div><b>Addiction</b><span>Relève des spécialistes, pas du manager.</span></div>
+    </div>
+    <p>L'addiction se lit à l'interaction entre une substance, une personne et un contexte. Le travail fait partie du contexte.</p>
+    <p class="src">Sources : Gerber et Krebs, « Addiction », <a href="https://www.seismoverlag.ch/fr/pdfgen/18682/">Dictionnaire de politique sociale suisse</a>, 2020 · <a href="https://grea.ch/wp-content/uploads/2026/06/Art-8.pdf">GREA, article sur la Fondation Phénix</a>. La deuxième colonne du tableau est une proposition de lecture pour la formation.</p>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Le contexte</span><h3>Ce que le travail y fait</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <p>Un surmenage sans récupération peut conduire à un usage compensatoire de substances. Le problème n'est donc pas seulement individuel.</p>
+    <div class="two">
+      <div class="box"><h4 class="bad">Facteurs de risque</h4><ul><li>Déséquilibre entre ressources et contraintes</li><li>Manque d'autonomie, surcharge</li><li>Faible reconnaissance</li><li>Exigences émotionnelles</li><li>Manque de personnel, conflits, pression de productivité</li></ul></div>
+      <div class="box"><h4 class="good">Facteurs de protection</h4><ul><li>Charge adaptée</li><li>Sécurité psychologique</li><li>Conciliation vie privée et travail</li><li>Sens de l'utilité</li><li>Horaires adéquats, bonne entente</li></ul></div>
+    </div>
+    <p class="src">Sources : <a href="https://shop.addictionsuisse.ch/fr/professionnels/470-983-intervention-precoce-dans-le-monde-du-travail.pdf">Addiction Suisse, guide Intervention précoce dans le monde du travail, 2025</a>, p. 14-17 · <a href="https://www.grea.ch/sites/default/files/aktionstag_alkoholprobleme_2024_f.pdf">Communiqué Journée nationale alcool, 15 mai 2024</a>.</p>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Ordres de grandeur</span><h3>Quelques chiffres sur l'alcool au travail</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <ul>
+      <li>Environ 2 % des salariés ont une consommation problématique d'alcool.</li>
+      <li>15 à 25 % des accidents du travail sont dus à l'alcool ou à d'autres substances psychoactives.</li>
+      <li>Absences injustifiées de courte durée 4 à 8 fois plus fréquentes chez ces personnes.</li>
+      <li>Environ 1 personne sur 3 en Suisse a dans son entourage quelqu'un qui a des problèmes d'alcool.</li>
+      <li>Pertes de productivité liées à l'alcool : environ 2,1 milliards de francs par an.</li>
+    </ul>
+    <div class="note"><b>Prudence.</b> Le communiqué ne cite pas ses études d'origine, et d'autres sources donnent d'autres chiffres pour les absences (environ 2 fois plus chez Weka). À présenter comme des ordres de grandeur, et seulement pour l'alcool.</div>
+    <p class="src">Source : <a href="https://www.grea.ch/sites/default/files/aktionstag_alkoholprobleme_2024_f.pdf">Communiqué de la Croix-Bleue, du Fachverband Sucht, du GREA et d'Addiction Suisse, 15 mai 2024</a>.</p>
+  </article>
+</section>
+
+<!-- REPÉRER -->
+<section class="panel" id="reperer" role="tabpanel" hidden>
+  <div class="phead"><span class="eyebrow">Entrée 3</span><h2>Repérer</h2><p class="lead">Regarder le travail, pas la vie de la personne.</p></div>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">La posture</span><h3>Repérer n'est pas surveiller</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <p>L'intervention précoce sert à repérer tôt, à clarifier s'il faut agir, puis à proposer un soutien. Addiction Suisse précise qu'elle n'est pas un système permettant à l'employeur d'identifier des employés jugés problématiques.</p>
+    <p>Une baisse de qualité du travail peut justifier d'ouvrir la conversation. Le manager n'a pas besoin de savoir si la personne est addicte : il parle de ce qu'il constate au travail.</p>
+    <p class="src">Source : <a href="https://shop.addictionsuisse.ch/fr/professionnels/470-983-intervention-precoce-dans-le-monde-du-travail.pdf">Addiction Suisse, guide 2025</a>, p. 2 et 21.</p>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Indices</span><h3>Ce qui peut alerter au travail</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <ul>
+      <li>Absences courtes et fréquentes, souvent le lundi.</li>
+      <li>Pauses prolongées.</li>
+      <li>Plus d'erreurs, baisse de la qualité ou de la performance.</li>
+      <li>Retrait, isolement, fatigue, difficultés de concentration, sautes d'humeur.</li>
+      <li>Irritabilité, tremblements, haleine alcoolisée.</li>
+      <li>À l'échelle d'une équipe : hausse des arrêts maladie.</li>
+    </ul>
+    <div class="note"><b>À répéter en formation.</b> Un indice peut n'avoir aucun lien avec une addiction : problème familial, deuil, difficultés financières, médicaments. C'est un changement dans la durée qui compte, jamais un signe isolé.</div>
+    <p class="src">Sources : <a href="https://www.weka.ch/themes/ressources-humaines/gestion-du-personnel/management-de-la-sante/article/lalcoolisme-au-travail-comment-reagir-en-tant-quemployeur/">Weka, L'alcoolisme au travail, 2026</a> · <a href="https://shop.addictionsuisse.ch/fr/professionnels/470-983-intervention-precoce-dans-le-monde-du-travail.pdf">Addiction Suisse, guide 2025</a>, p. 11-12.</p>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Le cas d'ouverture</span><h3>Le souper de boîte</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag p">Proposition</span>
+    <p>Un collègue boit trop à chaque souper d'entreprise. Tout le monde rit. Ce cas pose deux questions différentes :</p>
+    <ul>
+      <li><b>Pour la personne :</b> c'est hors du travail. Ça peut mettre la puce à l'oreille, mais seul, ça ne justifie pas un entretien. Y a-t-il aussi quelque chose qui a changé au travail ?</li>
+      <li><b>Pour l'entreprise :</b> quelle place donne-t-on à l'alcool dans nos fêtes ? Rit-on de quelqu'un au lieu de s'inquiéter ?</li>
+    </ul>
+    <p>Le communiqué de 2024 recommande justement des règles claires sur l'apéritif après le travail et les cadeaux d'entreprise, et le guide d'Addiction Suisse cite l'alcool lors des fêtes parmi les questions de culture d'entreprise. Il donne aussi l'exemple de collègues qui plaisantent sur quelqu'un au lieu d'alerter la personne de référence.</p>
+    <p class="src">Sources : <a href="https://www.grea.ch/sites/default/files/aktionstag_alkoholprobleme_2024_f.pdf">Communiqué du 15 mai 2024</a> · <a href="https://shop.addictionsuisse.ch/fr/professionnels/470-983-intervention-precoce-dans-le-monde-du-travail.pdf">Addiction Suisse, guide 2025</a>, p. 6-12. La lecture en deux questions est une proposition.</p>
+  </article>
+</section>
+
+<!-- CADRE -->
+<section class="panel" id="cadre" role="tabpanel" hidden>
+  <div class="phead"><span class="eyebrow">Entrée 4</span><h2>Cadre suisse</h2><p class="lead">Les repères à connaître. À faire relire par un juriste avant de former.</p></div>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Obligations</span><h3>Ce que l'employeur doit et peut faire</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <ul>
+      <li>Il doit protéger la santé et la personnalité du travailleur (art. 328 CO, art. 6 LTr).</li>
+      <li>Il ne peut pas obliger quelqu'un à consommer de l'alcool ou d'autres psychotropes dans son activité (art. 6 al. 2bis LTr).</li>
+      <li>Il peut engager sa responsabilité en cas d'accident s'il a autorisé ou toléré la consommation pendant le travail ou les pauses.</li>
+      <li>Il peut édicter des directives (art. 321d CO) et interdire la consommation pendant le travail, les pauses et avant la prise de service.</li>
+      <li>Le travailleur ne doit pas se trouver dans un état d'ivresse ou d'intoxication qui le mette en danger, lui ou autrui (art. 11 al. 3 OPA).</li>
+    </ul>
+    <p class="src">Source : <a href="https://www.lausanne.ch/vie-pratique/travail/protection-des-travailleurs/travailleur/contrat-de-travail-regles/alcool-drogues-travail.html">Ville de Lausanne, Alcool et drogues sur le lieu de travail</a>.</p>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Limites</span><h3>Tests de dépistage</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <ul>
+      <li>Un test est une atteinte grave à la personnalité. Il n'est admissible que si l'intérêt de sécurité l'emporte.</li>
+      <li>Postes à risque (chauffeurs, grutiers, machines dangereuses…) : des tests préventifs sont possibles.</li>
+      <li>Autres postes : en principe seulement en cas de soupçon concret de consommation pendant le travail. Pas de tests systématiques.</li>
+      <li>Le consentement est toujours requis, et une directive préalable doit préciser le but, les modalités et les conséquences.</li>
+      <li>Réalisé par du personnel médical. L'employeur apprend seulement si la personne est apte ou non, pas le résultat.</li>
+    </ul>
+    <p class="src">Source : <a href="https://www.lausanne.ch/vie-pratique/travail/protection-des-travailleurs/travailleur/contrat-de-travail-regles/alcool-drogues-travail.html">Ville de Lausanne</a>, qui s'appuie sur le Préposé fédéral à la protection des données.</p>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Conséquences</span><h3>Sanction et licenciement</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <ul>
+      <li>Un licenciement motivé uniquement par la dépendance serait abusif (art. 336 CO).</li>
+      <li>La dépendance peut le justifier si elle perturbe l'organisation, nuit à la qualité du travail ou accroît les risques d'accident.</li>
+      <li>Le licenciement immédiat appelle une grande prudence, car la dépendance peut être considérée comme une maladie.</li>
+    </ul>
+    <div class="note"><b>Situation d'urgence.</b> Une personne en état d'ébriété ne doit pas continuer à travailler. Ce que cela implique concrètement (retour à domicile, salaire, sécurité sur le trajet) est à valider avec un juriste.</div>
+    <p class="src">Sources : <a href="https://www.lausanne.ch/vie-pratique/travail/protection-des-travailleurs/travailleur/contrat-de-travail-regles/alcool-drogues-travail.html">Ville de Lausanne</a> · <a href="https://www.weka.ch/themes/ressources-humaines/gestion-du-personnel/management-de-la-sante/article/lalcoolisme-au-travail-comment-reagir-en-tant-quemployeur/">Weka, 2026</a>.</p>
+  </article>
+</section>
+
+<!-- CONVERSATION -->
+<section class="panel" id="conversation" role="tabpanel" hidden>
+  <div class="phead"><span class="eyebrow">Entrée 5</span><h2>La conversation</h2><p class="lead">Le moment le plus difficile, y compris pour les spécialistes.</p></div>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Le principe</span><h3>Ce qui guide la première conversation</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <div class="two">
+      <div class="box"><h4 class="good">À faire</h4><ul><li>Partir d'observations concrètes et factuelles</li><li>Dire son inquiétude, demander comment la personne va</li><li>Rappeler les attentes liées au poste</li><li>Écouter, sans stigmatiser</li><li>Proposer une aide spécialisée</li></ul></div>
+      <div class="box"><h4 class="bad">À éviter</h4><ul><li>Ton autoritaire ou paternaliste</li><li>Jugement moral</li><li>Étiquette (« Vous êtes accro ! »)</li><li>Nier ou minimiser</li><li>Poser un diagnostic</li></ul></div>
+    </div>
+    <p>Le guide d'Addiction Suisse le dit lui-même : trouver le bon ton et les bonnes questions reste délicat. Il renvoie à des vidéos sur addiction-et-monde-du-travail.ch.</p>
+    <p class="src">Sources : <a href="https://shop.addictionsuisse.ch/fr/professionnels/470-983-intervention-precoce-dans-le-monde-du-travail.pdf">Addiction Suisse, guide 2025</a>, p. 21 · <a href="https://www.weka.ch/themes/ressources-humaines/gestion-du-personnel/management-de-la-sante/article/lalcoolisme-au-travail-comment-reagir-en-tant-quemployeur/">Weka, 2026</a>.</p>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Les étapes</span><h3>Une progression en plusieurs entretiens</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="b"><span class="name">Observer</span><span class="ex">Noter les changements, sans juger.</span></div></div>
+      <div class="step"><div class="n">2</div><div class="b"><span class="name">Premier entretien</span><span class="ex">Des faits précis, un changement demandé, et une chance de rétablir la situation. Selon Weka, l'addiction n'est pas encore évoquée.</span></div></div>
+      <div class="step"><div class="n">3</div><div class="b"><span class="name">Deuxième entretien, avec les RH</span><span class="ex">Si rien ne change, nommer l'inquiétude et proposer une évaluation par des spécialistes. Plusieurs entretiens sont souvent nécessaires.</span></div></div>
+      <div class="step"><div class="n">4</div><div class="b"><span class="name">Accompagnement</span><span class="ex">Si la personne accepte, un plan avec des spécialistes et une reprise progressive des responsabilités.</span></div></div>
+    </div>
+    <div class="note"><b>Point de débat.</b> Weka présente la résiliation comme justifiable après un refus répété de traitement, et même après une rechute. Ce dernier point mérite une discussion : la rechute fait partie de nombreux parcours de rétablissement, et je n'ai pas vérifié sa solidité juridique.</div>
+    <p class="src">Source : <a href="https://www.weka.ch/themes/ressources-humaines/gestion-du-personnel/management-de-la-sante/article/lalcoolisme-au-travail-comment-reagir-en-tant-quemployeur/">Weka, 2026</a>.</p>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Mots possibles</span><h3>Une trame pour ouvrir</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag p">Proposition</span>
+    <p>Ces phrases sont une trame à tester et à corriger, pas un script validé.</p>
+    <p class="say">« Je voulais qu'on prenne un moment. J'ai remarqué que depuis deux mois, tu es arrivé en retard quatre lundis et que deux rapports sont revenus avec des erreurs. »</p>
+    <p class="say">« Ça ne te ressemble pas, et je m'inquiète un peu. Comment ça va ? »</p>
+    <p class="say">« De mon côté, j'ai besoin que les horaires et la qualité reviennent. Qu'est-ce qui t'aiderait ? »</p>
+    <p class="say">« Il existe des personnes à qui parler, en toute discrétion, si tu en as besoin. On se revoit dans deux semaines. »</p>
+    <div class="tip"><span class="k">Le piège à montrer</span>Couvrir un collègue, refaire son travail ou excuser ses absences semble aider, mais retarde la prise de conscience. Le programme d'Addiction Suisse de 2016 traitait déjà de la codépendance. <a href="https://www.grea.ch/sites/default/files/formation-pme-mai-2016.pdf">Voir le programme</a>.</div>
+  </article>
+</section>
+
+<!-- ORIENTER -->
+<section class="panel" id="orienter" role="tabpanel" hidden>
+  <div class="phead"><span class="eyebrow">Entrée 6</span><h2>Orienter</h2><p class="lead">Le manager ouvre une porte, il n'accompagne pas.</p></div>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">La limite</span><h3>Où s'arrête le rôle du manager</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <p>Le cadre observe, aborde et oriente. Il ne pose pas de diagnostic et l'entreprise ne se substitue pas aux services de conseil, au case management ou aux programmes d'aide aux employés.</p>
+    <ul>
+      <li><b>Grandes entreprises :</b> médecine du travail, RH, conseillers sociaux.</li>
+      <li><b>PME :</b> services externes de consultation en addiction.</li>
+      <li><b>En Suisse romande :</b> Addiction Suisse, Croix-Bleue romande, Fondation vaudoise contre l'alcoolisme dans le canton de Vaud.</li>
+    </ul>
+    <div class="note"><b>À compléter.</b> La liste des contacts canton par canton reste à faire, avec des coordonnées vérifiées au moment de chaque formation.</div>
+    <p class="src">Sources : <a href="https://shop.addictionsuisse.ch/fr/professionnels/470-983-intervention-precoce-dans-le-monde-du-travail.pdf">Addiction Suisse, guide 2025</a>, p. 7 et 19 · <a href="https://www.weka.ch/themes/ressources-humaines/gestion-du-personnel/management-de-la-sante/article/lalcoolisme-au-travail-comment-reagir-en-tant-quemployeur/">Weka, 2026</a> · <a href="https://www.grea.ch/sites/default/files/conference_4_alcool_au_travail_par_vanessa_redzepi.pdf">Croix-Bleue romande</a> · <a href="https://www.lausanneregion.ch/wp-content/uploads/2020/02/20200218-Compe-rendu-consommations-problematiques.pdf">Lausanne Région, 2020</a>.</p>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Après la formation</span><h3>La formation ne suffit pas seule</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag s">Sourcé</span>
+    <p>Addiction Suisse juge l'information nécessaire mais insuffisante, et considère la formation des cadres comme particulièrement importante. Elle la situe parmi d'autres mesures :</p>
+    <ul>
+      <li>Une politique interne sur les conduites addictives, rappelée régulièrement.</li>
+      <li>Une procédure formalisée de repérage et d'accompagnement.</li>
+      <li>La réintégration après une absence.</li>
+      <li>Des espaces de dialogue.</li>
+      <li>Une formation des cadres répétée dans le temps.</li>
+    </ul>
+    <p class="src">Source : <a href="https://shop.addictionsuisse.ch/fr/professionnels/470-983-intervention-precoce-dans-le-monde-du-travail.pdf">Addiction Suisse, guide 2025</a>, p. 19-20 et 25.</p>
+  </article>
+</section>
+
+<!-- EXERCICES -->
+<section class="panel" id="exercices" role="tabpanel" hidden>
+  <div class="phead"><span class="eyebrow">Entrée 7</span><h2>Exercices</h2><p class="lead">Cas inventés pour la formation, à remplacer par des situations réelles et anonymisées si tu en as.</p></div>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">30 minutes</span><h3>Fait ou interprétation ?</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag p">Proposition</span>
+    <p>Les participants classent chaque phrase, puis réécrivent les interprétations en faits.</p>
+    <div class="scale">
+      <div><b>« Il fait la fête le week-end. »</b><span>Interprétation</span></div>
+      <div><b>« Absent trois lundis sur les six derniers. »</b><span>Fait</span></div>
+      <div><b>« Elle a un problème avec l'alcool. »</b><span>Interprétation</span></div>
+      <div><b>« J'ai senti l'alcool mardi à 9 h. »</b><span>Fait, à manier avec prudence</span></div>
+      <div><b>« Paul m'a dit qu'il boit. »</b><span>Rumeur</span></div>
+      <div><b>« Deux livraisons erronées ce mois-ci, aucune avant. »</b><span>Fait</span></div>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">55 minutes</span><h3>Jeu de rôle à trois</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag p">Proposition</span>
+    <p>Par groupes de trois : manager, collaborateur, observateur. Huit minutes de jeu, cinq minutes de retour, puis on tourne.</p>
+    <ul>
+      <li><b>Cas 1, Marc, 48 ans, chef d'équipe apprécié :</b> retards répétés le lundi, ambiance tendue. Il répond que tout va bien.</li>
+      <li><b>Cas 2, Sonia, 32 ans, comptable :</b> erreurs inhabituelles, retrait. Elle se met à pleurer et parle d'un divorce. Le problème n'est peut-être pas celui qu'on croit.</li>
+      <li><b>Cas 3, Luc, 55 ans, magasinier :</b> haleine alcoolisée, utilise un chariot élévateur. Question de sécurité immédiate.</li>
+    </ul>
+    <p>L'observateur note une seule chose : le manager a-t-il parlé de faits, ou de la personne ?</p>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">5 minutes</span><h3>Mon engagement</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag p">Proposition</span>
+    <p>Chacun écrit pour lui-même, sans partager :</p>
+    <ul>
+      <li>Une situation à laquelle je repense depuis tout à l'heure.</li>
+      <li>La personne de référence que je contacterais demain.</li>
+      <li>Une chose que je vais arrêter de faire.</li>
+    </ul>
+  </article>
+</section>
+
+<!-- QUESTIONS OUVERTES -->
+<section class="panel" id="ouvert" role="tabpanel" hidden>
+  <div class="phead"><span class="eyebrow">Entrée 8</span><h2>Questions ouvertes</h2><p class="lead">Ce qui n'est pas réglé. À garder sous les yeux.</p></div>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Fond</span><h3>Les points vraiment difficiles</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag d">À décider</span>
+    <ul>
+      <li><b>Nommer ou pas ?</b> Weka conseille de ne pas évoquer l'addiction au premier entretien, Addiction Suisse d'exprimer son inquiétude et de demander comment la personne va. Ces deux conseils sont compatibles, mais où passe la limite ?</li>
+      <li><b>Soutien et sanction.</b> Le même manager aide et évalue. Comment la personne peut-elle lui faire confiance ?</li>
+      <li><b>Rechute.</b> Quelle position défend-on devant une entreprise ?</li>
+      <li><b>Confidentialité.</b> Le guide d'Addiction Suisse en parle très peu. Qui sait quoi, et que note-t-on par écrit ? À travailler avec un juriste.</li>
+      <li><b>Alcool seulement ?</b> Quelle place pour le cannabis, les médicaments, les jeux d'argent ou les écrans ? Les sources suisses trouvées portent surtout sur l'alcool.</li>
+    </ul>
+  </article>
+
+  <article class="card">
+    <div class="ch"><div class="t"><span class="eyebrow">Positionnement</span><h3>Ta place dans tout ça</h3></div><button class="mini copy" type="button">Copier</button></div>
+    <span class="tag d">À décider</span>
+    <ul>
+      <li><b>Ce que tu amènes :</b> que veux-tu dire depuis ta place de pair praticien ? Faut-il un objectif du type « comprendre ce qu'une remarque ou un silence peut produire chez la personne » ?</li>
+      <li><b>Coanimation :</b> avec un spécialiste, un juriste, un binôme ?</li>
+      <li><b>Offre existante :</b> la Croix-Bleue romande propose un séminaire de sensibilisation sur le lieu de travail et Addiction Suisse a proposé des formations de cadres. Concurrence ou partenariat ? À vérifier ce qui se fait aujourd'hui.</li>
+      <li><b>Avant de construire plus :</b> tester le format de 3 h auprès de deux ou trois RH.</li>
+    </ul>
+  </article>
+</section>
+
+<!-- SOURCES -->
+<section class="panel" id="biblio" role="tabpanel" hidden>
+  <div class="phead"><span class="eyebrow">Entrée 9</span><h2>Sources</h2><p class="lead">À relire dans le texte avant de former.</p></div>
+
+  <article class="card">
+    <h3>État de la vérification</h3>
+    <div class="note"><b>À savoir.</b> Ces contenus ont été reformulés à partir d'extractions automatiques des pages. Avant de les enseigner, il faut les relire dans le texte original, en particulier le droit et les numéros de pages. La page Blick n'a pas pu être ouverte et n'est donc pas utilisée. La partie juridique doit passer chez un juriste.</div>
+    <p>Weka cite aussi le « SFA » comme ressource : c'est un ancien nom d'Addiction Suisse (anciennement ISPA), à ne pas présenter comme une structure distincte.</p>
+  </article>
+
+  <article class="card">
+    <h3>Références</h3>
+    <ul>
+      <li><a href="https://shop.addictionsuisse.ch/fr/professionnels/470-983-intervention-precoce-dans-le-monde-du-travail.pdf">Addiction Suisse (2025), Intervention précoce dans le monde du travail. Un guide pour les entreprises</a> : la référence principale.</li>
+      <li><a href="https://www.grea.ch/sites/default/files/aktionstag_alkoholprobleme_2024_f.pdf">Journée nationale alcool, communiqué du 15 mai 2024</a></li>
+      <li><a href="https://www.lausanne.ch/vie-pratique/travail/protection-des-travailleurs/travailleur/contrat-de-travail-regles/alcool-drogues-travail.html">Ville de Lausanne, Alcool et drogues sur le lieu de travail</a></li>
+      <li><a href="https://www.weka.ch/themes/ressources-humaines/gestion-du-personnel/management-de-la-sante/article/lalcoolisme-au-travail-comment-reagir-en-tant-quemployeur/">Weka, L'alcoolisme au travail, 2026</a></li>
+      <li><a href="https://www.grea.ch/sites/default/files/formation-pme-mai-2016.pdf">Addiction Suisse, programme de formation PME, 2016</a></li>
+      <li><a href="https://www.grea.ch/sites/default/files/conference_4_alcool_au_travail_par_vanessa_redzepi.pdf">Croix-Bleue romande, offre aux entreprises</a></li>
+      <li><a href="https://www.seismoverlag.ch/fr/pdfgen/18682/">Gerber et Krebs (2020), Addiction, Dictionnaire de politique sociale suisse</a></li>
+      <li><a href="https://www.bag.admin.ch/fr/prevention-des-addictions">OFSP, Prévention des addictions et intervention précoce</a></li>
+      <li><a href="https://www.dirm.nord-atlantique-manche-ouest.developpement-durable.gouv.fr/IMG/pdf/formation_conduites_addictives-1_cle72422d.pdf">Institut maritime de prévention, programme d'une demi-journée</a> : exemple de format.</li>
+    </ul>
+  </article>
+</section>
+
+<button type="button" class="tosom" id="tosom">↑ Sommaire</button>
+<p class="foot">Premier jet · document de travail, pas un avis juridique ni médical</p>
+</div>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab')),panels=[].slice.call(document.querySelectorAll('.panel'));
+  function show(id){
+    if(!panels.some(function(p){return p.id===id}))id='deroule';
+    panels.forEach(function(p){p.hidden=p.id!==id});
+    tabs.forEach(function(t){var on=t.getAttribute('href')==='#'+id;t.setAttribute('aria-selected',on?'true':'false');});
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(e){e.preventDefault();var id=t.getAttribute('href').slice(1);show(id);try{history.replaceState(null,'','#'+id)}catch(_){}var p=document.getElementById(id);if(p)p.scrollIntoView();})});
+  document.getElementById('tosom').addEventListener('click',function(){window.scrollTo(0,0)});
+  window.addEventListener('hashchange',function(){show(location.hash.slice(1))});
+  show(location.hash.slice(1));
+
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.copy');if(!b)return;
+    var c=b.closest('.card').cloneNode(true);c.querySelectorAll('.acts,.tag').forEach(function(x){x.remove()});
+    var txt=c.innerText||c.textContent;
+    var done=function(){b.textContent='Copié';b.classList.add('ok');setTimeout(function(){b.textContent='Copier';b.classList.remove('ok')},1500)};
+    try{navigator.clipboard.writeText(txt.trim()).then(done,function(){b.textContent='Impossible'})}catch(_){b.textContent='Impossible'}
+  });
+
+  var r=document.documentElement,btn=document.getElementById('theme'),K='addictions-theme';
+  function sys(){return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}
+  function cur(){return r.dataset.theme||sys()}
+  function label(){btn.textContent=cur()==='dark'?'Mode clair':'Mode sombre'}
+  try{var s=localStorage.getItem(K);if(s==='dark'||s==='light')r.dataset.theme=s}catch(_){}
+  btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.dataset.theme=n;try{localStorage.setItem(K,n)}catch(_){}label()});
+  label();
+
+  /* ----- export PDF ----- */
+  var NAME='Formation addictions en entreprise', dl=null, libs=null;
+  var LIGHT={'--paper':'#EEF0F2','--sheet':'#FFFFFF','--ink':'#1A1E26','--muted':'#5B6270','--line':'#D3D7DE','--soft':'#E3E6EB','--tally':'#D3302A','--tally-bg':'#FBE7E5','--go':'#2C7A4B','--go-bg':'#E2F2E8','--shoot':'#8F5F00','--tip-bg':'#FBF1D9','--tech':'#2F6CD8','--tech-bg':'#E4EDFB'};
+  function loadScript(src){return new Promise(function(res,rej){var t=document.createElement('script');t.src=src;t.onload=res;t.onerror=rej;document.head.appendChild(t)})}
+  function loadLibs(){
+    if(!libs)libs=Promise.all([loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'),loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js')]).catch(function(e){libs=null;throw e});
+    return libs;
+  }
+  function slug(t){return (t||'fiche').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60)||'fiche'}
+  function flash(b,txt){b.textContent=txt;setTimeout(function(){b.textContent=b.dataset.label;b.disabled=false},2200)}
+  function makeBtn(cls,label,title){var b=document.createElement('button');b.type='button';b.className='mini '+cls;b.textContent=label;b.dataset.label=label;b.title=title;return b}
+
+  function addButtons(){
+    document.querySelectorAll('.card').forEach(function(card){
+      var ch=card.querySelector('.ch');if(!ch)return;
+      var cp=ch.querySelector('.copy'),a=document.createElement('div');a.className='acts';
+      if(cp)a.appendChild(cp);
+      a.appendChild(makeBtn('pdf','PDF','Exporter cette fiche, format portrait'));
+      a.appendChild(makeBtn('pdf land','PDF paysage','Exporter cette fiche, format paysage'));
+      ch.appendChild(a);
+    });
+    var head=document.querySelector('.head'),all=document.createElement('div');all.className='allpdf';
+    all.appendChild(makeBtn('pdf whole','Tout en PDF','Exporter tout le classeur, format portrait'));
+    all.appendChild(makeBtn('pdf whole land','Tout en paysage','Exporter tout le classeur, une fiche par page, format paysage'));
+    head.appendChild(all);
+  }
+
+  async function addCard(pdf,card,land,isFirst){
+    var W=land?1120:760,pw=land?297:210,ph=land?210:297,m=12,iw=pw-2*m,ih=ph-2*m-4;
+    var host=document.createElement('div');host.className='pdfhost';
+    host.style.cssText='position:fixed;left:-10000px;top:0;width:'+W+'px;padding:'+(land?'36px':'28px')+';background:#FFFFFF;font-size:'+(land?'19px':'16px');
+    Object.keys(LIGHT).forEach(function(k){host.style.setProperty(k,LIGHT[k])});
+    host.style.color='#1A1E26';host.style.colorScheme='light';
+    var clone=card.cloneNode(true);
+    clone.querySelectorAll('.acts').forEach(function(n){n.remove()});
+    if(land)clone.querySelectorAll('.tag,.src').forEach(function(n){n.remove()});
+    clone.style.border='0';clone.style.padding='0';clone.style.background='#FFFFFF';
+    if(land){clone.querySelectorAll('p,li,ul,ol,.step .name,.step .ex,.box ul,.scale div,.note,.tip,h4').forEach(function(n){n.style.fontSize='24px';n.style.lineHeight='1.35';n.style.maxWidth='none'});clone.querySelectorAll('h3').forEach(function(n){n.style.fontSize='44px'});clone.querySelectorAll('.step').forEach(function(n){n.style.gridTemplateColumns='4.2em 1fr'});clone.querySelectorAll('.step .n').forEach(function(n){n.style.fontSize='28px'})}
+    host.appendChild(clone);document.body.appendChild(host);
+    try{await document.fonts.ready}catch(_){}
+    var top=host.getBoundingClientRect().top,breaks=[];
+    host.querySelectorAll('p,li,h3,.tip,.note,.scale>div,.step,.box,.say,.ch').forEach(function(el){var r=el.getBoundingClientRect();if(r.height>0)breaks.push(r.bottom-top)});
+    var canvas;
+    try{canvas=await window.html2canvas(host,{scale:2,backgroundColor:'#FFFFFF',useCORS:true,logging:false})}finally{host.remove()}
+    var css2px=canvas.height/(host.offsetHeight||canvas.height/2);
+    breaks=breaks.map(function(b){return Math.round(b*css2px)}).sort(function(a,b){return a-b});
+    var pxPerMm=canvas.width/iw,pageH=Math.floor(ih*pxPerMm),y=0,first=true;
+    /* en paysage, une fiche un peu trop haute est réduite pour tenir sur une seule page */
+    if(land&&canvas.height>pageH&&canvas.height<=pageH*1.45){
+      var f=pageH/canvas.height,w=iw*f,x=(pw-w)/2;
+      if(!isFirst)pdf.addPage();
+      pdf.addImage(canvas.toDataURL('image/jpeg',0.92),'JPEG',x,m,w,ih);
+      return;
+    }
+    while(y<canvas.height){
+      var h=Math.min(pageH,canvas.height-y);
+      if(y+h<canvas.height){
+        var lim=y+pageH,best=0;
+        for(var i=0;i<breaks.length;i++){var bk=breaks[i]+6*css2px;if(bk>y+pageH*0.4&&bk<=lim)best=bk}
+        if(best)h=best-y;
+      }
+      var c=document.createElement('canvas');c.width=canvas.width;c.height=h;
+      c.getContext('2d').drawImage(canvas,0,y,canvas.width,h,0,0,canvas.width,h);
+      if(!(first&&isFirst))pdf.addPage();first=false;
+      pdf.addImage(c.toDataURL('image/jpeg',0.92),'JPEG',m,m,iw,h/pxPerMm);
+      y+=h;
+    }
+  }
+
+  addButtons();
+  document.addEventListener('click',async function(e){
+    var b=e.target.closest('.pdf');if(!b)return;
+    if(!dl){flash(b,'Indisponible');return}
+    b.disabled=true;b.textContent='…';
+    try{
+      await loadLibs();
+      var land=b.classList.contains('land'),whole=b.classList.contains('whole');
+      var cards=whole?[].slice.call(document.querySelectorAll('.card')).filter(function(c){return !land||!(c.closest('#ouvert')||c.closest('#biblio'))}):[b.closest('.card')];
+      var pdf=new window.jspdf.jsPDF({unit:'mm',format:'a4',orientation:land?'landscape':'portrait'});
+      for(var i=0;i<cards.length;i++){await addCard(pdf,cards[i],land,i===0)}
+      var pw=land?297:210,ph=land?210:297,n=pdf.getNumberOfPages();
+      for(var p=1;p<=n;p++){pdf.setPage(p);pdf.setFont('helvetica','normal');pdf.setFontSize(8);pdf.setTextColor(91,98,112);pdf.text('© Philippe Vaudan 2026 · '+NAME,12,ph-6);if(n>1)pdf.text(p+' / '+n,pw-12,ph-6,{align:'right'})}
+      var title=whole?'classeur':(cards[0].querySelector('h3')||{}).textContent;
+      await dl.save({filename:'addictions-entreprise-'+slug(title)+(land?'-paysage':'')+'.pdf',data:pdf.output('blob')});
+      flash(b,'Enregistré');
+    }catch(err){var code=err&&err.code;flash(b,code==='declined'?'Annulé':code==='rate_limited'?'Patiente…':'Échec')}
+  });
+  (async function(){
+    if(!(window.claude&&window.claude.use))return;
+    try{dl=await window.claude.use('downloads')}catch(_){dl=null}
+    if(!dl)document.querySelectorAll('.pdf').forEach(function(x){x.remove()});
+  })();
+})();
+</script>
+<script>if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
+</body>
+</html>
