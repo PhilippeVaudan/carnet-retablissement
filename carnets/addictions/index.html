@@ -6,7 +6,7 @@
 <link rel="icon" href="icons/icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Addictions">
+<meta name="apple-mobile-web-app-title" content="Addictions RH">
 <meta name="theme-color" content="#2C4A6E">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -546,7 +546,11 @@ li::marker{color:var(--muted);font-family:var(--font-mono);font-size:.85em}
   addButtons();
   document.addEventListener('click',async function(e){
     var b=e.target.closest('.pdf');if(!b)return;
-    if(!dl){flash(b,'Indisponible');return}
+    if(!dl)dl={save:async function(o){ /* hors de Claude : partager (Enregistrer / Imprimer) ou télécharger */
+      var f=null;try{f=new File([o.data],o.filename,{type:'application/pdf'})}catch(_){}
+      if(f&&navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:o.filename});return}catch(err){if(err&&err.name==='AbortError'){var e2=new Error();e2.code='declined';throw e2}}}
+      var u=URL.createObjectURL(o.data),a=document.createElement('a');a.href=u;a.download=o.filename;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},60000);
+    }};
     b.disabled=true;b.textContent='…';
     try{
       await loadLibs();

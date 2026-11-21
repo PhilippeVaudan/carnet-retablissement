@@ -1,5 +1,5 @@
 /* Fonctionnement hors ligne : réseau d'abord, sinon la dernière copie. */
-const CACHE='addictions-v1';
+const CACHE='addictions-v2';
 self.addEventListener('install',e=>self.skipWaiting());
 self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch',e=>{
